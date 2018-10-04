@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var ejs = require('ejs');
 var ejsmate = require('ejs-mate'); // View engine
 
+require('./init');
 var app = express();
 
 // Middleware and config
