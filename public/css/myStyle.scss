@@ -5,10 +5,11 @@
 $colors: (
     primary: #f25656,
     dashboard: #2b384e,
-    navbar: rgb(43,56,78,0.85)
+    navbar: rgba(43,56,78,0.85)
 );
 
 $desktop: 812px;
+$radius: 2px;
 
 @function color($color-name){
     @return map-get($colors,$color-name);
@@ -18,6 +19,13 @@ $desktop: 812px;
     @media (min-width: #{$desktop}){
         @content;
     }
+}
+
+@mixin blur ($radius) {
+    -webkit-filter: blur($radius+px); /* Chrome, Safari */
+	-ms-filter: blur($radius+px); /* IE12? */
+	filter: url("data:image/svg+xml;utf8,<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\"><filter id=\"blur\"><feGaussianBlur stdDeviation=\"#{$radius}\" /></filter></svg>#blur"); /* Firefox, Safari, Chrome*/
+    filter: progid:DXImageTransform.Microsoft.Blur(Strength=$radius); /* IE9 */
 }
 
 body,html{
@@ -58,7 +66,6 @@ body,html{
 
     .navbar-default {
         background-color: color(navbar);
-        filter: blur(2px);
     }
 
     .navbar {
@@ -73,6 +80,7 @@ body,html{
         }
     }
 }
+
 
 .cover-container {
     max-width: 42em;
@@ -133,7 +141,7 @@ body,html{
     width: 100%;
     height: 80%;
     max-width: 330px;
-    padding: 10% 15px;
+    padding: 8% 15px;
     margin: 0 auto;
 
     .form-control {
@@ -142,5 +150,29 @@ body,html{
     
     a{
         margin-bottom: 5px;
+    }
+}
+
+.form-post {
+    width: 100%;
+    max-width: 600px;
+    padding: 5px 15px;
+    margin: 0 auto;
+
+    .form-control {
+        margin-bottom: 1em;
+    }
+    
+    a{
+        margin-bottom: 5px;
+    }
+}
+
+.table-bottom-border {
+    th {
+        border-bottom: 2px solid #fff; 
+    }
+    th, td {
+        border-top:none;
     }
 }

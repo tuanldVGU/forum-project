@@ -19,8 +19,10 @@ app.set('view engine','ejs');
 
 // Routing
 var main = require('./routes/mainRoute');
+var thread = require('./routes/threadRoute');
 
 app.use('/',main);
+app.use('/forum',thread);
 
 // Start the server
 const PORT = process.env.PORT || 8080;
