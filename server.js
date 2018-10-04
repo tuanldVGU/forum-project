@@ -18,12 +18,13 @@ app.engine('ejs',ejsmate);
 app.set('view engine','ejs');
 
 // Routing
-var main = require('./routes/mainRoute');
+app.use('/',require('./routes/mainRoute'));
 
-app.use('/',main);
 
 // Start the server
 const PORT = process.env.PORT || 8080;
 http.createServer(app).listen(PORT,function(){
 	console.log("App running on port "+ PORT);
 });
+
+module.exports = app;

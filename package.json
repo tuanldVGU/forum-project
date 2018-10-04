@@ -13,6 +13,7 @@
   "author": "Forted Team",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "bluebird": "^3.5.2",
     "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
@@ -20,6 +21,8 @@
     "express": "^4.16.3",
     "lodash": "^4.17.11",
     "mongoose": "^5.3.1",
-    "nodemon": "^1.18.4"
+    "nodemon": "^1.18.4",
+    "vue-cli": "^2.9.6",
+    "vue-router": "^3.0.1"
   }
 }
