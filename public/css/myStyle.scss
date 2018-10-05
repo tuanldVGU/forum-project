@@ -176,3 +176,20 @@ body,html{
         border-top:none;
     }
 }
+
+.media {
+    img{
+        width: 50px;
+        height: auto;
+        color: #fff;
+    }
+}
+
+.thread {
+    padding: 2rem 3rem;
+}
+
+.widget {
+    display: none;
+    float: right;
+}
