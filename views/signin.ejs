@@ -1,10 +1,10 @@
 <%layout('./partials/layout')%>
 <body class="bg-menu text-center">
-    <form class="form-signin">
+    <form action="/auth/signin" class="form-signin" method="POST">
         <h1 class="brand">motor</h1>
-        <input type="text" placeholder="Username" id="usr" class="form-control" required autofocus>
+        <input type="text" placeholder="Username" name="usr" class="form-control" required autofocus>
         <label class="sr-only" for="pwd">Password</label>
-        <input type="text" placeholder="Password" id="pwd" class="form-control" required autofocus>
+        <input type="password" placeholder="Password" name="pwd" class="form-control" required autofocus>
         <button href="/home" class="btn btn-lg btn-block btn-white">Sign in</button>
         <p class="mt-2">
             <a href="http://fb.com" class="btn btn-lg btn-white" style="width: 45%;"><i class="fab fa-facebook-f"></i></a> 
