@@ -1,4 +1,8 @@
-@import url("https://fonts.googleapis.com/css?family=Ubuntu");
+@font-face {
+  font-family: "Ubuntu";
+  src: url("/fonts/Ubuntu-Regular.ttf") format("truetype");
+}
+
 body, html {
   font-family: 'Ubuntu';
   height: 100%;
@@ -39,7 +43,7 @@ body, html {
 }
 
 .bg-white .navbar-default {
-  background-color: #2b384e;
+  background-color: rgba(43, 56, 78, 0.85);
 }
 
 .bg-white .navbar {
@@ -52,6 +56,7 @@ body, html {
 
 .bg-white .navbar a:hover {
   color: #f25656;
+  text-decoration: none;
 }
 
 .cover-container {
@@ -81,7 +86,7 @@ body, html {
   border-bottom-color: #f25656;
 }
 
-.navbar-expand-lg .navbar-nav .nav-link {
+.cover-container .navbar-expand-lg .navbar-nav .nav-link {
   padding: 2px 0;
   margin-left: 10px;
 }
@@ -116,7 +121,7 @@ body, html {
   width: 100%;
   height: 80%;
   max-width: 330px;
-  padding: 10% 15px;
+  padding: 8% 15px;
   margin: 0 auto;
 }
 
@@ -126,5 +131,43 @@ body, html {
 
 .form-signin a {
   margin-bottom: 5px;
+}
+
+.form-post {
+  width: 100%;
+  max-width: 600px;
+  padding: 5px 15px;
+  margin: 0 auto;
+}
+
+.form-post .form-control {
+  margin-bottom: 1em;
+}
+
+.form-post a {
+  margin-bottom: 5px;
+}
+
+.table-bottom-border th {
+  border-bottom: 2px solid #fff;
+}
+
+.table-bottom-border th, .table-bottom-border td {
+  border-top: none;
+}
+
+.media img {
+  width: 50px;
+  height: auto;
+  color: #fff;
+}
+
+.thread {
+  padding: 2rem 3rem;
+}
+
+.widget {
+  display: none;
+  float: right;
 }
 /*# sourceMappingURL=myStyle.css.map */

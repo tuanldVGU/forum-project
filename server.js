@@ -1,3 +1,4 @@
+
 const http = require('http'); //HTTP Protocol
 var express = require('express'); //Express Framework
 var path = require('path');
@@ -18,8 +19,11 @@ app.engine('ejs',ejsmate);
 app.set('view engine','ejs');
 
 // Routing
-app.use('/',require('./routes/mainRoute'));
+var main = require('./routes/mainRoute');
+var thread = require('./routes/threadRoute');
 
+app.use('/',main);
+app.use('/forum',thread);
 
 // Start the server
 const PORT = process.env.PORT || 8080;
