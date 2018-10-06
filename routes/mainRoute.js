@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var User=require('../db/User');
 var loggedin = function (req, res, next) {
     if (req.isAuthenticated()) {
       next()
@@ -21,8 +22,17 @@ router.get('/signin', function(req,res,next){
 });
 
 router.get('/home', loggedin,function(req,res,next){
-    res.render('home',{title:"Motor || Home"});
+    res.render('home',{title:"Motor || Home", user:req.user});
 });
+router.get('/profile',loggedin,function(req,res,next){
+    //console.log(req.session+ "    "+ req.User);
+   // res.send(req.session);
+    res.render('profile',{ user: req.user});
+})
+router.get('/logout', function (req, res) {
+    req.logout()
+    res.redirect('/')
+  })
 
 
 module.exports = router;
