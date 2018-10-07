@@ -11,3 +11,10 @@ for (var i = 0; i<comment.length;i++){
         widget.style.display = "block";
     });
 }
+
+var navbar = new Vue({
+    el: '#usrname',
+    data: {
+        userName: 'thinh'
+    }
+})

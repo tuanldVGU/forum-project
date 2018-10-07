@@ -24,5 +24,14 @@ router.get('/home', loggedin,function(req,res,next){
     res.render('home',{title:"Motor || Home"});
 });
 
+router.get('/tech', loggedin,function(req,res,next){
+    res.render('tech',{title:"Motor || Technical support"});
+});
+
+router.get('/about', loggedin,function(req,res,next){
+    res.render('about',{title:"Motor || About us"});
+});
+
+
 
 module.exports = router;

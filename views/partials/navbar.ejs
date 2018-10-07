@@ -7,7 +7,16 @@
                                 <li class="nav-item"><a class="nav-link" href="/forum">Forum</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/tech">Technical Help</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
-                                <li class="nav-item"><a class="nav-link" ><i class="far fa-user-circle" style="padding: 0 2px;"></i>TuanLD</a></li>
+                                <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="usrname">
+                                                <i class="far fa-user-circle" style="padding: 0 2px;"></i>{{userName}}
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                                <a class="dropdown-item" href="#">Information</a>
+                                                <a class="dropdown-item" href="#">Your post</a>
+                                                <a class="dropdown-item" href="#">Addition</a>
+                                        </div>
+                                </li>
                         </ul>
                 </div>   
         </div>

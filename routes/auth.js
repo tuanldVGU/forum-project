@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../db/User');
-var bcrypt =require('bcrypt-nodejs');
+var User = require('../models/User');
 
 module.exports = function(passport){
     /* GET home page. */
@@ -39,13 +38,15 @@ module.exports = function(passport){
             })
                
         });
-  //  router.post('/login',passport.authenticate)
-  router.post('/signin',passport.authenticate('local', {
+    //  router.post('/login',passport.authenticate)
+    router.post('/signin',passport.authenticate('local', {
     failureRedirect: '/signin',
     successRedirect: '/home',
-}), function (req, res) {
-    res.send('hey')
-})
-  return router;
+    }), function (req, res) {
+        res.send('hey');
+        res.cookie('user',req.body.usr);
+    });
+
+    return router;  
 };
 

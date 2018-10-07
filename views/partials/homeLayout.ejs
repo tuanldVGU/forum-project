@@ -2,7 +2,7 @@
 <body class="bg-white">
 <div>
     <header>
-        <%include ./navbarfixed%>
+        <%include ./navbar%>
     </header>
     <main>
         <%- body%>
@@ -31,5 +31,9 @@
                 </div>
             </div>
     </footer>
+    <script>
+        var navbar = document.getElementsByClassName('navbar');
+        navbar[0].classList.add("fixed-top");
+    </script>
 </div>
 

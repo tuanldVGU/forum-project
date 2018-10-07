@@ -21,13 +21,6 @@ $radius: 2px;
     }
 }
 
-@mixin blur ($radius) {
-    -webkit-filter: blur($radius+px); /* Chrome, Safari */
-	-ms-filter: blur($radius+px); /* IE12? */
-	filter: url("data:image/svg+xml;utf8,<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\"><filter id=\"blur\"><feGaussianBlur stdDeviation=\"#{$radius}\" /></filter></svg>#blur"); /* Firefox, Safari, Chrome*/
-    filter: progid:DXImageTransform.Microsoft.Blur(Strength=$radius); /* IE9 */
-}
-
 body,html{
     font-family: 'Ubuntu';
     height: 100%;
@@ -50,6 +43,11 @@ body,html{
     }
     footer a {
         color: rgba(255,255,255,.2);
+    }
+    .navbar{
+        .dropdown-menu{
+            background: color(dashboard); 
+        }   
     }
 }
 
@@ -77,6 +75,11 @@ body,html{
                 color: color(primary);
                 text-decoration: none;
             }
+        }
+
+        .dropdown-menu{
+            margin: 0.75rem 0 0;
+            background: color(navbar); 
         }
     }
 }
