@@ -41,12 +41,19 @@ module.exports = function(passport){
     //  router.post('/login',passport.authenticate)
     router.post('/signin',passport.authenticate('local', {
     failureRedirect: '/signin',
-    successRedirect: '/home',
-    }), function (req, res) {
-        res.send('hey');
-        res.cookie('user',req.body.usr);
-    });
-
-    return router;
+    successRedirect: '/profile'
+}), function (req, res) {
+   // res.render('home', {title:"Motor || Home",user: req.Userr})
+   res.send('hey')
+})
+  router.get('/signin/facebook/return',
+  passport.authenticate('facebook',{ failureRedirect: '/signin', successRedirect: '/profile'}))
+ // function(req, res) {
+//    res.render('home',{title:"Motor || Home",user: req.User});
+   // res.render('profile')
+//})
+  router.get('/signin/facebook',
+  passport.authenticate('facebook'));
+  return router;
 };
 
