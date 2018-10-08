@@ -26,8 +26,8 @@ router.get('/home', loggedin,function(req,res,next){
 });
 router.get('/profile',loggedin,function(req,res,next){
     //console.log(req.session+ "    "+ req.User);
-   // res.send(req.session);
-    res.render('profile',{ user: req.user});
+    res.send(req.session);
+   // res.render('profile',{ user: req.user});
 })
 router.get('/logout', function (req, res) {
     req.logout()

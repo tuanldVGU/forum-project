@@ -42,13 +42,13 @@ module.exports = function(passport){
   //  router.post('/login',passport.authenticate)
   router.post('/signin',passport.authenticate('local', {
     failureRedirect: '/signin',
-    successRedirect: '/home'
+    successRedirect: '/profile'
 }), function (req, res) {
    // res.render('home', {title:"Motor || Home",user: req.Userr})
    res.send('hey')
 })
   router.get('/signin/facebook/return',
-  passport.authenticate('facebook', { failureRedirect: '/signin', successRedirect: '/home'}))
+  passport.authenticate('facebook',{ failureRedirect: '/signin', successRedirect: '/profile'}))
  // function(req, res) {
 //    res.render('home',{title:"Motor || Home",user: req.User});
    // res.render('profile')

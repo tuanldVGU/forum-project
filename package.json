@@ -19,6 +19,7 @@
     "ejs-mate": "^2.3.0",
     "express": "^4.16.3",
     "nodemon": "^1.18.4",
-    "passport-facebook": "^2.1.1"
+    "passport-facebook": "^2.1.1",
+    "passport-google-oauth20": "^1.0.0"
   }
 }
