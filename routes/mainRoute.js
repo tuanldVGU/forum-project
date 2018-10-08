@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var User=require('../db/User');
+var User=require('../models/user');
 var loggedin = function (req, res, next) {
     if (req.isAuthenticated()) {
       next()
@@ -33,6 +33,15 @@ router.get('/logout', function (req, res) {
     req.logout()
     res.redirect('/')
   })
+
+router.get('/tech', loggedin,function(req,res,next){
+    res.render('tech',{title:"Motor || Technical support"});
+});
+
+router.get('/about', loggedin,function(req,res,next){
+    res.render('about',{title:"Motor || About us"});
+});
+
 
 
 module.exports = router;

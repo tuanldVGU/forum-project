@@ -1,6 +1,10 @@
 var localStrategy = require('passport-local').Strategy;
-var User = require('../db/User')
+var User = require('../models/user')
 var facebookStrategy = require('passport-facebook').Strategy;
+const passportJWT = require("passport-jwt");
+const ExtractJWT = passportJWT.ExtractJwt;
+
+
 
 
 module.exports = function (passport) {

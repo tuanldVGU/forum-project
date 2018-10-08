@@ -30,6 +30,10 @@ body, html {
   color: rgba(255, 255, 255, 0.2);
 }
 
+.bg-menu .navbar .dropdown-menu {
+  background: #2b384e;
+}
+
 .bg-white {
   color: #2b384e;
 }
@@ -57,6 +61,11 @@ body, html {
 .bg-white .navbar a:hover {
   color: #f25656;
   text-decoration: none;
+}
+
+.bg-white .navbar .dropdown-menu {
+  margin: 0.75rem 0 0;
+  background: rgba(43, 56, 78, 0.85);
 }
 
 .cover-container {
