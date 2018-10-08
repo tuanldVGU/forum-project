@@ -14,6 +14,7 @@ user.deleteMany({}).exec()
   .then(() => post.deleteMany({}).exec())
   .then(() => user.create({
     username: '',
-    
+    password: '',
+
   }))
 
