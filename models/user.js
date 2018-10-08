@@ -1,10 +1,21 @@
 const mongoose = require('mongoose');
-const SALT_ROUNDS = 15;
-const bcrypt = require('bcryptjs');
-const schema = mongoose.Schema({
-  username: { type: String, unique: true, require: true },
-  email: { type: String, unique: true, require: true },
-  password: { type: String, require: true },
+const bcrypt = require('bcrypt-nodejs');
+const schema = mongoose.Schema;
+const userSchema = new schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    unique: true,
+    require: true
+  },
   userType: {
     type: String,
     default: 'user',
@@ -14,23 +25,12 @@ const schema = mongoose.Schema({
       'user',
     ],
   },
-}, {
-  collection: 'user',
-  timestamps: true,
 });
+userSchema.methods.hashPassword = function(password){
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+}
 
-schema.pre('save', function preSave(next) {
-  if (this.isModified('password')) {
-    const that = this;
-
-
-    return bcrypt.hash(this.password, SALT_ROUNDS, (err, hash) => {
-      that.password = hash;
-      return next();
-    });
-  }
-
-  return next();
-});
-
-module.exports = mongoose.model('user', schema);
+userSchema.methods.comparePassword = function(password,hash){
+    return bcrypt.compareSync(password,hash)
+}
+module.exports=mongoose.model('user',userSchema, 'user');

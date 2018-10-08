@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Promise = require('bluebird');
 const _ = require('lodash');
 const envConf = require('./config/env');
+require('./models');
 // const logger = require('./utils/logger');
 
 process.on('uncaughtException', (err) => {
@@ -30,7 +31,7 @@ mongoose.set('debug', (collectionName, method, query, doc) => {
   }
 });
 
-require('./models');
+
 
 // Insert default users
 _.each(envConf.defaultUsers, (defaultUser) => {

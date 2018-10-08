@@ -17,15 +17,15 @@ const defaultConfig = {
 
 const config = {
   test: {
-    mongodb: 'mongodb://localhost:27017/forum-test',
+    mongodb: 'mongodb://admin:admin123@ds223253.mlab.com:23253/forum',
     domain: 'http://localhost:8080',
   },
   dev: {
-    mongodb: 'mongodb://localhost:27017/forum-dev',
+    mongodb: 'mongodb://admin:admin123@ds223253.mlab.com:23253/forum',
     domain: 'http://localhost:8080',
   },
   prod: {
-    mongodb: 'mongodb://mongod:27017/forum-prod',
+    mongodb: 'mongodb://admin:admin123@ds223253.mlab.com:23253/forum',
     domain: '',
   },
 };
