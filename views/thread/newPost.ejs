@@ -7,11 +7,11 @@
         <input type="text" id="tilte" name="tilte" class="form-control" required autofocus>
 
         <label for="content">Content</label>
-        <textarea id="content" name="content" class="form-control"  row="5" required> </textarea>
+        <textarea id="content" name="content" class="form-control"> </textarea>
         
         <label for="category">Category</label>
         <select id="category" name="category" class="form-control"> 
-            <option value="">Demoe</option>
+            <option value="">Demo</option>
         </select>
 
         <label for="author">Author</label>
@@ -21,5 +21,14 @@
         
         <p class="mt-3 mb-3 text-muted">© Team 1 VGU 2018</p>
     </form>
-    <!-- development version, includes helpful console warnings -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript" src="/js/lib/nicEdit.js"></script>
+    <script>
+        var area;
+        bkLib.onDomLoaded(function() { 
+            // var area2 = new nicEditor({fullPanel : true}).panelInstance('myArea2');
+            addTextArea();
+        });
+        function addTextArea(){
+            area = new nicEditor({fullPanel : true}).panelInstance('content'); 
+        }
+    </script>

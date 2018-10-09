@@ -1,19 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Welcome</title>
-</head>
-<body>
-  <div class="jumbotron jumbotron-fluid primary white">
-    <div class="container text-center">
-      <h1 class="display-2">
-        Welcome, <%= user.id %>
-      </h1>
-      <a class="btn secondary white btn-lg" href="/logout">Logout</a>
+<%layout('./partials/threadLayout')%>
+<div class="profile mx-auto container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="prof-img">
+        <img src="/img/user-circle.svg">
+        <div class="img-title">
+            <a role="button" id="changeImg" class="btn btn-white">Change Avatar</a>
+          </div>
+      </div>
+    </div>      
+    <div class="col-md-9">
+      <div class="prof-info">
+        <h2>Your Information</h2>
+        <div class="info">
+          <label>Name:</label> {{userName}}
+        </div>
+        <div class="info">
+          <label>Email:</label> {{userName}}
+        </div>
+        <div class="info">
+          <label>Role:</label> {{userName}}
+        </div>
+      </div>
     </div>
   </div>
-</body>
-</html>
+</div>

@@ -147,6 +147,7 @@ body, html {
   max-width: 600px;
   padding: 5px 15px;
   margin: 0 auto;
+  color: #000;
 }
 
 .form-post .form-control {
@@ -155,6 +156,10 @@ body, html {
 
 .form-post a {
   margin-bottom: 5px;
+}
+
+.form-post h1, .form-post h4, .form-post label {
+  color: #fff;
 }
 
 .table-bottom-border th {
@@ -178,5 +183,41 @@ body, html {
 .widget {
   display: none;
   float: right;
+}
+
+.profile .prof-img {
+  width: 100%;
+  height: 300px;
+  position: relative;
+}
+
+.profile .prof-img img {
+  width: 100%;
+  height: 100%;
+  padding: 3px;
+}
+
+.profile .prof-img .img-title {
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+  padding: 5px;
+}
+
+.profile .prof-info {
+  padding-top: 3rem;
+}
+
+.profile .prof-info .info {
+  padding: 10px;
+  font-size: 14px;
+}
+
+.profile .prof-info .info i {
+  padding: 8px 9px 0 9px;
+}
+
+.nicEdit-pane {
+  color: #000;
 }
 /*# sourceMappingURL=myStyle.css.map */

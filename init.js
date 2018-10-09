@@ -31,8 +31,6 @@ mongoose.set('debug', (collectionName, method, query, doc) => {
   }
 });
 
-
-
 // Insert default users
 _.each(envConf.defaultUsers, (defaultUser) => {
   mongoose
