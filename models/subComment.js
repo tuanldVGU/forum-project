@@ -6,8 +6,8 @@ const schema = mongoose.Schema({
   content: { type: String, require: true }
 
 }, {
-  collection: 'subcomment',
+  collection: 'subComment',
   timestamps: true,
 });
 
-module.exports = mongoose.model('subcomment', schema);
+module.exports = mongoose.model('subComment', schema);
