@@ -45,11 +45,9 @@ app.use('/',main);
 app.use('/forum',thread);
 app.use('/auth',auth);
 //app.use('/service', require('./routes/main'));
+
 // Start the server
-const PORT = process.env.PORT;
-app.listen(PORT, function(){
-	 console.log("App is running on port " + PORT);
+const PORT = process.env.PORT||8080;
+http.createServer(app).listen(PORT,function(){
+	console.log("App running on port "+ PORT);
 });
-// http.createServer(app).listen(PORT,function(){
-// 	console.log("App running on port "+ PORT);
-// });
