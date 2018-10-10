@@ -8,5 +8,8 @@ class postService {
   static getDetail() {
     return post.find().exec();
   }
+  static getSumPost(){
+    return post.countDocuments().exec();
+  }
 }
 module.exports = postService;

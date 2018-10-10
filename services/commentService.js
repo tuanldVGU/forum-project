@@ -8,5 +8,9 @@ class commentService {
   static getDetail() {
     return comment.find().exec();
   }
+  static getSumComment(postId){
+  console.log(postId);
+    return comment.countDocuments({ post: postId }).exec();
+  }
 }
 module.exports = commentService;

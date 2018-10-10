@@ -1,6 +1,6 @@
 <%layout('./partials/layout')%>
 <body class="bg-menu">
-    <form class="form-post">
+    <form method="post" class="form-post">
         <h1 class="brand">motor</h1>
         <h4>Create new post</h4>
         <label for="title">Title</label>
@@ -8,27 +8,27 @@
 
         <label for="content">Content</label>
         <textarea id="content" name="content" class="form-control"> </textarea>
-        
+
         <label for="category">Category</label>
-        <select id="category" name="category" class="form-control"> 
+        <select id="category" name="category" class="form-control">
             <option value="">Demo</option>
         </select>
 
         <label for="author">Author</label>
         <input type="text" id="author" name="author" class="form-control" required>
 
-        <button href="/home" class="btn btn-lg btn-block btn-white">Submit</button>
-        
+        <button class="btn btn-lg btn-block btn-white">Submit</button>
+
         <p class="mt-3 mb-3 text-muted">© Team 1 VGU 2018</p>
     </form>
     <script type="text/javascript" src="/js/lib/nicEdit.js"></script>
     <script>
         var area;
-        bkLib.onDomLoaded(function() { 
+        bkLib.onDomLoaded(function() {
             // var area2 = new nicEditor({fullPanel : true}).panelInstance('myArea2');
             addTextArea();
         });
         function addTextArea(){
-            area = new nicEditor({fullPanel : true}).panelInstance('content'); 
+            area = new nicEditor({fullPanel : true}).panelInstance('content');
         }
     </script>
