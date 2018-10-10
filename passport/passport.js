@@ -58,7 +58,8 @@ module.exports = function (passport) {
                        // done(null,{username:doc.username,token :doc.token})
                         // token=generateToken(doc.username,doc._id)
                          // do not add password hash to session
-                          done(null,{ 
+                          done(null,{
+                            username:doc.username, 
                             token : jwt.sign({
                             username: doc.username,
                              userID: doc._id,

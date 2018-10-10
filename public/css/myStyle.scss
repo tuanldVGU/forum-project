@@ -159,16 +159,22 @@ body,html{
 .form-post {
     width: 100%;
     max-width: 600px;
-    padding: 5px 15px;
+    padding: 3rem 0.5px;
     margin: 0 auto;
-
+    color: #000;
     .form-control {
         margin-bottom: 1em;
     }
     
     a{
         margin-bottom: 5px;
+        color: #000;
     }
+
+    h1, h4, label, button{
+        color: #fff;
+    }
+
 }
 
 .table-bottom-border {
@@ -195,4 +201,41 @@ body,html{
 .widget {
     display: none;
     float: right;
+}
+
+.profile {
+    .prof-img{
+        width: 100%; height: 300px;
+        position: relative;
+        
+        img{
+            width: 100%; height: 100%;
+            padding: 3px;
+        }
+
+        .img-title{
+            bottom: 0;
+            text-align: center;
+            width: 100%;
+            padding: 5px;
+        }
+    }
+    .prof-info{
+        padding-top: 3rem;
+        .info{
+            padding: 10px; font-size: 14px; 
+            i{
+                padding: 8px 9px 0 9px;
+            }
+        }
+    }
+}
+
+.nicEdit-pane{
+    color: #000;
+}
+
+.hidden{
+    display: none !important;
+    visibility: hidden;
 }

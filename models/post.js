@@ -5,7 +5,7 @@ const schema = mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'user', default: undefined },
   title: { type: String, require: true },
   description: { type: String, require: true },
-  views: { type: Number },
+  views: { type: Number, default: 0 },
   reported: { type: Boolean, default: false },
   isBlocked: { type: Boolean, default: false }
 

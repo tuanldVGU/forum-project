@@ -44,9 +44,10 @@ var auth = require('./routes/auth')(passport);
 app.use('/',main);
 app.use('/forum',thread);
 app.use('/auth',auth);
-//app.use('/', require('./routes'));
+app.use('/service', require('./routes/main'));
+
 // Start the server
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8000;
 http.createServer(app).listen(PORT,function(){
 	console.log("App running on port "+ PORT);
 });

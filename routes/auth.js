@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const jwt = require('jsonwebtoken');
+var mail= require('../javascripts/components/mailer')
 
 
 module.exports = function(passport){
@@ -63,6 +65,34 @@ module.exports = function(passport){
 //})
   router.get('/signin/facebook',
   passport.authenticate('facebook'));
+  router.post('/reset', function(req,res){
+      var username= req.body.usr;
+      User.findOne({username:username},
+        function(err,doc){
+            if(err){res.status(500).send('Error occured!!');}
+            else{
+                if(!doc){res.status(500).send('Username not exits.')}
+                else{
+                    key="passwordtoken";
+                    const token=jwt.sign({username:doc.username, userId: doc.id},key,{expiresIn:'15m'});
+                    mail(doc.email,'Reset password','Please click to the link http://localhost:8000/setPassword?token='+token+' to reset password. This request will expire in 15 minute. Thank you')
+                    res.send('Please check your email to reset password!!')}
+            }
+        })
+  })
+  router.post('/setpass',function(req,res){
+    // res.send(req.body);
+    var record=new User();
+   // res.send(req.body.userId)
+    userId=req.body.userId,
+    password=record.hashPassword(req.body.newPass);
+   var myquery={ _id:userId};
+   var newvalue={$set:{password:password}};
+   User.updateOne(myquery,newvalue,function(err,doc){
+       if(err){res.status(500).send("Error in update database")}
+       else{res.redirect('/signin')}
+   })
+ })
   return router;
 };
 

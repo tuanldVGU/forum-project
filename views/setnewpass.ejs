@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Reset Password</title>
+    <script type="text/javascript" language="JavaScript">
+        function checkPassWord(theForm){
+            if(theForm.newPass.value!=theForm.confirmPass.value)
+                {alert('The confirm password is not match with password');
+                 return false;}
+            else{return true;}
+        }
+        </script>
+</head>
+
+<body>
+    <div class="jumbotron jumbotron-fluid primary white">
+        <div class="container text-center">
+            <h1 class="display-4">
+                Reset Password for <%= user.username %>
+            </h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <form name="myForm" action="/auth/setpass" class="col-md-5" method="post" onsubmit="return checkPassWord(this)">
+            <div class="form-group">
+                <label for="">NewPassword:</label>
+                <input autofocus class="form-control" type="password" name="newPass">
+                <label for="">ConfirmPassword:</label>
+                <input autofocus class="form-control" type="password" name="confirmPass">
+                <input type="text" value= "<%=user.userId%>" style="display:none" name="userId">
+            </div>
+            <input type="submit" value="ResetPassword" class="btn secondary white">
+            </form>
+    </div>
+</body>
+
+</html>

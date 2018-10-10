@@ -5,8 +5,12 @@ router.get('/', function(req,res,next){
     res.render('./thread/forum',{title:"Welcome to Motor forum"});
 });
 
+router.get('/newforum', function(req,res,next){
+    res.render('./thread/newForum',{title:"Motor || Create forum"});
+});
+
 router.get('/post', function(req,res,next){
-    res.render('./thread/newsPost',{title:"Motor || Post new thread"});
+    res.render('./thread/newPost',{title:"Motor || Post new thread"});
 });
 
 router.get('/thread', function(req,res,next){
