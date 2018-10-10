@@ -7,4 +7,10 @@ router.get('/api/post/getDetail', (req, res) => postService.getDetail()
   .catch((err) => {
     return res.json(utils.fail(err, err.message));
   }));
+
+router.get('/api/post/getSumPost', (req, res) => postService.getSumPost()
+  .then(result => res.json(utils.succeed(result)))
+  .catch((err) => {
+    return res.json(utils.fail(err, err.message));
+  }));
 module.exports = router;
