@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var User=require('../models/user');
+var jwt=require('jsonwebtoken');
 var loggedin = function (req, res, next) {
     if (req.isAuthenticated()) {
       next()
@@ -26,7 +27,8 @@ router.get('/home', loggedin,function(req,res,next){
 });
 router.get('/profile',loggedin,function(req,res,next){
     //console.log(req.session+ "    "+ req.User);
-    res.send(req.session);
+    console.log(req.session.passport.user.token);
+    res.send(jwt.verify(req.session.passport.user.token, 'secrettoken'));
    // res.render('profile',{ user: req.user});
 })
 router.get('/logout', function (req, res) {

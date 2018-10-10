@@ -1,9 +1,9 @@
 var localStrategy = require('passport-local').Strategy;
 var User = require('../models/user')
 var facebookStrategy = require('passport-facebook').Strategy;
-const passportJWT = require("passport-jwt");
-const ExtractJWT = passportJWT.ExtractJwt;
-
+//const passportJWT = require("passport-jwt");
+//const ExtractJWT = passportJWT.ExtractJwt;
+var jwt =require('jsonwebtoken');
 
 
 
@@ -15,6 +15,17 @@ module.exports = function (passport) {
         done(null, user)
         
     })
+    var generateToken = function(username, id){
+        key = 'secrettoken';
+        const token = jwt.sign({
+            username: username,
+            userID: id,
+          },key,
+          {
+            expiresIn: '3h'
+          });
+    }
+
     passport.use(new facebookStrategy({
         clientID: '889945071201359',
         clientSecret:  '9ed19d203186784ff9055e552114df60',
@@ -43,15 +54,23 @@ module.exports = function (passport) {
                  if (doc) {
                      var valid = doc.comparePassword(password, doc.password)
                      if (valid) {
+                        key = 'secrettoken';
+                       // done(null,{username:doc.username,token :doc.token})
+                        // token=generateToken(doc.username,doc._id)
                          // do not add password hash to session
-                         done(null, {
-                             username: doc.username,
-                             id: doc._id
-                         })
-                     } else {
+                          done(null,{ 
+                            token : jwt.sign({
+                            username: doc.username,
+                             userID: doc._id,
+                           },key,
+                           {
+                             expiresIn: '3h'
+                           })
+                        })}
+                      else {
                          done(null, false,req.flash('message','Wrong pass'))
-                     }
-                 } else {
+                     }}
+                  else {
                      done(null, false, req.flash('message','Not found username'))
                  }
              }
