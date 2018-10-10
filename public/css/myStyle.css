@@ -145,7 +145,7 @@ body, html {
 .form-post {
   width: 100%;
   max-width: 600px;
-  padding: 5px 15px;
+  padding: 3rem 0.5px;
   margin: 0 auto;
   color: #000;
 }
@@ -156,9 +156,10 @@ body, html {
 
 .form-post a {
   margin-bottom: 5px;
+  color: #000;
 }
 
-.form-post h1, .form-post h4, .form-post label {
+.form-post h1, .form-post h4, .form-post label, .form-post button {
   color: #fff;
 }
 
@@ -219,5 +220,10 @@ body, html {
 
 .nicEdit-pane {
   color: #000;
+}
+
+.hidden {
+  display: none !important;
+  visibility: hidden;
 }
 /*# sourceMappingURL=myStyle.css.map */
