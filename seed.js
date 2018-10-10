@@ -5,11 +5,11 @@ const Promise = require('bluebird');
 const user = mongoose.model('user');
 const category = mongoose.model('category');
 const comment = mongoose.model('comment');
-const subcomment = mongoose.model('subcomment');
+const subComment = mongoose.model('subComment');
 const post = mongoose.model('post');
 category.deleteMany({}).exec()
   .then(() => comment.deleteMany({}).exec())
-  .then(() => subcomment.deleteMany({}).exec())
+  .then(() => subComment.deleteMany({}).exec())
   .then(() => post.deleteMany({}).exec())
   .then(() => user.findOne({ username: 'admin' }).exec())
   .then((_user) => category.create({
@@ -29,7 +29,7 @@ category.deleteMany({}).exec()
       user: _user,
       content: 'I fixed.'
     }))
-    .then((_comment) => subcomment.create({
+    .then((_comment) => subComment.create({
       comment: _comment,
       user: _user,
       content: 'yeah'

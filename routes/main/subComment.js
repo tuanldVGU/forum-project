@@ -1,8 +1,8 @@
 const router = require('express').Router();
-const commentService = require('../../services/commentService');
+const subCommentService = require('../../services/subCommentService');
 const utils = require('../../ultis/ultis');
 
-router.get('/api/comment/getDetail', (req, res) => commentService.getDetail()
+router.get('/api/subComment/getDetail', (req, res) => subCommentService.getDetail()
   .then(result => res.json(utils.succeed(result)))
   .catch((err) => {
     return res.json(utils.fail(err, err.message));
