@@ -10,7 +10,8 @@ class commentService {
   }
   static getSumComment(postId){
   console.log(postId);
-    return comment.countDocuments({ post: postId }).exec();
+    return comment.countDocuments({ post: ObjectId(postId) }).exec();
   }
+
 }
 module.exports = commentService;

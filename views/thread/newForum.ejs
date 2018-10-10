@@ -1,6 +1,6 @@
 <%layout('./partials/layout')%>
-<body class="bg-menu">
-    <form class="form-post" method="POST" action="/service/api/post/forum" id="vue-form">
+<body class="bg-menu" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+    <form class="form-post" method="POST" action="/service/api/forumList/addForum" id="vue-form">
         <h1 class="brand">motor</h1>
         <h4>Create new forum</h4>
         <label for="title">Title</label>
@@ -17,7 +17,7 @@
                 <button type="button" class="btn btn-white btn-block" v-on:click="addtotext">Add category</button>
             </div>
         </div>
-        <button type="submit" class="btn btn-lg btn-block btn-white">Submit</button>        
+        <button type="submit" class="btn btn-lg btn-block btn-white">Submit</button>
         <p class="mt-3 mb-3 text-muted">© Team 1 VGU 2018</p>
     </form>
     <script src="/js/components/formControl.js"></script>
