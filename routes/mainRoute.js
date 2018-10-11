@@ -28,15 +28,7 @@ router.get('/home', loggedin,function(req,res,next){
 });
 
 router.get('/profile',loggedin,function(req,res,next){
-    //console.log(req.session+ "    "+ req.User);
-    console.log(req.session.passport.user.token);
-   //res.send(req.session.passport.user.token)
-    //res.send(jwt.verify(req.session.passport.user.token, 'secrettoken'));
-   // res.render('profile',{ user: req.user});
-   res.cookie('usrName',req.session.passport.user.username);
-   res.cookie('token',req.session.passport.user.token);
-   res.send(req.cookies)
-  // res.render('profile',{title:"Motor || Profile"});
+   res.render('profile',{title:"Motor || Profile"});
 })
 
 router.get('/logout', function (req, res) {

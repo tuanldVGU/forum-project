@@ -3,14 +3,15 @@ console.log(forumID);
 var table = new Vue({
     el: '#vue-thread',
     data: {
+        id: forumID,
         info: {
             forumName: document.URL.split('id=')[1],
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
         },
-        dataTable: []
+        tableData: []
     },
     created(){
-        //this.loadtableData()
+        this.loadtableData()
     },
     methods:{
         loadforumInfo: function(){
@@ -28,14 +29,15 @@ var table = new Vue({
             })
         },
         loadtableData: function(){
-            this.$http.get('/service/api/post/getDetail/:id',{params: {id : forumID}}).then(response => {
+            this.$http.get('/service/api/post/getDetail/'+forumID).then(response => {
+                console.log(response);
                 response.body.data.forEach(element => {
                     var input = {
                         id: element._id,
-                        forumName: element.forumName,
-                        lastPost: '',
-                        thread: '',
-                        post: '',
+                        title: element.title,
+                        Postdate: element.createdAt,
+                        comment: 0,
+                        lastComment: 'unknown',
                     }
                     this.tableData.push(input);
                 });

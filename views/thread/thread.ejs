@@ -12,7 +12,7 @@
                 <a class="btn btn-block btn-white">Advance filter</a>   
             </div>
         <div class="col col-2">
-            <a href="/forum/post" class="btn btn-block btn-white"><i class="fas fa-plus"></i>  New Thread</a>     
+            <a v-bind:href="'/forum/post?id='+id" class="btn btn-block btn-white"><i class="fas fa-plus"></i>  New Thread</a>     
         </div>
     </div>
     
@@ -21,17 +21,17 @@
             <thead>
                 <tr>
                     <th scope="col">Title</th>
-                    <th scope="col">Started date</th>
+                    <th scope="col">Posted date</th>
                     <th scope="col">Views</th>
                     <th scope="col">Last post</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><a href="/forum/article">abc</a></td>
-                    <td>????</td>
-                    <td>10</td>
-                    <td>1000</td>
+                <tr v-for="row in tableData">
+                    <td><a v-bind:href="'/forum/article?id='+row.id">{{row.title}}</a></td>
+                    <td>{{row.Postdate}}</td>
+                    <td>{{row.comment}}</td>
+                    <td>{{row.lastcomment}}</td>
                 </tr>
             </tbody>
         </table>

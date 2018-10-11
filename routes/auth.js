@@ -44,19 +44,18 @@ module.exports = function(passport){
     //  router.post('/login',passport.authenticate)
     router.post('/signin',passport.authenticate('local', {
     failureRedirect: '/signin',
-    successRedirect: '/profile'
-}), function (req, res) {
-    var key= 'hello';
-   // res.render('home', {title:"Motor || Home",user: req.Userr})
-  // const token = jwt.sign({
-    //username: req.username,
-    //userID: req._id,
-  //},key,
- // {
-   // expiresIn: '3h'
- // });
-  
-})
+    successRedirect: '/forum'
+    }), function (req, res) {
+    // res.render('home', {title:"Motor || Home",user: req.Userr})
+    // const token = jwt.sign({
+        //username: req.username,
+        //userID: req._id,
+    //},key,
+    // {
+    // expiresIn: '3h'
+    // });
+    
+    })
   router.get('/signin/facebook/return',
   passport.authenticate('facebook',{ failureRedirect: '/signin', successRedirect: '/profile'}))
  // function(req, res) {
