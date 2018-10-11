@@ -44,20 +44,6 @@ module.exports = function(passport){
     //  router.post('/login',passport.authenticate)
     router.post('/signin',passport.authenticate('local', {
     failureRedirect: '/signin',
-<<<<<<< HEAD
-    successRedirect: '/forum'
-    }), function (req, res) {
-    // res.render('home', {title:"Motor || Home",user: req.Userr})
-    // const token = jwt.sign({
-        //username: req.username,
-        //userID: req._id,
-    //},key,
-    // {
-    // expiresIn: '3h'
-    // });
-    
-    })
-=======
     successRedirect: '/home'
 }), function (req, res) {
     var key= 'hello';
@@ -71,7 +57,6 @@ module.exports = function(passport){
  // });
   
 })
->>>>>>> 8855c64ff36d3520106c1871fee5f59e3afea00e
   router.get('/signin/facebook/return',
   passport.authenticate('facebook',{ failureRedirect: '/signin', successRedirect: '/home'}))
  // function(req, res) {
