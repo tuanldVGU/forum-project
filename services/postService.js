@@ -11,5 +11,8 @@ class postService {
   static getSumPost(){
     return post.countDocuments().exec();
   }
+  static getPost(postId) {
+    return post.findById(postId).exec();
+  }
 }
 module.exports = postService;
