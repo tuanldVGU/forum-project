@@ -2,7 +2,7 @@ const router = require('express').Router();
 const postService = require('../../services/postService');
 const utils = require('../../ultis/ultis');
 
-router.get('/api/post/getDetail', (req, res) => postService.getDetail()
+router.get('/api/post/getDetail/:id', (req, res) => postService.getDetail(req.params.id)
   .then(result => res.json(utils.succeed(result)))
   .catch((err) => {
     return res.json(utils.fail(err, err.message));

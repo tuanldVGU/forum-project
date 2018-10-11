@@ -28,7 +28,7 @@ var table = new Vue({
             })
         },
         loadtableData: function(){
-            this.$http.get('/service/api/threadList/getDetail',{params: {id : forumID}}).then(response => {
+            this.$http.get('/service/api/post/getDetail/:id',{params: {id : forumID}}).then(response => {
                 response.body.data.forEach(element => {
                     var input = {
                         id: element._id,
