@@ -44,7 +44,7 @@ module.exports = function(passport){
     //  router.post('/login',passport.authenticate)
     router.post('/signin',passport.authenticate('local', {
     failureRedirect: '/signin',
-    successRedirect: '/profile'
+    successRedirect: '/home'
 }), function (req, res) {
     var key= 'hello';
    // res.render('home', {title:"Motor || Home",user: req.Userr})
@@ -58,7 +58,7 @@ module.exports = function(passport){
   
 })
   router.get('/signin/facebook/return',
-  passport.authenticate('facebook',{ failureRedirect: '/signin', successRedirect: '/profile'}))
+  passport.authenticate('facebook',{ failureRedirect: '/signin', successRedirect: '/home'}))
  // function(req, res) {
 //    res.render('home',{title:"Motor || Home",user: req.User});
    // res.render('profile')
@@ -75,7 +75,7 @@ module.exports = function(passport){
                 else{
                     key="passwordtoken";
                     const token=jwt.sign({username:doc.username, userId: doc.id},key,{expiresIn:'15m'});
-                    mail(doc.email,'Reset password','Please click to the link http://localhost:8000/setPassword?token='+token+' to reset password. This request will expire in 15 minute. Thank you')
+                    mail(doc.email,'Reset password','Please click to the link https://motor-forum.herokuapp.com/setPassword?token='+token+' to reset password. This request will expire in 15 minute. Thank you')
                     res.send('Please check your email to reset password!!')}
             }
         })
