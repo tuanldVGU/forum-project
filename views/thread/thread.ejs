@@ -1,37 +1,42 @@
 <%layout('./partials/threadLayout')%>
-<div class="jumbotron bg-menu m-md-3" style="padding: 5rem 3rem 1rem;">
-    <h1 class="display-4">News about scooter</h1>
-    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-</div>
-<div class="row" style="padding: 0 3rem;">
-    <div class="col col-8">
-        <input type="text" name="" id="" placeholder="Enter title, author, or categories ....." class="form-control">
+<div id='vue-thread'>
+    <div class="jumbotron bg-menu m-md-3" style="padding: 5rem 3rem 1rem;">
+        <h1 class="display-4">{{info.forumName}}</h1>
+        <p class="lead">{{info.description}}</p>
     </div>
-    <div class="col col-2">
-            <a class="btn btn-block btn-white">Advance filter</a>   
+    <div class="row" style="padding: 0 3rem;">
+        <div class="col col-8">
+            <input type="text" name="" id="" placeholder="Enter title, author, or categories ....." class="form-control">
         </div>
-    <div class="col col-2">
-        <a href="/forum/post" class="btn btn-block btn-white"><i class="fas fa-plus"></i>  New Thread</a>     
+        <div class="col col-2">
+                <a class="btn btn-block btn-white">Advance filter</a>   
+            </div>
+        <div class="col col-2">
+            <a v-bind:href="'/forum/post?id='+id" class="btn btn-block btn-white"><i class="fas fa-plus"></i>  New Thread</a>     
+        </div>
+    </div>
+    
+    <div class="container-fluid" style="padding: 3rem 3rem 1rem;">
+        <table class="table table-hover table-bottom-border">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Posted date</th>
+                    <th scope="col">Views</th>
+                    <th scope="col">Last post</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="row in tableData">
+                    <td><a v-bind:href="'/forum/article?id='+row.id">{{row.title}}</a></td>
+                    <td>{{row.Postdate}}</td>
+                    <td>{{row.comment}}</td>
+                    <td>{{row.lastcomment}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
-<div class="container-fluid" style="padding: 3rem 3rem 1rem;">
-    <table class="table table-hover table-bottom-border">
-        <thead>
-            <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Started date</th>
-                <th scope="col">Views</th>
-                <th scope="col">Last post</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><a href="/forum/article">abc</a></td>
-                <td>????</td>
-                <td>10</td>
-                <td>1000</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+
+<script src="/js/components/threadControl.js"></script>

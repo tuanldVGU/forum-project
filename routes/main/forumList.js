@@ -9,8 +9,6 @@ router.get('/api/forumList/getDetail', (req, res) => forumListService.getDetail(
   }));
 router.post('/api/forumList/addForum', (req, res) => {
   const { category, forumName } = req.body;
-
-
   return forumListService.addForum({ category, forumName })
     .then(() => res.send(utils.succeed()))
     .catch(err => res.send(utils.fail(err, err.message)));

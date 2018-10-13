@@ -1,20 +1,29 @@
 var table = new Vue({
-    el: '#table',
+    el: '#vue-forum',
     data: {
-        tableData:{
-            forum: [],
-            lastpost: [],
-            threads: [],
-            posts: [],
-            categories: [] 
-        }
+        tableData:[]
     },
-    created: function(){
-        this.$http.get('/api/getpost',function(data,status,request){
-            if (status == 200){
-                this.tableData = data;
+    created(){
+        this.loadtableData()
+    },
+    methods:{
+        loadtableData: function(){
+            this.$http.get('/service/api/forumList/getDetail').then(response => {
+                response.body.data.forEach(element => {
+                    var input = {
+                        id: element._id,
+                        forumName: element.forumName,
+                        lastPost: '',
+                        thread: '',
+                        post: '',
+                    }
+                    this.tableData.push(input);
+                });
                 console.log(this.tableData);
-            }
-        });
+            }, response => {
+                // error callback
+                console.log('failed');
+            })
+        }
     }
 });

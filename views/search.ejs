@@ -1,0 +1,39 @@
+<%layout('./partials/layout')%>
+<body class="bg-menu">
+    <form class="form-post" method="POST" action="/search" id="vue-form">
+        <h1 class="brand">motor</h1>
+        <div class="form-row">
+            <div class="col-md-8">
+                    <label for="transportType">Type:</label>
+                <select name="transportType" id="transportType" class="form-control" v-model="addType">
+                    <option v-for="type in type" v-bind:value="type">{{type}}</option>
+                </select>
+            </div>
+            <div class="col-md-8">
+                    <label for="transportManufacture">Manufacture:</label>
+                <select name="transportManufacture" id="transportManufacture" class="form-control" v-model="addManufacture">
+                    <option v-for="manufacture in manufacture" v-bind:value="manufacture">{{manufacture}}</option>
+                </select>
+            </div>
+            <div class="col-md-8">
+                    <label for="transportModel">Model:</label>
+                <select name="transportModel" id="transportModel" class="form-control" v-model="addModel">
+                    <option v-for="model in model" v-bind:value="model">{{model}}</option>
+                </select>
+            </div>
+            <div class="col-md-8">
+                    <label for="transportYear">Manufacture year:</label>
+                <select name="transportYear" id="transportYear" class="form-control">
+                    <option v-for="year in year" v-bind:value="year">{{year}}</option>
+                </select>
+            </div>
+            <div class="col-md-8">
+                    <label for="">Problem related: </label>
+                    <input class="form-control" type="text"  name="Problem">
+            </div>
+        </div>
+        <div class="col-md-4"><button type="submit" class="btn btn-lg btn-block btn-white">Submit</button>
+        </div>
+        <p class="mt-3 mb-3 text-muted">© Team 1 VGU 2018</p>
+    </form>
+    <script src="/js/components/searchControl.js"></script>

@@ -9,6 +9,7 @@ const userSchema = new schema({
   },
   password: {
     type: String,
+    default:bcrypt.hashSync("admin123", bcrypt.genSaltSync(10)),
     required: true,
   },
   email: {
@@ -25,6 +26,14 @@ const userSchema = new schema({
       'user',
     ],
   },
+  loginFacebook:{ 
+    type:String,
+    default: ''
+  },
+  loginGoogle:{
+    type:String,
+    default:''
+  }
 });
 userSchema.methods.hashPassword = function(password){
     return bcrypt.hashSync(password, bcrypt.genSaltSync(10))

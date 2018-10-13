@@ -10,7 +10,8 @@ process.on('uncaughtException', (err) => {
 });
 
 mongoose.Promise = Promise;
-mongoose.connect(envConf.mongodb, {
+const url = 'mongodb://admin:admin123@ds223253.mlab.com:23253/forum';
+mongoose.connect(url, {
   useCreateIndex: true,
   useNewUrlParser: true,
   poolSize: 10,

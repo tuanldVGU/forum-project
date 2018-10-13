@@ -1,5 +1,5 @@
 <%layout('./partials/threadLayout')%>
-<main id='table'>
+<main>
     <div class="jumbotron bg-menu m-md-3" style="padding: 5rem 3rem 1rem;">
         <h1 class="display-4">Forum</h1>
         <p class="lead">Share, Support, and Thrive</p>
@@ -38,10 +38,9 @@
         </div>
     </div>
 
-    <div class="container-fluid" style="padding: 2rem 3rem 1rem;" >
+    <div class="container-fluid" style="padding: 2rem 3rem 1rem;" id='vue-forum'>
         <table class="table table-hover table-bottom-border">
             <thead>
-
                 <tr>
                     <th scope="col">Forum name</th>
                     <th scope="col">Last Post</th>
@@ -50,14 +49,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><a href="/forum/thread">News about scooter</a></td>
-                    <td>????</td>
-                    <td>10</td>
-                    <td>1000</td>
-                </tr> 
+                <tr v-for="row in tableData">
+                    <td><a v-bind:href="'/forum/thread?id='+row.id">{{row.forumName}}</a></td>
+                    <td>{{row.lastPost}}</td>
+                    <td>{{row.thread}}</td>
+                    <td>{{row.post}}</td>
+                </tr>
             </tbody>
         </table>
     </div>
 </main>
-<script src="/js/components/forum.js"></script>
+<script src="/js/components/forumControl.js"></script>
