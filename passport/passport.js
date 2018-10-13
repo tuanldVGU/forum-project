@@ -29,7 +29,7 @@ module.exports = function (passport) {
     passport.use(new facebookStrategy({
         clientID: '889945071201359',
         clientSecret:  '9ed19d203186784ff9055e552114df60',
-        callbackURL: 'http://localhost:8080/auth/signin/facebook/return'
+        callbackURL: 'http://localhost:8000/auth/signin/facebook/return'
       },  function(accessToken, refreshToken, profile, cb) {
         // In this example, the user's Facebook profile is supplied as the user
         // record.  In a production-quality application, the Facebook profile should

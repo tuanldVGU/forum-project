@@ -44,7 +44,7 @@ module.exports = function(passport){
     //  router.post('/login',passport.authenticate)
     router.post('/signin',passport.authenticate('local', {
     failureRedirect: '/signin',
-    successRedirect: '/profile'
+    successRedirect: '/home'
 }), function (req, res) {
     var key= 'hello';
    // res.render('home', {title:"Motor || Home",user: req.Userr})
