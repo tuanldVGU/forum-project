@@ -155,10 +155,9 @@ router.get('/resetPassword',function(req, res)
 //     res.render('tech',{title:"Motor || Technical support"});
 // });
 router.get('/setPassword', function(req,res){
-    var q=url.parse(req.url,true).query;
-  var text= jwt.verify(q.token,'passwordtoken');
- // res.send(text)
-  res.render('setPassword',{title:"Motor || Set New Password",user:text})
+ var q=url.parse(req.url,true).query;
+ res.cookie("token",q.token)
+  res.render('setPassword',{title:"Motor || Set New Password"})
 })
 router.get('/tech', loggedin,function(req,res,next){
     res.render('search',{title:"Motor || Technical support"});

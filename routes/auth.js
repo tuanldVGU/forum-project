@@ -64,12 +64,12 @@ router.get('/signin/google/return',
   router.get('/signin/facebook',
   passport.authenticate('facebook',{scope:["email"]}));
   router.post('/reset', function(req,res){
-      var username= req.body.usr;
-      User.findOne({username:username},
+      var email= req.body.email;
+      User.findOne({email:email},
         function(err,doc){
             if(err){res.status(500).send('Error occured!!');}
             else{
-                if(!doc){res.status(500).send('Username not exits.')}
+                if(!doc){res.status(500).send('Email not exits.')}
                 else{
                     key="passwordtoken";
                     const token=jwt.sign({username:doc.username, userId: doc.id},key,{expiresIn:'15m'});
@@ -79,16 +79,18 @@ router.get('/signin/google/return',
         })
   })
   router.post('/setpass',function(req,res){
-    // res.send(req.body);
+    var text= jwt.verify(req.cookies.token,'passwordtoken');
+   // res.send(text);
     var record=new User();
    // res.send(req.body.userId)
-    userId=req.body.userId,
+    userId=text.userId,
     password=record.hashPassword(req.body.newPass);
    var myquery={ _id:userId};
    var newvalue={$set:{password:password}};
    User.updateOne(myquery,newvalue,function(err,doc){
        if(err){res.status(500).send("Error in update database")}
-       else{res.redirect('/signin')}
+       else{res.clearCookie("token");
+           res.redirect('/signin')}
    })
  })
   return router;
