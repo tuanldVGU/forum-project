@@ -43,28 +43,15 @@ module.exports = function(passport){
         });
     //  router.post('/login',passport.authenticate)
     router.post('/signin',passport.authenticate('local', {
-    failureRedirect: '/signin',
-    successRedirect: '/home'
-}), function (req, res) {
-    var key= 'hello';
-   // res.render('home', {title:"Motor || Home",user: req.Userr})
-  // const token = jwt.sign({
-    //username: req.username,
-    //userID: req._id,
-  //},key,
- // {
-   // expiresIn: '3h'
- // });
-  
-})
-  router.get('/signin/facebook/return',
-  passport.authenticate('facebook',{ failureRedirect: '/signin', successRedirect: '/home'}))
- // function(req, res) {
-//    res.render('home',{title:"Motor || Home",user: req.User});
-   // res.render('profile')
-//})
-  router.get('/signin/facebook',
-  passport.authenticate('facebook'));
+        failureRedirect: '/signin',
+        successRedirect: '/forum'
+    }), function (req, res) {
+        console.log('aaaa');
+    });
+
+  router.get('/signin/facebook/return', passport.authenticate('facebook',{ failureRedirect: '/signin', successRedirect: '/home'}))
+  router.get('/signin/facebook', passport.authenticate('facebook'));
+
   router.post('/reset', function(req,res){
       var username= req.body.usr;
       User.findOne({username:username},
@@ -80,6 +67,7 @@ module.exports = function(passport){
             }
         })
   })
+  
   router.post('/setpass',function(req,res){
     // res.send(req.body);
     var record=new User();

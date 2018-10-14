@@ -12,7 +12,7 @@ var formControl = new Vue({
         loadCategory: function(){
             this.$http.get('/service/api/category/getDetail').then(response => {
                 response.body.data.forEach(element => {
-                    this.categories.push(element.transportType);
+                    this.categories.push(element);
                 });
                 console.log(this.categories);
             }, response => {

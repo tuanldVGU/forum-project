@@ -38,6 +38,8 @@ module.exports = function (passport) {
         // providers.
         return cb(null, profile);
       }))
+
+    
     passport.use(new localStrategy(
         {
             usernameField: 'usr',
@@ -45,36 +47,38 @@ module.exports = function (passport) {
         },
         function (username,password, done) {
             //console.log(username + " "+ password);
-         User.findOne({
-             username: username
-         }, function (err, doc) {
-             if (err) {
-                 done(err,req.flash('message',err))
-             } else {
-                 if (doc) {
-                     var valid = doc.comparePassword(password, doc.password)
-                     if (valid) {
-                        key = 'secrettoken';
-                       // done(null,{username:doc.username,token :doc.token})
-                        // token=generateToken(doc.username,doc._id)
-                         // do not add password hash to session
-                          done(null,{
-                            username:doc.username, 
-                            token : jwt.sign({
-                            username: doc.username,
-                             userID: doc._id,
-                           },key,
-                           {
-                             expiresIn: '3h'
-                           })
-                        })}
-                      else {
-                         done(null, false,req.flash('message','Wrong pass'))
-                     }}
-                  else {
-                     done(null, false, req.flash('message','Not found username'))
-                 }
-             }
-         })
-    }))
+            User.findOne({
+                username: username
+            }, function (err, doc) {
+                if (err) {
+                    done(err,req.flash('message',err))
+                } else {
+                    if (doc) {
+                        var valid = doc.comparePassword(password, doc.password)
+                        if (valid) {
+                            key = 'secrettoken';
+                            console.log('finish');
+                            done(null,{
+                                username:doc.username, 
+                                token : jwt.sign({
+                                username: doc.username,
+                                userID: doc._id,
+                            },key,
+                            {
+                                expiresIn: '3h'
+                            })
+                            })
+                        }
+                        else {
+                            done(null, false,req.flash('message','Wrong pass'))
+                        }
+                    }
+                    else {
+                        done(null, false, req.flash('message','Not found username'))
+                    }
+                }
+            })
+            console.log('finish');
+        }
+    ))
 }
