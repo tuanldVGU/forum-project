@@ -1,8 +1,21 @@
 var forumID = document.URL.split('id=')[1];
 console.log(forumID);
+
+class thread {
+    constructor(id, title, date, comment,lc) {
+        this.id = id;
+        this.title = title;
+        this.Postdate = date;
+        this.comment = comment;
+        this.lastComment = lc;
+    }
+}
+
 var table = new Vue({
     el: '#vue-thread',
     data: {
+        searchbar: '',
+        filterType: '',
         id: forumID,
         info: {
             forumName: document.URL.split('id=')[1],
@@ -30,21 +43,27 @@ var table = new Vue({
         },
         loadtableData: function(){
             this.$http.get('/service/api/post/getDetail/'+forumID).then(response => {
-                console.log(response);
                 response.body.data.forEach(element => {
-                    var input = {
-                        id: element._id,
-                        title: element.title,
-                        Postdate: element.createdAt,
-                        comment: 0,
-                        lastComment: 'unknown',
-                    }
+                    console.log(element);
+                    var input = new thread(element._id,
+                        element.title,
+                        element.createdAt,
+                        0,
+                        'unknown'
+                    )
                     this.tableData.push(input);
                 });
-                console.log(this.tableData);
+                //console.log(this.tableData);
             }, response => {
                 // error callback
                 console.log('failed');
+            })
+        }
+    },
+    computed:{
+        filteredtableData() {
+            return this.tableData.filter(row => {
+              return row.title.toLowerCase().includes(this.searchbar.toLowerCase())
             })
         }
     }

@@ -29,7 +29,7 @@ module.exports = function (passport) {
     passport.use(new facebookStrategy({
         clientID: '889945071201359',
         clientSecret:  '9ed19d203186784ff9055e552114df60',
-        callbackURL: 'https://motor-forum.herokuapp.com/auth/signin/facebook/return',
+        callbackURL: 'http://localhost:8000/auth/signin/facebook/return',
         profileFields: ['emails','id', 'displayName'],
       },  function(accessToken, refreshToken, profile, cb) {
        // console.log(profile);
