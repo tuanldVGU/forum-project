@@ -23,8 +23,8 @@ var formControl = new Vue({
         addtotext: function(){
             var categoryText = document.getElementById('categoryText');
             var boxValue = document.getElementById('addCategory');
-            var tmp  = this.categories[boxValue.selectedIndex];
-            categoryText.value += tmp + ';';
+            var tmp  = this.categories[boxValue.selectedIndex]._id;
+            categoryText.value = tmp;
         }
     },
     mounted(){
