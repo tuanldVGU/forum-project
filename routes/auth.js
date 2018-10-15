@@ -47,31 +47,29 @@ module.exports = function(passport){
     successRedirect: '/home'
 }), function (req, res) {
     var key= 'hello';
-   // res.render('home', {title:"Motor || Home",user: req.Userr})
-  // const token = jwt.sign({
-    //username: req.username,
-    //userID: req._id,
-  //},key,
- // {
-   // expiresIn: '3h'
- // });
   
 })
+router.get('/signin/google',
+  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.email',
+  'https://www.googleapis.com/auth/userinfo.profile'
+] }));
+
+router.get('/signin/google/return', 
+  passport.authenticate('google', { failureRedirect: '/signin' }),
+  function(req, res) {
+    res.redirect('/google');
+  });
   router.get('/signin/facebook/return',
-  passport.authenticate('facebook',{ failureRedirect: '/signin', successRedirect: '/home'}))
- // function(req, res) {
-//    res.render('home',{title:"Motor || Home",user: req.User});
-   // res.render('profile')
-//})
+  passport.authenticate('facebook',{ failureRedirect: '/signin', successRedirect: '/facebook'}))
   router.get('/signin/facebook',
-  passport.authenticate('facebook'));
+  passport.authenticate('facebook',{scope:["email"]}));
   router.post('/reset', function(req,res){
-      var username= req.body.usr;
-      User.findOne({username:username},
+      var email= req.body.email;
+      User.findOne({email:email},
         function(err,doc){
             if(err){res.status(500).send('Error occured!!');}
             else{
-                if(!doc){res.status(500).send('Username not exits.')}
+                if(!doc){res.status(500).send('Email not exits.')}
                 else{
                     key="passwordtoken";
                     const token=jwt.sign({username:doc.username, userId: doc.id},key,{expiresIn:'15m'});
@@ -81,16 +79,18 @@ module.exports = function(passport){
         })
   })
   router.post('/setpass',function(req,res){
-    // res.send(req.body);
+    var text= jwt.verify(req.cookies.token,'passwordtoken');
+   // res.send(text);
     var record=new User();
    // res.send(req.body.userId)
-    userId=req.body.userId,
+    userId=text.userId,
     password=record.hashPassword(req.body.newPass);
    var myquery={ _id:userId};
    var newvalue={$set:{password:password}};
    User.updateOne(myquery,newvalue,function(err,doc){
        if(err){res.status(500).send("Error in update database")}
-       else{res.redirect('/signin')}
+       else{res.clearCookie("token");
+           res.redirect('/signin')}
    })
  })
   return router;
