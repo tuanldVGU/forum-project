@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const postService = require('../../services/postService');
 const utils = require('../../ultis/ultis');
+const jwt=require('jsonwebtoken')
 
 router.get('/api/post/getDetail/:id', (req, res) => postService.getDetail(req.params.id)
   .then(result => res.json(utils.succeed(result)))
@@ -23,7 +24,7 @@ router.get('/api/post/getSumPost', (req, res) => postService.getSumPost()
 
 router.post('/api/post/createPost', (req, res) => {
   const { category, forumList, title, description } = req.body;
-  const { user } = "5bb79f8d1b91910884c2d529";
+    const { user } =record.userID;
   return postService.createPost({ category, forumList, user, title, description })
     .then(() => res.send(utils.succeed()))
     .catch(err => res.send(utils.fail(err, err.message)));

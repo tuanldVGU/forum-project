@@ -30,7 +30,7 @@ module.exports = function (passport) {
     passport.use(new facebookStrategy({
         clientID: '889945071201359',
         clientSecret:  '9ed19d203186784ff9055e552114df60',
-        callbackURL: 'https://motor-forum.herokuapp.com/auth/signin/facebook/return',
+        callbackURL: 'http://localhost:8000/auth/signin/facebook/return',
         profileFields: ['emails','id', 'displayName'],
       },  function(accessToken, refreshToken, profile, cb) {
        // console.log(profile);
@@ -40,7 +40,7 @@ module.exports = function (passport) {
         // allows for account linking and authentication with other identity
         // providers.
         key = 'facebooktoken';
-        return cb(null,{token : jwt.sign({username:profile.displayName, faceID:profile.id,email:profile.emails[0].value},key,{expiresIn: '3h'}) 
+        return cb(null,{tokenface : jwt.sign({username:profile.displayName, faceID:profile.id,email:profile.emails[0].value},key,{expiresIn: '15m'}) 
       });
       }))
     passport.use(new localStrategy(
@@ -74,10 +74,10 @@ module.exports = function (passport) {
                            })
                         })}
                       else {
-                         done(null, false,req.flash('message','Wrong pass'))
+                         done(null, false)
                      }}
                   else {
-                     done(null, false, req.flash('message','Not found username'))
+                     done(null, false)
                  }
              }
          })
@@ -86,7 +86,7 @@ module.exports = function (passport) {
     passport.use(new googleStrategy({
         clientID: "782253470032-29nmibjot6u91u4dmaa64urck3npvuv5.apps.googleusercontent.com" ,
         clientSecret:"XGTQMUz1N53_nKDLvtIDrNV0",
-        callbackURL: "https://motor-forum.herokuapp.com/auth/signin/google/return"
+        callbackURL: "http://localhost:8000/auth/signin/google/return"
       },
       function(accessToken, refreshToken, profile, done) {
           console.log(profile.id, profile.displayName, profile.emails[0].value)
@@ -99,7 +99,7 @@ module.exports = function (passport) {
                      googleID:profile.id,
                      email:profile.emails[0].value}
                      ,key,
-                     {expiresIn: '3h'}) 
+                     {expiresIn: '15m'}) 
            });
            //});
       }

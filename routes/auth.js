@@ -44,11 +44,12 @@ module.exports = function(passport){
     //  router.post('/login',passport.authenticate)
     router.post('/signin',passport.authenticate('local', {
     failureRedirect: '/signin',
-    successRedirect: '/home'
-}), function (req, res) {
-    var key= 'hello';
-  
-})
+    successRedirect: '/redirect'}
+    //,function(req,res){
+    //res.cookie('usrName',req.session.passport.user.username);
+    //res.cookie('token',req.session.passport.user.token);
+//}
+));
 router.get('/signin/google',
   passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.email',
   'https://www.googleapis.com/auth/userinfo.profile'
@@ -79,7 +80,7 @@ router.get('/signin/google/return',
         })
   })
   router.post('/setpass',function(req,res){
-    var text= jwt.verify(req.cookies.token,'passwordtoken');
+    var text= jwt.verify(req.cookies.tokenreset,'passwordtoken');
    // res.send(text);
     var record=new User();
    // res.send(req.body.userId)
@@ -89,7 +90,7 @@ router.get('/signin/google/return',
    var newvalue={$set:{password:password}};
    User.updateOne(myquery,newvalue,function(err,doc){
        if(err){res.status(500).send("Error in update database")}
-       else{res.clearCookie("token");
+       else{res.clearCookie("passwordtoken");
            res.redirect('/signin')}
    })
  })
