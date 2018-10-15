@@ -9,7 +9,9 @@ var table = new Vue({
     methods:{
         loadtableData: function(){
             this.$http.get('/service/api/forumList/getDetail').then(response => {
-                response.body.data.forEach(element => {
+                console.log(response.body.data)
+                response.body.data[0].forEach(element => {
+                    //console.log(element);
                     var input = {
                         id: element._id,
                         forumName: element.forumName,
@@ -18,8 +20,21 @@ var table = new Vue({
                         post: '',
                     }
                     this.tableData.push(input);
+                    console.log(input);
                 });
-                console.log(this.tableData);
+                var i = 0;
+                response.body.data[1].forEach(element => {
+                    //console.log(element);
+                    tableData[i].thread = element;
+                    i++;
+                });
+                i=0;
+                response.body.data[2].forEach(element=>{
+                    tableData[i].lastPost=element.updateAt;
+                    i++;
+                })
+
+                //console.log('table data:',this.tableData);
             }, response => {
                 // error callback
                 console.log('failed');
