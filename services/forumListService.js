@@ -6,14 +6,16 @@ const post = mongoose.model('post');
 
 const { ObjectId } = mongoose.Types;
 class forumListService {
-  static getDetail(forumId) {
-    return Promise.all([
-      forumList.find().exec(),
-      post.countDocuments({ forumList: ObjectId(forumId) }).exec(),
-      post.find({ forumList: ObjectId(forumId) }).sort({ "_id": -1 }).limit(1),
-    ]);
+  static getDetail() {
+    return forumList.find().exec()
+        .then((_forum) => {
+        return Promise.all([
+          forumList.find().exec(),
+          post.countDocuments({ forumList: _forum }).exec(),
+        post.find({ forumList: _forum }).sort({ "_id": -1 }).limit(1),
+        ]);
 
-
+      });
   }
   static addForum({category, forumName}){
     return forumList.create({category: category, forumName: forumName});
