@@ -5,6 +5,7 @@ var Post=require('../models/post')
 var Category=require('../models/category');
 var jwt=require('jsonwebtoken');
 var url=require('url');
+var mail= require('../javascripts/components/mailer')
 var loggedin = function (req, res, next) {
     if (req.isAuthenticated()) {
       next()
@@ -43,7 +44,7 @@ router.get('/google', loggedin,function(req,res,next){
         {
             if(doc){
                 res.cookie('usrName',doc.username);
-                var newtoken=jwt.sign({username:doc.username,userID:doc._id},"secrettoken",{expiresIn: '3h'}) 
+                var newtoken=jwt.sign({userID:doc._id},"secrettoken",{expiresIn: '3h'}) 
                 res.cookie('token',newtoken)
                 res.render('home',{title:"Motor || Home"});}
             else{
@@ -59,7 +60,7 @@ router.get('/google', loggedin,function(req,res,next){
                         User.updateOne(myquery,newvalue,function(err,doc){
                             if(err){res.status(500).send("Error in update database")}
                             else{res.cookie('usrName',record.username);
-                            var newtoken=jwt.sign({username:record.username,userID:record._id},"secrettoken",{expiresIn: '3h'}) 
+                            var newtoken=jwt.sign({userID:record._id},"secrettoken",{expiresIn: '3h'}) 
                             res.cookie('token',newtoken)
                             res.render('home',{title:"Motor || Home"});}})
 
@@ -85,7 +86,7 @@ router.get('/facebook',loggedin,function(req,res,next){
         {
             if(doc){
                 res.cookie('usrName',doc.username);
-                var newtoken=jwt.sign({username:doc.username,userID:doc._id},"secrettoken",{expiresIn: '3h'}) 
+                var newtoken=jwt.sign({userID:doc._id},"secrettoken",{expiresIn: '3h'}) 
                 res.cookie('token',newtoken)
                 res.render('home',{title:"Motor || Home"});}
             else{
@@ -103,7 +104,7 @@ router.get('/facebook',loggedin,function(req,res,next){
                                 else
                                 {
                                   res.cookie('usrName',record.username);
-                                  var newtoken=jwt.sign({username:record.username,userID:record._id},"secrettoken",{expiresIn: '3h'}) 
+                                  var newtoken=jwt.sign({userID:record._id},"secrettoken",{expiresIn: '3h'}) 
                                   res.cookie('token',newtoken)
                                   res.render('home',{title:"Motor || Home"});
                                   //  res.send(record)
@@ -138,7 +139,7 @@ router.post('/FacebookUser',function(req,res){
                 if(err){throw err;}
                 else{
                     res.cookie('usrName',doc.username);
-                    var newtoken=jwt.sign({username:doc.username,userID:doc._id},"secrettoken",{expiresIn: '3h'}) 
+                    var newtoken=jwt.sign({userID:doc._id},"secrettoken",{expiresIn: '3h'}) 
                     res.cookie('token',newtoken)
                     res.render('home',{title:"Motor || Home"});
 
@@ -165,7 +166,7 @@ router.post('/googleUser',function(req,res){
                 if(err){throw err;}
                 else{
                     res.cookie('usrName',doc.username);
-                    var newtoken=jwt.sign({username:doc.username,userID:doc._id},"secrettoken",{expiresIn: '3h'}) 
+                    var newtoken=jwt.sign({userID:doc._id},"secrettoken",{expiresIn: '3h'}) 
                     res.cookie('token',newtoken)
                     res.render('home',{title:"Motor || Home"});
 
@@ -221,6 +222,14 @@ router.post('/search', function(req, res){
 router.get('/about', loggedin,function(req,res,next){
     res.render('about',{title:"Motor || About us"});
 });
+router.post('/forwardthread',function(req,res,next){
+    console.log(req.body.link, req.body.email, req.body.username);
+    link=req.body.link;
+    email=req.body.email;
+    name=req.body.username;
+    mail(email,'The thread are shared by your friend','Your friend '+name+' share the post from Motor-Forum to you. \nPlease click to the link '+link +' to visit the Motor Forum and enjoy the post. \nThank you. \nVGU Team 1.');
+    res.send("Email was sent")
+})
 router.get('/redirect', loggedin,function(req,res,next){
     //res.send(req.session);
     res.cookie('usrName',req.session.passport.user.username); 

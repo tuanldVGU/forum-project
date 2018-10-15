@@ -11,6 +11,7 @@
             <div class="container-fluid" style="padding: 3rem 3.5rem 1rem;">
                 {{info.content}}
             </div>
+            <input class="form-control" type="text"  v-model="email" name="Email" v-on:keyup.13="forwardingthread">
     </div>
     <!-- Comment section -->
     <div class="card bg-menu thread" id="vue-comment">

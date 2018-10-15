@@ -37,9 +37,9 @@ router.get('/api/post/getSumPost', (req, res) => postService.getSumPost()
   }));
 
 router.post('/api/post/createPost', (req, res) => {
-  const { category, forumList, title, description } = req.body;
-    const { user } =record.userID;
-  return postService.createPost({ category, forumList, user, title, description })
+  const { category, forumList, title, description , author} = req.body;
+    const { user } =jwt.verify(author,"secrettoken");
+  return postService.createPost({ category, forumList,user, title, description })
     .then(() => res.send(utils.succeed()))
     .catch(err => res.send(utils.fail(err, err.message)));
 });

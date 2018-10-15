@@ -72,7 +72,7 @@ module.exports = function(passport){
                 if(err){res.status(500).send('Error occured!!');}
                 else{
                     key="passwordtoken";
-                    const token=jwt.sign({username:doc.username, userId: doc.id},key,{expiresIn:'15m'});
+                    const token=jwt.sign({userId: doc.id},key,{expiresIn:'15m'});
                     mail(doc.email,'Reset password','Please click to the link https://motor-forum.herokuapp.com/setPassword?token='+token+' to reset password. This request will expire in 15 minute. Thank you')
                     res.send('Please check your email to reset password!!')}
             }
