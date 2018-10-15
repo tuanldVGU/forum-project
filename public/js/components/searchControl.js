@@ -8,12 +8,21 @@ var formControl = new Vue({
         manufacture:[],
         model:[],
         year:[],
+        categoryid:'',
         addType: '',
+        search:'',
         addManufacture:'',
         addModel:'',
         addYear:'',
     },
     components: {
+    },
+    computed:{
+        filteredTable() {
+            return this.table.filter(element => {
+              return element.title.toLowerCase().includes(this.search.toLowerCase())
+            })
+          }
     },
     watch:{
         addType: function(news,old){
@@ -104,15 +113,15 @@ var formControl = new Vue({
                     this.categories.push(element);
                 });
                 console.log(this.categories);
+                this.getType();
             }, response => {
                 // error callback
                 console.log('failed');
             })
-            this.getType();
             this.loadPost();
         },
         loadPost:function(){
-            this.$http.get('/service/api/category/getDetail').then(response => {
+            this.$http.get('/service/api/post/getAllDetail').then(response => {
                 response.body.data.forEach(element=>{
                     this.post.push(element);
                 });
@@ -120,7 +129,23 @@ var formControl = new Vue({
             },  response =>{
                 console.log('failed');
             }
-                )},
+        )},
+        searchPost: function(event){
+         //   console.log("test");
+            this.table.length=0;
+            this.categories.forEach(element=>{
+                
+                 if(element.transportManufacture==this.addManufacture && element.transportType==this.addType&& element.transportModel==this.addModel
+                      &&element.transportYear==this.addYear){
+                        //console.log("true",element._id);  
+                        this.categoryid=element._id;}})
+                  console.log(this.categoryid)
+            this.post.forEach(element=>{
+                if(element.category==this.categoryid){this.table.push(element);}
+            });
+            console.log(this.table)
+           // })
+         },
         addtotext: function(){
             var categoryText = document.getElementById('categoryText');
             var boxValue = document.getElementById('addCategory');

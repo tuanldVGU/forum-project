@@ -46,5 +46,5 @@ try {
     author.value = getCookie('token');
 }
 catch(err){
-    console.log('Not avaliable : ',err);
+    console.log('Not avaliable : ');
 }
