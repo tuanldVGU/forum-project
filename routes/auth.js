@@ -50,34 +50,33 @@ module.exports = function(passport){
     //res.cookie('token',req.session.passport.user.token);
 //}
 ));
-router.get('/signin/google',
-  passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.email',
-  'https://www.googleapis.com/auth/userinfo.profile'
-] }));
+    router.get('/signin/google',
+    passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile'
+    ] }));
 
-router.get('/signin/google/return', 
-  passport.authenticate('google', { failureRedirect: '/signin' }),
-  function(req, res) {
-    res.redirect('/google');
-  });
-  router.get('/signin/facebook/return',
-  passport.authenticate('facebook',{ failureRedirect: '/signin', successRedirect: '/facebook'}))
-  router.get('/signin/facebook',
-  passport.authenticate('facebook',{scope:["email"]}));
-  router.post('/reset', function(req,res){
-      var email= req.body.email;
-      User.findOne({email:email},
-        function(err,doc){
-            if(err){res.status(500).send('Error occured!!');}
-            else{
-                if(!doc){res.status(500).send('Email not exits.')}
+    router.get('/signin/google/return', 
+    passport.authenticate('google', { failureRedirect: '/signin' }),
+    function(req, res) {
+        res.redirect('/google');
+    });
+
+    router.get('/signin/facebook/return',
+    passport.authenticate('facebook',{ failureRedirect: '/signin', successRedirect: '/facebook'}))
+    router.get('/signin/facebook',
+    passport.authenticate('facebook',{scope:["email"]}));
+    router.post('/reset', function(req,res){
+        var email= req.body.email;
+        User.findOne({email:email},
+            function(err,doc){
+                if(err){res.status(500).send('Error occured!!');}
                 else{
                     key="passwordtoken";
                     const token=jwt.sign({username:doc.username, userId: doc.id},key,{expiresIn:'15m'});
                     mail(doc.email,'Reset password','Please click to the link https://motor-forum.herokuapp.com/setPassword?token='+token+' to reset password. This request will expire in 15 minute. Thank you')
                     res.send('Please check your email to reset password!!')}
             }
-        })
+        )
   })
   router.post('/setpass',function(req,res){
     var text= jwt.verify(req.cookies.tokenreset,'passwordtoken');

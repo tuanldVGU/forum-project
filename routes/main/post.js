@@ -16,6 +16,12 @@ router.get('/api/post/getPost/:id', (req, res) => postService.getPost(req.params
     return res.json(utils.fail(err, err.message));
   }));
 
+router.get('/api/post/getUserPost/:id', (req, res) => postService.getUserPost(req.params.id)
+  .then(result => res.json(utils.succeed(result)))
+  .catch((err) => {
+    return res.json(utils.fail(err, err.message));
+  }));
+
 router.get('/api/post/getSumPost', (req, res) => postService.getSumPost()
   .then(result => res.json(utils.succeed(result)))
   .catch((err) => {
@@ -29,4 +35,12 @@ router.post('/api/post/createPost', (req, res) => {
     .then(() => res.send(utils.succeed()))
     .catch(err => res.send(utils.fail(err, err.message)));
 });
+
+router.post('/api/post/deletePost', (req, res) => {
+  return postService.deletePost(req.body)
+    .then(() => res.send(utils.succeed()))
+    .catch(err => res.send(utils.fail(err, err.message)));
+});
+
+
 module.exports = router;

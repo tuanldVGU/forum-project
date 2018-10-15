@@ -12,7 +12,7 @@ var formControl = new Vue({
         loadCategory: function(){
             this.$http.get('/service/api/category/getDetail').then(response => {
                 response.body.data.forEach(element => {
-                    this.categories.push(element.transportType);
+                    this.categories.push(element);
                 });
                 console.log(this.categories);
             }, response => {
@@ -23,11 +23,8 @@ var formControl = new Vue({
         addtotext: function(){
             var categoryText = document.getElementById('categoryText');
             var boxValue = document.getElementById('addCategory');
-            var tmp  = this.categories[boxValue.selectedIndex];
-            categoryText.value += tmp + ';';
+            var tmp  = this.categories[boxValue.selectedIndex]._id;
+            categoryText.value = tmp;
         }
-    },
-    mounted(){
-        document.getElementById('forum_id').value = document.URL.split('id=')[1];
     }
 });

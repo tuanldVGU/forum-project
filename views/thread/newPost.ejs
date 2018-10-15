@@ -7,7 +7,7 @@
         <input type="text" id="forum_id" name="forumList" class="form-control" readonly>
 
         <label for="title">Title</label>
-        <input type="text" id="tilte" name="tilte" class="form-control" required autofocus>
+        <input type="text" id="title" name="title" class="form-control" required autofocus>
 
         <label for="content">Content</label>
         <textarea id="content" name="description" class="form-control"> </textarea>
@@ -17,7 +17,7 @@
         <div class="form-row">
             <div class="col-md-8">
                 <select name="addCategory" id="addCategory" class="form-control">
-                    <option v-for="category in categories" v-bind:value="category">{{category}}</option>
+                    <option v-for="element in categories" v-bind:value="element._id">{{element.transportType}}+{{element.transportManufacture}}+{{element.transportModel}}+{{element.transportYear}}</option>
                 </select>
             </div>
             <div class="col-md-4">
@@ -26,7 +26,7 @@
         </div>
 
         <label for="author">Author</label>
-        <input type="text" id="author" name="author" class="form-control" required>
+        <input type="text" id="author" name="author" class="form-control" readonly>
 
         <button class="btn btn-lg btn-block btn-white">Submit</button>
 

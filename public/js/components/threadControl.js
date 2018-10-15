@@ -30,7 +30,7 @@ var table = new Vue({
         },
         loadtableData: function(){
             this.$http.get('/service/api/post/getDetail/'+forumID).then(response => {
-                console.log(response);
+                //console.log(response);
                 response.body.data.forEach(element => {
                     var input = {
                         id: element._id,
@@ -41,7 +41,7 @@ var table = new Vue({
                     }
                     this.tableData.push(input);
                 });
-                console.log(this.tableData);
+                //console.log(this.tableData);
             }, response => {
                 // error callback
                 console.log('failed');

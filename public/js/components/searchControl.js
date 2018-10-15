@@ -2,6 +2,8 @@ var formControl = new Vue({
     el: "#vue-form",
     data: {
         categories: [],
+        post:[],
+        table:[],
         type:[],
         manufacture:[],
         model:[],
@@ -101,13 +103,24 @@ var formControl = new Vue({
                 response.body.data.forEach(element => {
                     this.categories.push(element);
                 });
-                this.getType();
                 console.log(this.categories);
             }, response => {
                 // error callback
                 console.log('failed');
             })
+            this.getType();
+            this.loadPost();
         },
+        loadPost:function(){
+            this.$http.get('/service/api/category/getDetail').then(response => {
+                response.body.data.forEach(element=>{
+                    this.post.push(element);
+                });
+                console.log(this.post);
+            },  response =>{
+                console.log('failed');
+            }
+                )},
         addtotext: function(){
             var categoryText = document.getElementById('categoryText');
             var boxValue = document.getElementById('addCategory');

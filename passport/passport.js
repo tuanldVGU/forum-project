@@ -13,8 +13,7 @@ module.exports = function (passport) {
         done(null, user)
     })
     passport.deserializeUser(function (user, done){
-        done(null, user)
-        
+        done(null, user)  
     })
     var generateToken = function(username, id){
         key = 'secrettoken';
@@ -43,42 +42,47 @@ module.exports = function (passport) {
         return cb(null,{tokenface : jwt.sign({username:profile.displayName, faceID:profile.id,email:profile.emails[0].value},key,{expiresIn: '15m'}) 
       });
       }))
+
+    
     passport.use(new localStrategy(
         {
             usernameField: 'usr',
             passwordField: 'pwd'
         },
         function (username,password, done) {
-            //console.log(username + " "+ password);
+         console.log(username +" "+ password);
          User.findOne({
              username: username
          }, function (err, doc) {
              if (err) {
                  done(err,req.flash('message',err))
              } else {
-                 if (doc) {
-                     var valid = doc.comparePassword(password, doc.password)
-                     if (valid) {
+                if (doc) {
+                    var valid = doc.comparePassword(password, doc.password)
+                    if (valid) {
+                        console.log('valid');
                         key = 'secrettoken';
                        // done(null,{username:doc.username,token :doc.token})
                         // token=generateToken(doc.username,doc._id)
                          // do not add password hash to session
-                          done(null,{
+                        done(null,
+                            {
                             username:doc.username, 
                             token : jwt.sign({
                             username: doc.username,
                              userID: doc._id,
-                           },key,
-                           {
-                             expiresIn: '3h'
-                           })
-                        })}
-                      else {
-                         done(null, false)
-                     }}
-                  else {
-                     done(null, false)
-                 }
+                            },key, {expiresIn: '3h'})
+                        })
+                    }
+                    else {
+                        console.log('not valid');
+                        done(null, false,req.flash('message','Wrong pass'))
+                    }
+                }
+                else {
+                    console.log('not valid');
+                    done(null, false, req.flash('message','Not found username'))
+                }
              }
          })
     }))
@@ -104,6 +108,5 @@ module.exports = function (passport) {
            //});
       }
     ));
-
 
 }
