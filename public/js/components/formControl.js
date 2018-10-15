@@ -26,8 +26,5 @@ var formControl = new Vue({
             var tmp  = this.categories[boxValue.selectedIndex]._id;
             categoryText.value = tmp;
         }
-    },
-    mounted(){
-        document.getElementById('forum_id').value = document.URL.split('id=')[1];
     }
 });
