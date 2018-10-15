@@ -15,9 +15,15 @@ class postService {
   static getPost(postId) {
     return post.findById(postId).exec();
   }
-  static createPost({_category, forumList, user, title, description}){
-
-    return post.create({category: _category, forumList: forumList, user: user, title: title, description: description});
+  static getUserPost(userId) {
+    return post.find({user: ObjectId(userId)}).exec();
+  }
+  static createPost({category, forumList, user, title, description}){
+    return post.create({category: category, forumList: forumList, user: user, title: title, description: description});
+  }
+  static deletePost({postId}){
+    console.log(postId);
+    return post.findByIdAndRemove(postId).exec();
   }
 }
 module.exports = postService;
