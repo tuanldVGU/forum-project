@@ -3,11 +3,13 @@ var postID = document.URL.split('id=')[1];
 var article = new Vue({
     el: '#vue-content',
     data(){
+        
         return{
             info: {
                 title: "loading..",
                 content: "still loading...",
-            }
+            },
+            email:'',
         }
     },
     created(){
@@ -27,9 +29,32 @@ var article = new Vue({
                 // error callback
                 console.log('failed');
             })
-        }    
+        } ,
+        forwardingthread:function(){
+            console.log(document.URL);
+            console.log("email:", this.email);
+            console.log(getCookie("usrName"));
+            this.$http.post('/forwardthread', {link:document.URL, email:this.email,username:getCookie("usrName")})
+            .then ((res)=> console.log (res.body))
+            .catch ((error)=> console.log(error))
+        }   
     }
 });
 article.$watch('info',function(){
     console.log("change!!!!");
 });
+function getCookie(cname){
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
