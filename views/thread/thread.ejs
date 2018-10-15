@@ -21,20 +21,12 @@
         <legend class="col-form-label col-sm-2 pt-0">Search for:</legend>
         <div class="col-sm-5">
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="type" value="name" id="1sttype" checked> 
+                <input class="form-check-input" type="radio" v-model="filterType" value="name" id="1sttype" checked> 
                 <label class="form-check-label" for="1sttype">Name</label> 
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="type" value="category" id="2ndtype"> 
-                <label class="form-check-label" for="2ndtype">Category</label> 
-            </div>
-        </div>
-        <div class="col-sm-5">
-            <div class="input-group">
-                <label for="searchMonth" class="col-sm-2 col-form-label">Month</label>
-                <div class="col-sm-10">
-                    <input type="month" name="searchMonth" class="form-control" id="searchMonth">
-                </div>
+                <input class="form-check-input" type="radio" v-model="filterType" value="Postdate" id="2ndtype"> 
+                <label class="form-check-label" for="2ndtype">Postdate</label> 
             </div>
         </div>
     </div>

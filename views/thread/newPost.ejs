@@ -26,7 +26,7 @@
         </div>
 
         <label for="author">Author</label>
-        <input type="text" id="author" name="author" class="form-control" required>
+        <input type="text" id="author" name="author" class="form-control" readonly>
 
         <button class="btn btn-lg btn-block btn-white">Submit</button>
 
@@ -44,3 +44,7 @@
         }
     </script>
     <script src="/js/components/formControl.js"></script>
+    <script>
+        var forumID = document.URL.split('id=')[1];
+        document.getElementById('forum_id').value = forumID;
+    </script>

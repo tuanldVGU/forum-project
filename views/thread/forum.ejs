@@ -50,7 +50,7 @@
             </thead>
             <tbody>
                 <tr v-for="row in tableData">
-                    <td><a v-bind:href="'/forum/thread?id='+row.id">{{row.forumName}}</a></td>
+                    <td><a v-bind:href="'/forum/thread?id='+row.id+'?name='+row.forumName">{{row.forumName}}</a></td>
                     <td>{{row.lastPost}}</td>
                     <td>{{row.thread}}</td>
                     <td>{{row.post}}</td>
