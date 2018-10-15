@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3355b095-9498-4d8e-920a-dc0bce75dbe1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/main/forumList.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/main/forumList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/forumListService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/forumListService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/main/post.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/main/post.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/postService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/postService.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -44,7 +43,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="ejs" value="168" />
-          <entry key="js" value="4848" />
+          <entry key="js" value="4882" />
           <entry key="json" value="11" />
         </counts>
       </usages-collector>
@@ -52,18 +51,18 @@
         <counts>
           <entry key="EJS" value="168" />
           <entry key="JSON" value="11" />
-          <entry key="JavaScript" value="4848" />
+          <entry key="JavaScript" value="4882" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/main/post.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="35" column="3" lean-forward="true" selection-start-line="35" selection-start-column="3" selection-end-line="35" selection-end-column="3" />
+            <state relative-caret-position="165">
+              <caret line="11" column="77" selection-start-line="11" selection-start-column="77" selection-end-line="11" selection-end-column="77" />
             </state>
           </provider>
         </entry>
@@ -77,7 +76,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/services/forumListService.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="180">
@@ -89,8 +88,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/services/postService.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
-              <caret line="18" column="20" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="20" />
+            <state relative-caret-position="246">
+              <caret line="21" column="54" lean-forward="true" selection-start-line="21" selection-start-column="54" selection-end-line="21" selection-end-column="54" />
             </state>
           </provider>
         </entry>
@@ -167,10 +166,10 @@
         <option value="$PROJECT_DIR$/init.js" />
         <option value="$PROJECT_DIR$/routes/threadRoute.js" />
         <option value="$PROJECT_DIR$/views/thread/newPost.ejs" />
-        <option value="$PROJECT_DIR$/services/postService.js" />
-        <option value="$PROJECT_DIR$/routes/main/post.js" />
         <option value="$PROJECT_DIR$/routes/main/forumList.js" />
         <option value="$PROJECT_DIR$/services/forumListService.js" />
+        <option value="$PROJECT_DIR$/services/postService.js" />
+        <option value="$PROJECT_DIR$/routes/main/post.js" />
       </list>
     </option>
   </component>
@@ -365,12 +364,12 @@
       <workItem from="1538634083176" duration="16340000" />
       <workItem from="1538964458055" duration="37133000" />
       <workItem from="1539248014638" duration="2547000" />
-      <workItem from="1539570195517" duration="6468000" />
+      <workItem from="1539570195517" duration="6805000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62488000" />
+    <option name="totallyTimeSpent" value="62825000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
@@ -674,24 +673,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/services/postService.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="18" column="20" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="57">
           <caret line="31" column="12" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/main/post.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="35" column="3" lean-forward="true" selection-start-line="35" selection-start-column="3" selection-end-line="35" selection-end-column="3" />
         </state>
       </provider>
     </entry>
@@ -706,6 +691,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="12" column="79" selection-start-line="12" selection-start-column="79" selection-end-line="12" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/services/postService.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="21" column="54" lean-forward="true" selection-start-line="21" selection-start-column="54" selection-end-line="21" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/main/post.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="77" selection-start-line="11" selection-start-column="77" selection-end-line="11" selection-end-column="77" />
         </state>
       </provider>
     </entry>

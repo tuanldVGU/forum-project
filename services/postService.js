@@ -9,6 +9,9 @@ class postService {
   static getDetail(forumId) {
     return post.find({forumList: forumId}).exec();
   }
+  static getAllDetail(){
+    return post.find().exec();
+  }
   static getSumPost(){
     return post.countDocuments().exec();
   }
