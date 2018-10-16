@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 const post = mongoose.model('post');
 const category = mongoose.model('category');
+const forumList = mongoose.model('forumList');
 
 const { ObjectId } = mongoose.Types;
 class postService {
@@ -21,8 +22,10 @@ class postService {
   static getUserPost(userId) {
     return post.find({user: ObjectId(userId)}).exec();
   }
-  static createPost({category, forumList, user, title, description}){
-    return post.create({category: category, forumList: forumList, user: user, title: title, description: description});
+  static createPost({category,forumList, user, title, description}){
+
+    return forumList.findOneAndUpdate({_id: ObjectId(forumList)}, { $inc: { numOfPost:1 } , recentPost: title}, {new: true }).exec()
+      .then(() => post.create({category: category, forumList: forumList, user: user, title: title, description: description}));
   }
   static deletePost({postId}){
     console.log(postId);
