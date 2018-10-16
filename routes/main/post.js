@@ -25,7 +25,7 @@ router.get('/api/post/getPost/:id', (req, res) => postService.getPost(req.params
     return res.json(utils.fail(err, err.message));
   }));
 
-router.get('/api/post/getUserPost/:id', (req, res) =>{ 
+router.get('/api/post/getUserPost/:id', (req, res) =>{
   const userId = jwt.verify(req.params.id,key.secret).userID;
   postService.getUserPost(userId)
   .then(result => res.json(utils.succeed(result)))
@@ -41,15 +41,15 @@ router.get('/api/post/getSumPost', (req, res) => postService.getSumPost()
 
 router.post('/api/post/createPost', (req, res) => {
   const { category, forumList, title, description , author} = req.body;
-    const { user } =jwt.verify(author,"secrettoken");
-  return postService.createPost({ category, forumList,user, title, description })
+    const user =jwt.verify(author,"secrettoken").userID;
+  return postService.createPost({ category, forumList, user, title, description })
     .then(() => res.send(utils.succeed()))
     .catch(err => res.send(utils.fail(err, err.message)));
 });
 
 router.post('/api/post/deletePost', (req, res) => {
-  const { forumId, postId} = req.body;
-  return postService.deletePost(req.body)
+  const { postId, forumId} = req.body;
+  return postService.deletePost({ postId, forumId })
     .then(() => res.send(utils.succeed()))
     .catch(err => res.send(utils.fail(err, err.message)));
 });
