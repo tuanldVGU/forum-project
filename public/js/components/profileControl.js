@@ -1,6 +1,10 @@
 import {getCookie} from '../getCookie.mjs';
 
 var usrToken = getCookie('token');
+Vue.component('modal', {
+    template: '#modal-template'
+}) 
+
 var formControl = new Vue({
     el: "#vue-profile",
     data: {
@@ -25,7 +29,12 @@ var formControl = new Vue({
 var postControl = new Vue({
     el: "#vue-profile-post",
     data: {
-        posts: []
+        posts: [],
+        showModal: false,
+        parseData : {}
+    },
+    component :{
+
     },
     created(){
         this.loadPost();
@@ -56,6 +65,10 @@ var postControl = new Vue({
                 // error callback
                 console.log('failed');
             })
+        },
+        deleteReminder: function(postID,forumID){
+            this.parseData.pid = postID;
+            this.parseData.fid= forumID;
         }
     }
 
