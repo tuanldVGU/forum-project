@@ -4,12 +4,10 @@ const _ = require('lodash');
 const defaultConfig = {
   defaultUsers: [{
     username: 'admin',
-    password: 'admin@123',
     email: 'admin@team1.com',
     userType: 'admin',
   }, {
     username: 'demo',
-    password: 'demo',
     email: 'demo@team1.com',
     userType: 'user',
   }],
