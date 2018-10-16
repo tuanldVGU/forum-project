@@ -54,9 +54,13 @@ var postControl = new Vue({
             })
         },
         deletePost: function(postID,forumID){
-            console.log(postID,forumID);
-            this.$http.post('/service/api/post/deletePost',{id: postID,fid: forumID}).then(response => {
-                console.log(success);
+            console.log('click');
+            this.$http.post('/service/api/post/deletePost',{postId: postID, forumId: forumID}).then(response => {
+                response.body.data.forEach(element => {
+                    console.log(element);
+                    this.posts.push(element);
+                });
+                console.log(this.posts);
             }, response => {
                 // error callback
                 console.log('failed');

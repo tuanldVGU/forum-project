@@ -1,35 +1,40 @@
 const _ = require('lodash');
 const mongoose = require('mongoose');
 
-const post = mongoose.model('post');
+const posts = mongoose.model('post');
 const category = mongoose.model('category');
-const forumList = mongoose.model('forumList');
-
+const forumLists = mongoose.model('forumList');
+const utils = require('../ultis/ultis');
 const { ObjectId } = mongoose.Types;
 class postService {
   static getDetail(forumId) {
-    return post.find({forumList: forumId}).exec();
+    return posts.find({forumList: forumId}).exec();
   }
   static getAllDetail(){
-    return post.find().exec();
+    return posts.find().exec();
   }
   static getSumPost(){
-    return post.countDocuments().exec();
+    return posts.countDocuments().exec();
   }
   static getPost(postId) {
-    return post.findById(postId).exec();
+    return posts.findById(postId).exec();
   }
   static getUserPost(userId) {
-    return post.find({user: ObjectId(userId)}).exec();
+    return posts.find({user: ObjectId(userId)}).exec();
   }
   static createPost({category,forumList, user, title, description}){
+    console.log(forumList);
 
-    return forumList.findOneAndUpdate({_id: ObjectId(forumList)}, { $inc: { numOfPost:1 } , recentPost: title}, {new: true }).exec()
-      .then(() => post.create({category: category, forumList: forumList, user: user, title: title, description: description}));
+    return forumLists.findOneAndUpdate({_id: ObjectId(forumList)}, { $inc: { numOfPost:1 } , recentPost: title}, {new: true }).exec()
+      .then(() => posts.create({category: category, forumList: forumList, user: user, title: title, description: description}))
+      ;
   }
-  static deletePost({postId}){
-    console.log(postId);
-    return post.findByIdAndRemove(postId).exec();
+  static deletePost({postId, forumId}){
+    return posts.findByIdAndRemove(postId).exec()
+      .then(()=>posts.find({ forumList: forumId }).sort({ "_id": -1 }).limit(1).then((_post) => {
+      const postDetail = utils.succeed(_post).data;
+      return forumLists.findOneAndUpdate({_id: ObjectId(forumId)}, { $inc: { numOfPost: -1 } , recentPost: postDetail[0].title }, {new: true }).exec();
+    }));
   }
 }
 module.exports = postService;
