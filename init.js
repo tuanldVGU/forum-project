@@ -31,7 +31,7 @@ mongoose.set('debug', (collectionName, method, query, doc) => {
     // logger.debug(`Mongoose: db.${collectionName}.${method}(${JSON.stringify(query)})`);
   }
 });
-
+require('./passport/passport');
 // Insert default users
 _.each(envConf.defaultUsers, (defaultUser) => {
   mongoose

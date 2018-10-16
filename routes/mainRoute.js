@@ -19,11 +19,11 @@ router.get('/', function(req,res,next){
 });
 
 router.get('/signup', function(req,res,next){
-    res.render('signup',{title:"Motor || Sign Up"});
+    res.render('auth/signup',{title:"Motor || Sign Up"});
 });
 
 router.get('/signin', function(req,res,next){
-    res.render('signin',{title:"Motor || Sign In"});
+    res.render('auth/signin',{title:"Motor || Sign In"});
 });
 
 router.get('/home', loggedin,function(req,res,next){
@@ -66,7 +66,7 @@ router.get('/google', loggedin,function(req,res,next){
 
                     }
                     else{
-                        res.render('usergoogle',{ title:"Motor || Set Username",});   
+                        res.render('auth/usergoogle',{ title:"Motor || Set Username",});   
                     }
                 }
             })
@@ -113,7 +113,7 @@ router.get('/facebook',loggedin,function(req,res,next){
                         }
                         else
                         {
-                            res.render('userface',{ title:"Motor || Set Username",})
+                            res.render('auth/userface',{ title:"Motor || Set Username",})
                         }
                     }
                 })
@@ -198,7 +198,7 @@ router.get('/logout', function (req, res) {
   })
 router.get('/resetPassword',function(req, res)
 {
-    res.render('reset',{ title:"Motor || Reset Password"})
+    res.render('auth/reset',{ title:"Motor || Reset Password"})
 })
 
 // router.get('/tech', loggedin,function(req,res,next){
@@ -207,7 +207,7 @@ router.get('/resetPassword',function(req, res)
 router.get('/setPassword', function(req,res){
  var q=url.parse(req.url,true).query;
  res.cookie("tokenreset",q.token)
-  res.render('setPassword',{title:"Motor || Set New Password"})
+  res.render('auth/setPassword',{title:"Motor || Set New Password"})
 })
 router.get('/tech', loggedin,function(req,res,next){
     res.render('search',{title:"Motor || Technical support"});

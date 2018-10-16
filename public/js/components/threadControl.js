@@ -1,17 +1,43 @@
-var forumID = document.URL.split('id=')[1];
+function urlParam(name){
+    var params = document.URL.split('?');
+    for (var i = 1; i<params.length; i++){
+        var param = params[i].split('=');
+        if (param[0]==name){
+            return param[1];
+        }
+    }
+}
+var forumID = urlParam('id');
+var forumName = urlParam('name');
 console.log(forumID);
+console.log(forumName);
+
+
+class thread {
+    constructor(id, title, date, comment,lc) {
+        this.id = id;
+        this.title = title;
+        this.Postdate = date;
+        this.comment = comment;
+        this.lastComment = lc;
+    }
+}
+
 var table = new Vue({
     el: '#vue-thread',
     data: {
+        searchbar: '',
+        filterType: 'name',
         id: forumID,
         info: {
-            forumName: document.URL.split('id=')[1],
+            forumName: decodeURI(urlParam('name')),
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
         },
         tableData: []
     },
     created(){
         this.loadtableData()
+        //this.loadforumInfo()
     },
     methods:{
         loadforumInfo: function(){
@@ -30,15 +56,13 @@ var table = new Vue({
         },
         loadtableData: function(){
             this.$http.get('/service/api/post/getDetail/'+forumID).then(response => {
-                //console.log(response);
                 response.body.data.forEach(element => {
-                    var input = {
-                        id: element._id,
-                        title: element.title,
-                        Postdate: element.createdAt,
-                        comment: 0,
-                        lastComment: 'unknown',
-                    }
+                    var input = new thread(element._id,
+                        element.title,
+                        element.createdAt,
+                        0,
+                        'unknown'
+                    )
                     this.tableData.push(input);
                 });
                 //console.log(this.tableData);
@@ -47,5 +71,17 @@ var table = new Vue({
                 console.log('failed');
             })
         }
+    },
+    computed:{
+        filteredtableData() {
+            return this.tableData.filter(row => {
+              if(this.filterType == 'name'){
+                  return row.title.toLowerCase().includes(this.searchbar.toLowerCase())
+              }else{
+                return row.Postdate.toLowerCase().includes(this.searchbar.toLowerCase())
+              }
+            })
+        }
     }
 })
+

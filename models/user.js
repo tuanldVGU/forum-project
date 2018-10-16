@@ -26,7 +26,10 @@ const userSchema = new schema({
       'user',
     ],
   },
-  loginFacebook:{ 
+  avatar: {
+    type: String,
+  },
+  loginFacebook:{
     type:String,
     default: ''
   },

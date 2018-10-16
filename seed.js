@@ -13,16 +13,37 @@ category.deleteMany({}).exec()
   .then(() => comment.deleteMany({}).exec())
   .then(() => subComment.deleteMany({}).exec())
   .then(() => post.deleteMany({}).exec())
+  .then(() => category.insertMany([
+    { "transportType": "Motorbike",
+      "transportModel": "Exciter",
+      "transportYear": 2018,
+      "transportManufacture": "Yamaha"
+    },
+    {
+      "transportType": "Motorbike",
+      "transportModel": "Exciter",
+      "transportYear": 2017,
+      "transportManufacture": "Yamaha",
+    },
+    {
+      "transportType": "Motorbike",
+      "transportModel": "Wave",
+      "transportYear": 2017,
+      "transportManufacture": "Honda",
+    }
+    ]))
   .then(() => user.findOne({ username: 'admin' }).exec())
   .then((_user) => category.create({
     transportType: 'Motorbike',
     transportModel: 'Jupiter Fi RC',
     transportYear: '2018',
-    transportManufacture: 'Yamaha'
+    transportManufacture: 'Yamaha',
   })
     .then((_category) => forumList.create({
       forumName: 'Ask for Motobike',
-      category: _category
+      category: _category,
+      numOfPost: '1',
+      numOfComment: '1',
     })
     .then((_forumList) => post.create({
       category: _category,

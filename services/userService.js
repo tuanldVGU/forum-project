@@ -5,8 +5,10 @@ const user = mongoose.model('user');
 
 const { ObjectId } = mongoose.Types;
 class userService {
-  static getDetail() {
-    return user.find().exec();
+  static getDetail(userId) {
+    //console.log({userId});
+  
+    return user.findById(userId).exec();
   }
   static checkUsername(username) {
     console.log("1")

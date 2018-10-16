@@ -6,13 +6,28 @@
     </div>
     <div class="row" style="padding: 0 3rem;">
         <div class="col col-8">
-            <input type="text" name="" id="" placeholder="Enter title, author, or categories ....." class="form-control">
+            <input type="text" name="" v-model="searchbar" placeholder="Enter title, author, or categories ....." class="form-control" v-on:keyup.13="filteredtableData">
         </div>
         <div class="col col-2">
-                <a class="btn btn-block btn-white">Advance filter</a>   
+                <a class="btn btn-block btn-white" onclick="filterToggle();">Advance filter</a>   
             </div>
         <div class="col col-2">
             <a v-bind:href="'/forum/post?id='+id" class="btn btn-block btn-white"><i class="fas fa-plus"></i>  New Thread</a>     
+        </div>
+    </div>
+
+    <!-- filter -->
+    <div class="row hidden" style="padding: 2rem 5rem 0;" id="filter">
+        <legend class="col-form-label col-sm-2 pt-0">Search for:</legend>
+        <div class="col-sm-5">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" v-model="filterType" value="name" id="1sttype" checked> 
+                <label class="form-check-label" for="1sttype">Name</label> 
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" v-model="filterType" value="Postdate" id="2ndtype"> 
+                <label class="form-check-label" for="2ndtype">Postdate</label> 
+            </div>
         </div>
     </div>
     
@@ -27,7 +42,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="row in tableData">
+                <tr v-for="row in filteredtableData">
                     <td><a v-bind:href="'/forum/article?id='+row.id">{{row.title}}</a></td>
                     <td>{{row.Postdate}}</td>
                     <td>{{row.comment}}</td>

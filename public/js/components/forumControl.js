@@ -1,6 +1,17 @@
+class forum {
+    constructor(id, name,last,thread,post) {
+        this.id = id;
+        this.forumName = title;
+        this.Postdate = date;
+        this.comment = comment;
+        this.lastComment = lc;
+    }
+}
 var table = new Vue({
     el: '#vue-forum',
     data: {
+        searchbar:'',
+        filterType:'name',
         tableData:[]
     },
     created(){
@@ -9,35 +20,34 @@ var table = new Vue({
     methods:{
         loadtableData: function(){
             this.$http.get('/service/api/forumList/getDetail').then(response => {
-                console.log(response.body.data)
-                response.body.data[0].forEach(element => {
-                    //console.log(element);
+                // console.log(response.body.data)
+                response.body.data.forEach(element => {
+                    console.log(element);
                     var input = {
                         id: element._id,
                         forumName: element.forumName,
-                        lastPost: '',
-                        thread: '',
-                        post: '',
+                        lastPost: element.recentPost,
+                        thread: element.numOfPost,
+                        post: element.numOfComment
                     }
                     this.tableData.push(input);
-                    console.log(input);
                 });
-                var i = 0;
-                response.body.data[1].forEach(element => {
-                    //console.log(element);
-                    tableData[i].thread = element;
-                    i++;
-                });
-                i=0;
-                response.body.data[2].forEach(element=>{
-                    tableData[i].lastPost=element.updateAt;
-                    i++;
-                })
 
-                //console.log('table data:',this.tableData);
+                console.log('table data:',this.tableData);
             }, response => {
                 // error callback
                 console.log('failed');
+            })
+        }
+    },
+    computed:{
+        filteredtableData() {
+            return this.tableData.filter(row => {
+              if(this.filterType == 'name'){
+                  return row.forumName.toLowerCase().includes(this.searchbar.toLowerCase())
+              }else{
+                return row.lastPost.toLowerCase().includes(this.searchbar.toLowerCase())
+              }
             })
         }
     }
