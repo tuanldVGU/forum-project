@@ -1,6 +1,6 @@
 <%layout('./partials/layout')%>
 <body class="bg-menu">
-    <form class="form-post" method="POST" action="/search" id="vue-form">
+    <div id="vue-form">
         <h1 class="brand">motor</h1>
         <div class="form-row">
             <div class="col-md-8">
@@ -23,17 +23,20 @@
             </div>
             <div class="col-md-8">
                     <label for="transportYear">Manufacture year:</label>
-                <select name="transportYear" id="transportYear" class="form-control">
+                <select name="transportYear" id="transportYear" class="form-control" v-model="addYear">
                     <option v-for="year in year" v-bind:value="year">{{year}}</option>
                 </select>
             </div>
             <div class="col-md-8">
                     <label for="">Problem related: </label>
-                    <input class="form-control" type="text"  name="Problem">
+                    <input class="form-control" type="text"  name="Problem" v-model="search" v-on:keyup.13="searchPost">
             </div>
         </div>
-        <div class="col-md-4"><button type="submit" class="btn btn-lg btn-block btn-white">Submit</button>
+        <div>
+            <div v-for="post in filteredTable">
+                <a v-bind:href="post.title" target="_blank">{{post.title}}</a>
+              </div>
         </div>
         <p class="mt-3 mb-3 text-muted">© Team 1 VGU 2018</p>
-    </form>
+    </div>
     <script src="/js/components/searchControl.js"></script>

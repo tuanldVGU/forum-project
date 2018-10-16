@@ -5,6 +5,7 @@ var Post=require('../models/post')
 var Category=require('../models/category');
 var jwt=require('jsonwebtoken');
 var url=require('url');
+var mail= require('../javascripts/components/mailer')
 var loggedin = function (req, res, next) {
     if (req.isAuthenticated()) {
       next()
@@ -26,7 +27,6 @@ router.get('/signin', function(req,res,next){
 });
 
 router.get('/home', loggedin,function(req,res,next){
-    res.cookie('usrName',req.session.passport.user.username);
     res.render('home',{title:"Motor || Home"});
 });
 
@@ -42,6 +42,12 @@ router.get('/google', loggedin,function(req,res,next){
         if(err){throw err;}
         else
         {
+            if(doc){
+                res.cookie('usrName',doc.username);
+                var newtoken=jwt.sign({userID:doc._id},"secrettoken",{expiresIn: '3h'}) 
+                res.cookie('token',newtoken)
+                res.render('home',{title:"Motor || Home"});}
+            else{
             User.findOne({email:user.email},function(err,doc)
             {
                 if(err){throw err;}
@@ -53,7 +59,10 @@ router.get('/google', loggedin,function(req,res,next){
                         var newvalue={$set:{loginGoogle:user.googleID}};
                         User.updateOne(myquery,newvalue,function(err,doc){
                             if(err){res.status(500).send("Error in update database")}
-                            else{res.render('home',{title:"Motor || Home"})}})
+                            else{res.cookie('usrName',record.username);
+                            var newtoken=jwt.sign({userID:record._id},"secrettoken",{expiresIn: '3h'}) 
+                            res.cookie('token',newtoken)
+                            res.render('home',{title:"Motor || Home"});}})
 
                     }
                     else{
@@ -61,22 +70,24 @@ router.get('/google', loggedin,function(req,res,next){
                     }
                 }
             })
-        }
+        }}
    })
 });
 
 
 router.get('/facebook',loggedin,function(req,res,next){
-   // res.send(jwt.verify(req.session.passport.user.token,"secrettoken"))
+  //  res.send(jwt.verify(req.session.passport.user.tokenface,"facebooktoken"))
    //res.cookie('token',req.session.passport.user.token);
-    var user=jwt.verify(req.session.passport.user.token,"facebooktoken");
+    var user=jwt.verify(req.session.passport.user.tokenface,"facebooktoken");
     User.findOne({loginFacebook:user.faceID},function(err,doc)
     {
         if(err){throw err;}
         else
         {
             if(doc){
-              //  res.cookie('usrName',doc.username);
+                res.cookie('usrName',doc.username);
+                var newtoken=jwt.sign({userID:doc._id},"secrettoken",{expiresIn: '3h'}) 
+                res.cookie('token',newtoken)
                 res.render('home',{title:"Motor || Home"});}
             else{
                 User.findOne({email:user.email},function(err,doc)
@@ -90,9 +101,14 @@ router.get('/facebook',loggedin,function(req,res,next){
                             var newvalue={$set:{loginFacebook:user.faceID}};
                             User.updateOne(myquery,newvalue,function(err,doc){
                                 if(err){res.status(500).send("Error in update database")}
-                                else{
-                                  //  res.cookie('usrName',record.username);
-                                    res.render('home',{title:"Motor || Home", user:doc});}
+                                else
+                                {
+                                  res.cookie('usrName',record.username);
+                                  var newtoken=jwt.sign({userID:record._id},"secrettoken",{expiresIn: '3h'}) 
+                                  res.cookie('token',newtoken)
+                                  res.render('home',{title:"Motor || Home"});
+                                  //  res.send(record)
+                                }
                             })
                         }
                         else
@@ -107,10 +123,7 @@ router.get('/facebook',loggedin,function(req,res,next){
     })
 })
 router.post('/FacebookUser',function(req,res){
-    console.log(req.body.usr);
-    console.log(req.cookies)
-    var user=jwt.verify(req.session.passport.user.token,"facebooktoken");
-    console.log(user)
+    var user=jwt.verify(req.session.passport.user.tokenface,"facebooktoken");
     var record=new User();
     var record = new User()
     record.username = req.body.usr;
@@ -122,9 +135,16 @@ router.post('/FacebookUser',function(req,res){
         }
         else{
             //res.send(user)
-           // res.cookie('usrName',record.username);
-            res.redirect('/home')
-        }
+            User.findOne({username:record.username},function(err,doc){
+                if(err){throw err;}
+                else{
+                    res.cookie('usrName',doc.username);
+                    var newtoken=jwt.sign({userID:doc._id},"secrettoken",{expiresIn: '3h'}) 
+                    res.cookie('token',newtoken)
+                    res.render('home',{title:"Motor || Home"});
+
+                }
+            })}
     })
 })
 router.post('/googleUser',function(req,res){
@@ -142,14 +162,23 @@ router.post('/googleUser',function(req,res){
             res.status(500).send(err)
         }
         else{
-            //res.send(user)
-           // res.cookie('usrName',record.username);
-            res.redirect('/home')
+            User.findOne({username:record.username},function(err,doc){
+                if(err){throw err;}
+                else{
+                    res.cookie('usrName',doc.username);
+                    var newtoken=jwt.sign({userID:doc._id},"secrettoken",{expiresIn: '3h'}) 
+                    res.cookie('token',newtoken)
+                    res.render('home',{title:"Motor || Home"});
+
+                }
+            })
         }
     })
 })
 router.get('/logout', function (req, res) {
     req.logout()
+    res.clearCookie("usrName");
+    res.clearCookie("token")
     res.redirect('/')
   })
 router.get('/resetPassword',function(req, res)
@@ -162,7 +191,7 @@ router.get('/resetPassword',function(req, res)
 // });
 router.get('/setPassword', function(req,res){
  var q=url.parse(req.url,true).query;
- res.cookie("token",q.token)
+ res.cookie("tokenreset",q.token)
   res.render('setPassword',{title:"Motor || Set New Password"})
 })
 router.get('/tech', loggedin,function(req,res,next){
@@ -192,6 +221,20 @@ router.post('/search', function(req, res){
   })
 router.get('/about', loggedin,function(req,res,next){
     res.render('about',{title:"Motor || About us"});
+});
+router.post('/forwardthread',function(req,res,next){
+    console.log(req.body.link, req.body.email, req.body.username);
+    link=req.body.link;
+    email=req.body.email;
+    name=req.body.username;
+    mail(email,'The thread are shared by your friend','Your friend '+name+' share the post from Motor-Forum to you. \nPlease click to the link '+link +' to visit the Motor Forum and enjoy the post. \nThank you. \nVGU Team 1.');
+    res.send("Email was sent")
+})
+router.get('/redirect', loggedin,function(req,res,next){
+    //res.send(req.session);
+    res.cookie('usrName',req.session.passport.user.username); 
+    res.cookie('token',req.session.passport.user.token)
+    res.render('home',{title:"Motor || Home"});
 });
 
 

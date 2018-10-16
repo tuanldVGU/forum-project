@@ -2,8 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req,res,next){
-    // res.cookie('usrName',req.session.passport.user.username);
-    // res.cookie('token',req.session.passport.user.token);
     res.render('./thread/forum',{title:"Welcome to Motor forum"});
 });
 
