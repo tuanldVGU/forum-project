@@ -10,7 +10,7 @@
       </div>
     </div>      
     <div class="col-md-9">
-      <div class="prof-info">
+      <div class="prof-info" id="vue-profile">
         <h2>Your Information</h2>
         <div class="info">
           <label>Name:</label> {{usr.username}}
@@ -25,23 +25,23 @@
     </div>
   </div>
   <!-- Your post -->
-  <div class="container-fluid" style="padding: 5rem 3rem 1rem;" id='vue-profile'>
+  <div class="container-fluid" style="padding: 5rem 3rem 1rem;" id='vue-profile-post'>
     <h2>Your post</h2>
     <table class="table table-hover table-bottom-border">
         <thead>
             <tr>
                 <th scope="col">Title</th>
-                <th scope="col">Last Post</th>
-                <th scope="col">Modified</th>
-                <th scope="col">Deleted</th>
+                <th scope="col">CreatedAt</th>
+                <th scope="col">Modify</th>
+                <th scope="col">Delete</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="row in posts">
-                <td><a v-bind:href="'/forum/thread?id='+row.id">{{row.forumName}}</a></td>
-                <td>{{row.lastPost}}</td>
-                <td><a href="#" class="btn btn-white">Modified</a></td>
-                <td><a href="#" class="btn btn-white"></a></td>
+                <td><a v-bind:href="'/forum/thread?id='+row._id">{{row.title}}</a></td>
+                <td>{{row.createdAt}}</td>
+                <td><a v-bind:href="'/forum/modifyPost?id='+row._id" class="btn"><i class="fas fa-wrench"></i></a></td>
+                <td><a role="button" class="btn" v-on:click="deletePost(row._id,row.forumId)"><i class="fas fa-eraser"></i></a></td>
             </tr>
         </tbody>
     </table>
