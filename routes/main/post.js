@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const postService = require('../../services/postService');
 const utils = require('../../ultis/ultis');
-const jwt=require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const key = require('../../config/jwt');
 
 router.get('/api/post/getDetail/:id', (req, res) => postService.getDetail(req.params.id)
   .then(result => res.json(utils.succeed(result)))
@@ -24,11 +25,13 @@ router.get('/api/post/getPost/:id', (req, res) => postService.getPost(req.params
     return res.json(utils.fail(err, err.message));
   }));
 
-router.get('/api/post/getUserPost/:id', (req, res) => postService.getUserPost(req.params.id)
+router.get('/api/post/getUserPost/:id', (req, res) =>{ 
+  const userId = jwt.verify(req.params.id,key.secret).userID;
+  postService.getUserPost(userId)
   .then(result => res.json(utils.succeed(result)))
   .catch((err) => {
     return res.json(utils.fail(err, err.message));
-  }));
+  })});
 
 router.get('/api/post/getSumPost', (req, res) => postService.getSumPost()
   .then(result => res.json(utils.succeed(result)))
