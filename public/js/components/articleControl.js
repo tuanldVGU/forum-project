@@ -3,7 +3,6 @@ var postID = document.URL.split('id=')[1];
 var article = new Vue({
     el: '#vue-content',
     data(){
-        
         return{
             info: {
                 title: "loading..",

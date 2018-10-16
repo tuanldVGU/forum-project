@@ -1,3 +1,6 @@
+import {getCookie} from '../getCookie.mjs';
+
+var usrToken = getCookie('token');
 var formControl = new Vue({
     el: "#vue-profile",
     data: {
@@ -12,7 +15,7 @@ var formControl = new Vue({
     methods:{
         loadPost: function(){
             //get user detail
-            this.$http.get('/service/api/post/getDetail').then(response => {
+            this.$http.get('/service/api/user/getDetail'+usrToken).then(response => {
                 this.usr = response.body.data
             }, response => {
                 // error callback

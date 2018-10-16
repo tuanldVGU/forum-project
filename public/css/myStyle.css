@@ -222,10 +222,6 @@ body, html {
   color: #000;
 }
 
-.nicEdit-main {
-  color: #fff;
-}
-
 .hidden {
   display: none !important;
   visibility: hidden;

@@ -9,9 +9,33 @@
             
             <!-- Content -->
             <div class="container-fluid" style="padding: 3rem 3.5rem 1rem;">
-                {{info.content}}
+                <p v-html="info.content"></p>
             </div>
-            <input class="form-control" type="text"  v-model="email" name="Email" v-on:keyup.13="forwardingthread">
+
+            <!-- Modal -->
+            <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModal" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="emailModalLabel" style="color: #000;">Enter your email</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                        <input class="form-control" type="text"  v-model="email" name="Email" v-on:keyup.13="forwardingthread" placeholder="Press enter to send">
+                                </div>
+                        </div>
+                </div>
+            </div>
+    </div>
+
+    <div class="text-center pb-3">
+        Share the post by 
+        <!-- Button trigger modal -->
+        <button type="button" class="btn" data-toggle="modal" data-target="#emailModal" style="margin-left: 1em">
+        <i class="far fa-envelope"></i>
+        </button>
     </div>
     <!-- Comment section -->
     <div class="card bg-menu thread" id="vue-comment">
@@ -21,7 +45,6 @@
             <div class="input-group-append">
                     <span class="input-group-text">Comment</span>
             </div>
-            
         </div>    
         <div class="media mb-4">
             <img class="d-flex mr-3 rounded-circle far fa-user-circle" src="/img/user-circle.svg">
