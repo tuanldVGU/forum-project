@@ -12,6 +12,7 @@ class post{
         this.author=e;
     }
 }
+
 var modify = new Vue({
     el:'#vue-modify-post',
     data:{
