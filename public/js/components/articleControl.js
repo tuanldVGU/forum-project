@@ -39,9 +39,11 @@ var article = new Vue({
         }   
     }
 });
+
 article.$watch('info',function(){
     console.log("change!!!!");
 });
+
 function getCookie(cname){
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -57,3 +59,37 @@ function getCookie(cname){
     }
     return "";
 }
+
+var comment = new VUe({
+    el:'#vue-comment',
+    data: {
+        commentBox:'',
+        comments:[]
+    },
+    methods:{
+        loadComment: function(){
+            this.$http.get('/service/api/post/getpost/'+postID).then(response => {
+                var element = response.body.data;
+                var input = {
+                    title: element.title,
+                    content: element.description,
+                    subcom: element.subcomment
+                }
+                this.info= input;
+                console.log(input);
+            }, response => {
+                // error callback
+                console.log('failed');
+            })
+        },
+        submitcomment: function(){
+            this.$http.post('/service/api/post/getpost/'+postID,{content: this.commentBox}).then(response => {
+               //Success
+               console.log('Success');
+            }, response => {
+                // error callback
+                console.log('failed');
+            })   
+        }
+    }
+})

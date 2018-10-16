@@ -8,52 +8,63 @@ var mail= require('../javascripts/components/mailer')
 module.exports = function(passport){
     /* GET home page. */
     router.post('/signup', function(req, res) {
-       //  res.send(req.body.usr+ " "+ req.body.pwd +" "+ req.body.email);
+        //console.log(req.body)
         var body = req.body,
             username=body.usr,
             email=body.email,
             password=body.pwd;
-       // res.send(username+" "+email+" "+password);
+        //console.log(username+" "+email+" "+password);
         User.findOne({username:username},
              function(err,doc){
             if(err){res.status(500).send('error occured')}
             else{
                 if(doc){
-                    res.status(500).send('username already on database')
+                    res.status(500).send('Username already on database. Please try another or reset password')
                 }
                 else {
-                    var record = new User()
-                        record.username = username
-                        record.password= record.hashPassword(password)
-                        record.email=email;
-                        //res.send(record);
-                        record.save(function(err,user){
-                            if(err){
-                                res.status(500).send(err)
+                    User.findOne({email:email},function(err,doc){
+                        if(err){res.status(500).send('error occured')}
+                        else
+                        {
+                            if(doc)
+                            {
+                                res.status(500).send("Email already used for register.Please try another or reset password")
                             }
                             else{
-                                //res.send(user)
-                                res.redirect('/signin')
+                                var record = new User()
+                                 record.username = username
+                                 record.password= record.hashPassword(password)
+                                 record.email=email;
+                        //res.send(record);
+                                record.save(function(err,user){
+                                 if(err){
+                                 res.status(500).send(err)
+                                }
+                                else{
+                                res.send("Success!!")
+                                }
+                                })
                             }
-                        })
+                        }
+                    })
+                    
                     }
                 }
             })
 
         });
+    router.get('/failure',function(req,res){
+        res.status(500).send("Invalid username or password!!")
+    })
     //  router.post('/login',passport.authenticate)
-    router.post('/signin',passport.authenticate('local', {
-    failureRedirect: '/signin',
-    successRedirect: '/redirect'}
-    //,function(req,res){
-    //res.cookie('usrName',req.session.passport.user.username);
-    //res.cookie('token',req.session.passport.user.token);
-//}
-));
-router.get('/signin/google',
-passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.email',
-'https://www.googleapis.com/auth/userinfo.profile'
-] }));
+    router.post('/signin',passport.authenticate('local',{
+        successRedirect:"/redirect",
+        failureRedirect: '/auth/failure',
+    }));
+    router.get('/signin/google',
+    passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile'
+    ] }));
 
 router.get('/signin/google/return', 
 passport.authenticate('google', { failureRedirect: '/signin' }),

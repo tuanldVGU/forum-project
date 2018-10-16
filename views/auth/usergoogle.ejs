@@ -1,0 +1,9 @@
+<%layout('./partials/layout')%>
+<body class="bg-white text-center">
+    <div class="form-signin"  id="vue-form1">
+        <h1 class="brand">motor</h1>
+        <input type="text" placeholder="Username" name="usr" class="form-control" v-model="username" required autofocus >
+        <button class="btn btn-lg btn-block btn-black" @click="submitgoogle">Set Username</button>
+        <p class="mt-5 mb-3 text-muted">© Team 1 VGU 2018</p>
+    </div>
+    <script src="/js/components/usernameControl.js"></script>

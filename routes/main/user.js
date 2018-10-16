@@ -11,5 +11,4 @@ router.get('/api/user/getDetail/:id', (req, res) => {
   .catch((err) => {
     return res.json(utils.fail(err, err.message));
   })});
-
 module.exports = router;
