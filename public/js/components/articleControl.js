@@ -39,9 +39,11 @@ var article = new Vue({
         }   
     }
 });
+
 article.$watch('info',function(){
     console.log("change!!!!");
 });
+
 function getCookie(cname){
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -57,11 +59,12 @@ function getCookie(cname){
     }
     return "";
 }
+
 var comment = new VUe({
     el:'#vue-comment',
     data: {
         commentBox:'',
-        comment:[]
+        comments:[]
     },
     methods:{
         loadComment: function(){
@@ -70,6 +73,7 @@ var comment = new VUe({
                 var input = {
                     title: element.title,
                     content: element.description,
+                    subcom: element.subcomment
                 }
                 this.info= input;
                 console.log(input);
