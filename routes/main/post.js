@@ -45,6 +45,7 @@ router.post('/api/post/createPost', (req, res) => {
 });
 
 router.post('/api/post/deletePost', (req, res) => {
+  const { forumId, postId} = req.body;
   return postService.deletePost(req.body)
     .then(() => res.send(utils.succeed()))
     .catch(err => res.send(utils.fail(err, err.message)));
