@@ -22,8 +22,7 @@ var navbar = new Vue({
     }
 })
 
-
-function filterToggle(){
+window.filterToggle = function filterToggle(){
     var filter = document.getElementById('filter');
     filter.classList.toggle('hidden');
 }

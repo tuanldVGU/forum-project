@@ -7,6 +7,7 @@ class forum {
         this.lastComment = lc;
     }
 }
+
 var table = new Vue({
     el: '#vue-forum',
     data: {

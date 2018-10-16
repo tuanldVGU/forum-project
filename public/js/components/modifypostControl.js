@@ -13,6 +13,15 @@ class post{
     }
 }
 
+var area;
+bkLib.onDomLoaded(function() {
+    //addTextArea();
+});
+
+function addTextArea(){
+    area = new nicEditor({fullPanel : true}).panelInstance('content');
+}
+
 var modify = new Vue({
     el:'#vue-modify-post',
     data:{
@@ -29,6 +38,7 @@ var modify = new Vue({
                 response.body.data.forEach(element => {
                     this.categories.push(element);
                 });
+                addTextArea();
             }, response => {
                 // error callback
                 console.log('failed');

@@ -40,10 +40,6 @@ var article = new Vue({
     }
 });
 
-article.$watch('info',function(){
-    console.log("change!!!!");
-});
-
 function getCookie(cname){
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);

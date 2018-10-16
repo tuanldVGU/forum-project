@@ -231,8 +231,12 @@ body,html{
     }
 }
 
-.nicEdit-pane{
+.nicEdit-panelContain, .nicEdit-pane{
     color: #000;
+}
+
+.nicEdit-selected{
+    color: #fff;
 }
 
 .hidden{
@@ -247,3 +251,4 @@ body,html{
 .modal {
     color: color(dashboard);
 }
+
