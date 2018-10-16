@@ -41,10 +41,24 @@
                 <td><a v-bind:href="'/forum/thread?id='+row._id">{{row.title}}</a></td>
                 <td>{{row.createdAt}}</td>
                 <td><a v-bind:href="'/forum/modifyPost?id='+row._id" class="btn"><i class="fas fa-wrench"></i></a></td>
-                <td><a role="button" class="btn" v-on:click="deletePost(row._id,row.forumId)"><i class="fas fa-eraser"></i></a></td>
+                <td><a role="button" class="btn" v-on:click="deleteReminder(row._id,row.forumList)"  data-toggle="modal" data-target="#emailModal"><i class="fas fa-eraser"></i></a></td>
             </tr>
         </tbody>
     </table>
+    <!-- Delete Modal -->
+    <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModal" aria-hidden="true">
+      <div class="modal-dialog" role="document"> 
+        <div class="modal-content">
+                <div class="modal-body">
+                  <p class="lead">Do you want to delete the post</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" v-on:click="deletePost(parseData.pid,parseData.fid)">Continue</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+                </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <script src="/js/components/profileControl.js" type="module"></script>

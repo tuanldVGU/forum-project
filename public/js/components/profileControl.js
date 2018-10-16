@@ -1,6 +1,10 @@
 import {getCookie} from '../getCookie.mjs';
 
 var usrToken = getCookie('token');
+Vue.component('modal', {
+    template: '#modal-template'
+}) 
+
 var formControl = new Vue({
     el: "#vue-profile",
     data: {
@@ -25,7 +29,12 @@ var formControl = new Vue({
 var postControl = new Vue({
     el: "#vue-profile-post",
     data: {
-        posts: []
+        posts: [],
+        showModal: false,
+        parseData : {}
+    },
+    component :{
+
     },
     created(){
         this.loadPost();
@@ -45,17 +54,17 @@ var postControl = new Vue({
             })
         },
         deletePost: function(postID,forumID){
-            console.log('click');
-            this.$http.delete('/service/api/post/deletePost',{id: postID,fid: forumID}).then(response => {
-                response.body.data.forEach(element => {
-                    console.log(element);
-                    this.posts.push(element);
-                });
-                console.log(this.posts);
+            console.log(postID,forumID);
+            this.$http.post('/service/api/post/deletePost',{id: postID,fid: forumID}).then(response => {
+                console.log(success);
             }, response => {
                 // error callback
                 console.log('failed');
             })
+        },
+        deleteReminder: function(postID,forumID){
+            this.parseData.pid = postID;
+            this.parseData.fid= forumID;
         }
     }
 

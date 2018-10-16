@@ -1,4 +1,3 @@
-
 function urlParam(name){
     var params = document.URL.split('?');
     for (var i = 1; i<params.length; i++){
@@ -12,6 +11,7 @@ var forumID = urlParam('id');
 var forumName = urlParam('name');
 console.log(forumID);
 console.log(forumName);
+
 
 class thread {
     constructor(id, title, date, comment,lc) {
@@ -84,3 +84,4 @@ var table = new Vue({
         }
     }
 })
+
