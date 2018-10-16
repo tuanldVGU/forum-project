@@ -33,6 +33,7 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "superagent": "^4.0.0-beta.5",
-    "url": "^0.11.0"
+    "url": "^0.11.0",
+    "lodash": "latest"
   }
 }
