@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const posts = mongoose.model('post');
 const category = mongoose.model('category');
 const forumLists = mongoose.model('forumList');
-
+const utils = require('../ultis/ultis');
 const { ObjectId } = mongoose.Types;
 class postService {
   static getDetail(forumId) {
@@ -31,7 +31,10 @@ class postService {
   }
   static deletePost({postId, forumId}){
     return posts.findByIdAndRemove(postId).exec()
-      .then(()=> forumLists.findOneAndUpdate({_id: ObjectId(forumId)}, { $inc: { numOfPost: -1 } }, {new: true }).exec())
+      .then(()=>posts.find({ forumList: forumId }).sort({ "_id": -1 }).limit(1).then((_post) => {
+      const postDetail = utils.succeed(_post).data;
+      return forumLists.findOneAndUpdate({_id: ObjectId(forumId)}, { $inc: { numOfPost: -1 } , recentPost: postDetail[0].title }, {new: true }).exec();
+    }));
   }
 }
 module.exports = postService;
