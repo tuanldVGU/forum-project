@@ -55,7 +55,7 @@ module.exports = function (passport) {
              username: username
          }, function (err, doc) {
              if (err) {
-                 done(err,req.flash('message',err))
+                 done(err);
              } else {
                 if (doc) {
                     var valid = doc.comparePassword(password, doc.password)
@@ -76,12 +76,12 @@ module.exports = function (passport) {
                     }
                     else {
                         console.log('not valid');
-                        done(null, false,req.flash('message','Wrong pass'))
+                        done(null,false);
                     }
                 }
                 else {
                     console.log('not valid');
-                    done(null, false, req.flash('message','Not found username'))
+                     done(null,false);
                 }
              }
          })

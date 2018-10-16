@@ -122,58 +122,73 @@ router.get('/facebook',loggedin,function(req,res,next){
 
     })
 })
-router.post('/FacebookUser',function(req,res){
+router.post('/facebookUser',function(req,res){
     var user=jwt.verify(req.session.passport.user.tokenface,"facebooktoken");
     var record=new User();
     var record = new User()
     record.username = req.body.usr;
     record.loginFacebook=user.faceID;
     record.email=user.email;
-    record.save(function(err,user){
-        if(err){
-            res.status(500).send(err)
-        }
+    User.findOne({username:record.username},function(err,doc){
+        if(err){res.status(500).send(err)}
         else{
-            //res.send(user)
-            User.findOne({username:record.username},function(err,doc){
-                if(err){throw err;}
-                else{
-                    res.cookie('usrName',doc.username);
-                    var newtoken=jwt.sign({userID:doc._id},"secrettoken",{expiresIn: '3h'}) 
-                    res.cookie('token',newtoken)
-                    res.render('home',{title:"Motor || Home"});
-
+            if(doc){res.status(500).send("Username already use please try another one")}
+            else{    record.save(function(err,user){
+                if(err){
+                    res.status(500).send(err)
                 }
-            })}
+                else{
+                    //res.send(user)
+                    User.findOne({username:record.username},function(err,doc){
+                        if(err){res.status(500).send( err);}
+                        else{
+                            res.cookie('usrName',doc.username);
+                            var newtoken=jwt.sign({userID:doc._id},"secrettoken",{expiresIn: '3h'}) 
+                            res.cookie('token',newtoken)
+                            res.send("Success!!");
+        
+                        }
+                    })}
+            })
+
+            }
+        }
     })
+
 })
 router.post('/googleUser',function(req,res){
-    //console.log(req.body.usr);
-    //console.log(req.session)
     var user=jwt.verify(req.session.passport.user.token,"googletoken");
-   // console.log(user)
-    var record=new User();
     var record = new User()
     record.username = req.body.usr;
     record.loginGoogle=user.googleID;
     record.email=user.email;
-    record.save(function(err,user){
-        if(err){
-            res.status(500).send(err)
-        }
-        else{
-            User.findOne({username:record.username},function(err,doc){
-                if(err){throw err;}
-                else{
-                    res.cookie('usrName',doc.username);
-                    var newtoken=jwt.sign({userID:doc._id},"secrettoken",{expiresIn: '3h'}) 
-                    res.cookie('token',newtoken)
-                    res.render('home',{title:"Motor || Home"});
-
-                }
-            })
+    User.findOne({username:record.username},function(err,doc){
+        if(err){throw err;}
+        else
+        {
+            if(doc){res.status(500).send("Username already used please try another one")}
+            else{
+                record.save(function(err,user){
+                    if(err){
+                        res.status(500).send(err)
+                    }
+                    else{
+                        User.findOne({username:record.username},function(err,doc){
+                            if(err){res.status(500).send( err);}
+                            else{
+                                res.cookie('usrName',doc.username);
+                                var newtoken=jwt.sign({userID:doc._id},"secrettoken",{expiresIn: '3h'}) 
+                                res.cookie('token',newtoken)
+                                res.send('Success!!');
+            
+                            }
+                        })
+                    }
+                })
+            }
         }
     })
+
 })
 router.get('/logout', function (req, res) {
     req.logout()
