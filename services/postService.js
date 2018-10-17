@@ -19,6 +19,9 @@ class postService {
   static getPost(postId) {
     return posts.findById(postId).exec();
   }
+  static searchPost(categoryid, title){
+    return posts.find({category:categoryid, title:new RegExp(title,'i')}).exec();
+  }
   static getUserPost(userId) {
     return posts.find({user: ObjectId(userId)}).exec();
   }

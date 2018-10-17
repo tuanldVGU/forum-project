@@ -37,7 +37,8 @@ router.get('/api/post/getSumPost', (req, res) => postService.getSumPost()
   .then(result => res.json(utils.succeed(result)))
   .catch((err) => {
     return res.json(utils.fail(err, err.message));
-  }));
+  })
+  );
 
 router.post('/api/post/createPost', (req, res) => {
   const { category, forumList, title, description , author} = req.body;
@@ -46,6 +47,12 @@ router.post('/api/post/createPost', (req, res) => {
     .then(() => res.send(utils.succeed()))
     .catch(err => res.send(utils.fail(err, err.message)));
 });
+// router.get('/api/post/searchPost/:categoryid/:title',(req,res)=>
+// postService.searchPost(req.params.categoryid,req.params.title)
+// .then(result => res.json(utils.succeed(result)))
+// .catch((err) => {
+//   return res.json(utils.fail(err, err.message));
+// }));
 
 router.post('/api/post/deletePost', (req, res) => {
   const { postId, forumId} = req.body;

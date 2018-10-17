@@ -11,7 +11,10 @@ var formControl = new Vue({
         categoryid:'',
         addType: '',
         search:'',
+        result:[],
+        partarea:['Engine','Tire & Wheel','Brake','Drivetrain'],
         addManufacture:'',
+        addPart:'',
         addModel:'',
         addYear:'',
     },
@@ -100,6 +103,27 @@ var formControl = new Vue({
                }
            })
         },
+        addPart:function(news, old){
+            this.categories.forEach(element=>{
+                if(element.transportManufacture==this.addManufacture && element.transportType==this.addType&& element.transportModel==this.addModel
+                     &&element.transportYear==this.addYear){
+                       //console.log("true",element._id);  
+                       this.categoryid=element._id;}})
+            if(this.categoryid!=''){
+            this.$http.get('/service/api/post/searchPost/'+this.categoryid+'/'+news).then(
+                response=>{
+                    response.body.data.forEach(element=>{
+                        this.table.push(element);
+                        console.log("success!!")
+                    })
+                }
+                ,response=>{
+                    console.log("failure!!")
+                });}
+
+
+
+        }
 
 
     },
@@ -118,7 +142,7 @@ var formControl = new Vue({
                 // error callback
                 console.log('failed');
             })
-            this.loadPost();
+           // this.loadPost();
         },
         loadPost:function(){
             this.$http.get('/service/api/post/getAllDetail').then(response => {
@@ -130,22 +154,6 @@ var formControl = new Vue({
                 console.log('failed');
             }
         )},
-        searchPost: function(event){
-         //   console.log("test");
-            this.table.length=0;
-            this.categories.forEach(element=>{
-                
-                 if(element.transportManufacture==this.addManufacture && element.transportType==this.addType&& element.transportModel==this.addModel
-                      &&element.transportYear==this.addYear){
-                        //console.log("true",element._id);  
-                        this.categoryid=element._id;}})
-                  console.log(this.categoryid)
-            this.post.forEach(element=>{
-                if(element.category==this.categoryid){this.table.push(element);}
-            });
-            console.log(this.table)
-           // })
-         },
         addtotext: function(){
             var categoryText = document.getElementById('categoryText');
             var boxValue = document.getElementById('addCategory');
