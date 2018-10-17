@@ -14,9 +14,12 @@ class commentService {
     return comments.countDocuments({ post: ObjectId(postId) }).exec();
   }
   static createComment({ post, user, content }){
+
     return posts.findOneAndUpdate({_id: ObjectId(post)}, { $inc: { numOfComment:1 } , recentComment: content}, {new: true }).exec()
-      .then(() => comments.create({ post: post, user: user, content: content }))
-      ;
+      .then(() => comments.create({ post: post, user: user, content: content })
+      .then(
+           //console.log("im here");
+      ));
   }
 
 }

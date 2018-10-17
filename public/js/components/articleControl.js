@@ -1,4 +1,5 @@
 var postID = document.URL.split('id=')[1];
+var userName = getCookie("usrName");
 
 var article = new Vue({
     el: '#vue-content',
@@ -24,25 +25,21 @@ var article = new Vue({
                     content: element.description,
                 }
                 this.info= input;
-                console.log(input);
+//                console.log(input);
             }, response => {
                 // error callback
                 console.log('failed');
             })
         } ,
         forwardingthread:function(){
-            console.log(document.URL);
-            console.log("email:", this.email);
-            console.log(getCookie("usrName"));
+            //console.log(document.URL);
+            //console.log("email:", this.email);
+            //console.log(getCookie("usrName"));
             this.$http.post('/forwardthread', {link:document.URL, email:this.email,username:getCookie("usrName")})
             .then ((res)=> console.log (res.body))
             .catch ((error)=> console.log(error))
         }
     }
-});
-
-article.$watch('info',function(){
-    console.log("change!!!!");
 });
 
 function getCookie(cname){
@@ -74,18 +71,24 @@ var comment = new Vue({
     },
     methods:{
         loadComment: function(){
-            //this.$http.get('/service/api/comment/getDetail/'+postID)
-            this.$http.get('/service/api/comment/getSumComment/'+postID)
+            this.$http.get('/service/api/comment/getDetail/'+postID)
+            //this.$http.get('/service/api/comment/getSumComment/'+postID)
             .then(response => {
                 var element = response.body.data;
                 console.log(element);
-                // var input = {
-                //     title: element.title,
-                //     content: element.description,
-                //     subcom: element.subcomment
-                // }
-                // this.info= input;
-                // console.log(input);
+                try {
+                    var tmp = element.content.split(':::');
+                    var input = {
+                        user: tmp[0],
+                        content: tmp[1],
+                        //subcom: element.subcomment
+                    }
+                    this.info= input;
+                    //console.log(input);
+                }
+                catch(err){
+                    console.log('empty');
+                }
             }, response => {
                 // error callback
                 console.log('failed');
@@ -96,19 +99,24 @@ var comment = new Vue({
                 user: getCookie("usrName"),
                 content:  this.commentBox
             };
-            //input.user = getCookie("usrName");
-            //input.content =  this.commentBox;
-            this.comments.push(input);
-            this.commentBox = '';
-            // get api this.$http.post('/service/api/post/getpost/'+postID,{content: this.commentBox})
-            // .then(response => {
-            //    //Success
-            //    console.log('Success');
-            // }, response => {
-            //     // error callback
-            //     console.log('failed');
-            // })
 
+            this.comments.push(input);
+            var dataSent ={
+                post: postID,
+                token: getCookie('token'),
+                content: getCookie("usrName")+":::"+this.commentBox
+            }
+            //get api
+            this.$http.post('/service/api/comment/createComment', { data: dataSent})
+            .then(response => {
+               //Success
+               console.log(response);
+            }, response => {
+                // error callback
+                console.log('failed');
+            })
+
+            this.commentBox = '';
 
         }
     }
