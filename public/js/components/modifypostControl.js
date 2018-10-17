@@ -62,6 +62,20 @@ var modify = new Vue({
             var boxValue = document.getElementById('addCategory');
             var tmp  = this.categories[boxValue.selectedIndex]._id;
             categoryText.value = tmp;
+        },
+        modifySent: function(){
+            var pack = $('form').serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+            pack.description = $('#vue-modify-post').find('.nicEdit-main').text();
+            this.$http.put('/service/api/post/modifyPost/',{data: pack}).then(response => {
+                console.log(response);
+                window.location.href= '/forum';
+            }, response => {
+                // error callback
+                console.log(response);
+            })
         }
     }
 })

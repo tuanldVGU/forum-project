@@ -252,3 +252,94 @@ body,html{
     color: color(dashboard);
 }
 
+.dashboard {
+    height: 100%;
+    @include desktop(){
+        display: grid;
+        grid-template-columns: 20% auto;
+    }
+
+    aside {
+        background: color(dashboard);
+        grid-template-columns: auto;
+        grid-template-rows: 30% auto;
+        padding: 0;
+
+        nav {
+            background: color(primary-menu);
+        }
+
+        ul{
+            display: block;
+            a {
+                color: #fff;
+                &:hover{
+                    background: color(primary-hover);
+                    color: color(primary);
+                }
+            }
+        }
+
+        #menu-link {
+            display: none;
+        }
+        .menu {
+            a{
+                text-transform: uppercase;
+                font-size:.8em;
+                display: block;
+                padding: 1.5em 3em;
+                color: #fff;
+                &:hover{
+                    color: color(primary);
+                    text-decoration: none;
+                }
+            }
+        }
+
+        #avatar{
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin: 2em auto 1em auto;
+            i{
+                color:#fff;
+                text-align: center;
+            }
+        }
+
+        figcaption{
+            text-align: center;
+            color: #fff;
+            a{
+                &:hover{
+                    background: color(primary-hover);
+                    color: #fff;
+                }
+            }
+        }
+    }
+}
+
+.media-info{
+    padding: 30px;
+    outline: none; 
+    .media-left{
+        padding-right: 25px;
+        position: inline;
+    }
+    .media-body{
+        position: relative;
+        vertical-align: middle;
+    }
+    .media-text-right{
+        text-align: right;
+    }
+}
+
+.toolbar{
+    display: flex !important;
+    flex-wrap: nowrap !important; 
+    align-items: center !important;
+    justify-content: space-between !important;
+}

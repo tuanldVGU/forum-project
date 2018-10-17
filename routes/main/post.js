@@ -41,9 +41,12 @@ router.get('/api/post/getSumPost', (req, res) => postService.getSumPost()
 
 router.post('/api/post/createPost', (req, res) => {
   const { category, forumList, title, description , author} = req.body;
-    const user =jwt.verify(author,"secrettoken").userID;
+    const user = jwt.verify(author,"secrettoken").userID;
   return postService.createPost({ category, forumList, user, title, description })
-    .then(() => res.send(utils.succeed()))
+    .then(
+      // () => res.send(utils.succeed())
+      res.redirect('/forum')
+      )
     .catch(err => res.send(utils.fail(err, err.message)));
 });
 
@@ -52,6 +55,15 @@ router.post('/api/post/deletePost', (req, res) => {
   return postService.deletePost({ postId, forumId })
     .then(() => res.send(utils.succeed()))
     .catch(err => res.send(utils.fail(err, err.message)));
+});
+
+router.put('/api/post/modifyPost', (req, res) =>{
+  const { postid, title, description, category, dummy, author} = req.body.data;
+  console.log(req.body.data);
+  const user = jwt.verify(author,key.secret).userID;
+  return postService.modifyPost({ category, postid, user, title, description })
+  .then(() => res.send(utils.succeed()))
+  .catch(err => res.send(utils.fail(err, err.message)));
 });
 
 

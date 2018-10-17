@@ -6,6 +6,7 @@ const category = mongoose.model('category');
 const forumLists = mongoose.model('forumList');
 const utils = require('../ultis/ultis');
 const { ObjectId } = mongoose.Types;
+
 class postService {
   static getDetail(forumId) {
     return posts.find({forumList: forumId}).exec();
@@ -39,6 +40,12 @@ class postService {
         return forumLists.findOneAndUpdate({_id: ObjectId(forumId)}, {  numOfPost: 0 , recentPost: '' }, {new: true }).exec();
 
     }));
+  }
+  static modifyPost({category,postid, user, title, description})
+  {
+    return posts.findOneAndUpdate({ _id: postid },
+    {category: category, user: user, title: title, description: description})
+    .exec();
   }
 }
 module.exports = postService;

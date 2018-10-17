@@ -11,4 +11,12 @@ router.get('/api/user/getDetail/:id', (req, res) => {
   .catch((err) => {
     return res.json(utils.fail(err, err.message));
   })});
+
+router.get('/api/user/getAllDetail/', (req, res) => {
+  userService.getAllDetail()
+  .then(result => res.json(utils.succeed(result)))
+  .catch((err) => {
+    return res.json(utils.fail(err, err.message));
+  })});
+
 module.exports = router;

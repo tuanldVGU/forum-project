@@ -1,6 +1,6 @@
 <%layout('./partials/layout')%>
 <body class="bg-menu">
-    <form class="form-post" method="POST" action ="/service/api/post/createPost" id="vue-modify-post">
+    <form class="form-post" id="vue-modify-post">
         <h1 class="brand">motor</h1>
         <h4>Create new post</h4>
         <label for="title">Update post</label>
@@ -28,7 +28,7 @@
         <label for="author">Author</label>
         <input type="text" id="author" name="author" class="form-control" v-model="post.author"readonly>
 
-        <button class="btn btn-lg btn-block btn-white">Submit</button>
+        <button type="button" class="btn btn-lg btn-block btn-white" v-on:click="modifySent">Submit</button>
 
         <p class="mt-3 mb-3 text-muted">© Team 1 VGU 2018</p>
     </form>

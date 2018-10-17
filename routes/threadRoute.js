@@ -14,16 +14,17 @@ router.get('/post', function(req,res,next){
 });
 
 router.get('/thread', function(req,res,next){
-    res.render('./thread/thread',{title:"Motor ||"});
+    console.log(req.params);
+    res.render('./thread/thread',{title:"Motor || "});
 });
 
 router.get('/article', function(req,res,next){
-    res.render('./thread/article',{title:"Motor ||"});
+    res.render('./thread/article',{title:"Motor || "});
 });
 
 router.get('/modifyPost', function(req,res,next){
     console.log(req.param);
-    res.render('./thread/modifyPost',{title:"Motor ||"});
+    res.render('./thread/modifyPost',{title:"Motor || "});
 });
 
 module.exports = router;

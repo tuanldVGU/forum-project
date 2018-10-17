@@ -30,6 +30,9 @@ class userService {
            else{return false;}
          }
     })
- }
+  }
+  static getAllDetail(){
+    return user.find().exec();
+  }
 }
 module.exports = userService;
