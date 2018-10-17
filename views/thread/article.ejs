@@ -28,36 +28,37 @@
                         </div>
                 </div>
             </div>
-            <div id="report" v-on:click="reportreason" class="control">
-                <p>Report</p>
-            </div>
-            <div v-if="seen" id='reason'>
-                <input type="checkbox" id="nudity" value="Nudity" v-model="reason">
-                <label for="nudity">Nudity</label>
-                <input type="checkbox" id="violence" value="Violence" v-model="reason">
-                <label for="violence">Violence</label>
-                <input type="checkbox" id="harassment" value="Harassment" v-model="reason">
-                <label for="Harassment">Harassment</label>
-                <input type="checkbox" id="suicide" value="Suicide or Self-Injury" v-model="reason">
-                <label for="suicide">Suicide or Self-Injury</label>
-                <input type="checkbox" id="fake" value="False News" v-model="reason">
-                <label for="fake">False News</label>
-                <br>
-                <input type="checkbox" id="spam" value="Spam" v-model="reason">
-                <label for="spam">Spam</label>
-                <input type="checkbox" id="unsales" value="Unauthorized Sales" v-model="reason">
-                <label for="unsales">Unauthorized Sales</label>
-                <input type="checkbox" id="speech" value="Hate Speech" v-model="reason">
-                <label for="speech">Hate Speech</label>
-                <input type="checkbox" id="terrorism" value="Terrorism" v-model="reason">
-                <label for="terrorism">Terrorism</label>
-                <br>
-                <span>Report reason: {{ reason }}</span>
-                <button class="btn" @click="createReport">Submit</button>
-              </div>
-
+        <!-- Report -->
+        <div id="report" v-on:click="reportreason" class="control text-center pb-3">
+                <button class="btn">Report this post</button>
+        </div>
+        <div v-if="seen" id='reason' class="text-center pb-3">
+            <input type="checkbox" id="nudity" value="Nudity" v-model="reason">
+            <label for="nudity">Nudity</label>
+            <input type="checkbox" id="violence" value="Violence" v-model="reason">
+            <label for="violence">Violence</label>
+            <input type="checkbox" id="harassment" value="Harassment" v-model="reason">
+            <label for="Harassment">Harassment</label>
+            <input type="checkbox" id="suicide" value="Suicide or Self-Injury" v-model="reason">
+            <label for="suicide">Suicide or Self-Injury</label>
+            <input type="checkbox" id="fake" value="False News" v-model="reason">
+            <label for="fake">False News</label>
+            <br>
+            <input type="checkbox" id="spam" value="Spam" v-model="reason">
+            <label for="spam">Spam</label>
+            <input type="checkbox" id="unsales" value="Unauthorized Sales" v-model="reason">
+            <label for="unsales">Unauthorized Sales</label>
+            <input type="checkbox" id="speech" value="Hate Speech" v-model="reason">
+            <label for="speech">Hate Speech</label>
+            <input type="checkbox" id="terrorism" value="Terrorism" v-model="reason">
+            <label for="terrorism">Terrorism</label>
+            <br>
+            <span>Report reason: {{ reason }}</span>
+            <button class="btn" @click="createReport">Submit</button>
+        </div>
     </div>
 
+    <!-- Share -->
     <div class="text-center pb-3">
         Share the post by
         <!-- Button trigger modal -->
