@@ -16,12 +16,13 @@ router.get('/api/report/getAllDetail', (req, res) => reportService.getAllDetail(
     //return res.json(req);
     return res.json(utils.fail(err, err.message));
   }));
-//router.post('/api/report/createreport', (req, res) => {
-  //const { postId,reason,reporter,author} = req.body;
- // res.send(req.body)
-  //const user =jwt.verify(author,"secrettoken").userID;
-  //return postService.createPost({ category, forumList, user, title, description })
-    //.then(() => res.send(utils.succeed()))
-    //.catch(err => res.send(utils.fail(err, err.message)));
-//});
+router.post('/api/report/createReport', (req, res) => {
+  const { postId,reason,reporter} = req.body;
+  //console.log(req.body)
+  //console.log(req.body.postId)
+  const user =jwt.verify(reporter,"secrettoken").userID;
+   return reportService.createReport({ postId,reason,user})
+     .then(() => res.send(utils.succeed()))
+     .catch(err => res.send(utils.fail(err, err.message)));
+});
 module.exports = router;

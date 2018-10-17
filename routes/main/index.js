@@ -13,7 +13,7 @@ router.use('/', forumList);
 router.use('/', comment);
 router.use('/', post);
 router.use('/', subComment);
-//router.use('/',report)
+router.use('/',report)
 router.get('/', (req, res) => res.render('main/index'));
 
 module.exports = router;
