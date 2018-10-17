@@ -29,6 +29,12 @@
                         </select>
                     </div>
                     <div class="col-md-8">
+                        <label for="transportYear">Problem area:</label>
+                    <select name="transportYear" id="transportYear" class="form-control" v-model="addPart">
+                        <option v-for="part in partarea" v-bind:value="part">{{part}}</option>
+                    </select>
+                </div>
+                    <div class="col-md-8">
                             <label for="">Problem related: </label>
                             <input class="form-control" type="text"  name="Problem" v-model="search" v-on:keyup.13="searchPost">
                     </div>

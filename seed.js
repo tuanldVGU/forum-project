@@ -51,6 +51,8 @@ category.deleteMany({}).exec()
       user: _user,
       title: 'Engineer V6 Problems',
       description: 'An icon cannot be reinvented, it can only be challenged. And only Aventador could surpass itself. Following Miura, Islero, Countach, and Urraco, Lamborghini’s most iconic model now reaps the inheritance of the historic S models and evolves into the new Aventador S Coupé. Exclusive Lamborghini design and the new V12 engine with a whopping 740 HP now join the most sophisticated technology of the range, featuring the new LDVA (Lamborghini Dinamica Veicolo Attiva/Lamborghini Active Vehicle Dynamics), which offers an unparalleled driving experience to all those who honour their egos by challenging themselves every day.',
+      numOfComment: 1,
+      recentComment: 'I fixed',
     })))
     .then((_post) => comment.create({
       post: _post,

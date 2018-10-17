@@ -4,3 +4,4 @@ require('./category');
 require('./comment');
 require('./subComment');
 require('./forumList');
+require('./report');
