@@ -16,7 +16,8 @@ var article = new Vue({
     },
     methods:{
         loadContent: function(){
-            this.$http.get('/service/api/post/getpost/'+postID).then(response => {
+            this.$http.get('/service/api/post/getpost/'+postID)
+            .then(response => {
                 var element = response.body.data;
                 var input = {
                     title: element.title,
@@ -36,7 +37,7 @@ var article = new Vue({
             this.$http.post('/forwardthread', {link:document.URL, email:this.email,username:getCookie("usrName")})
             .then ((res)=> console.log (res.body))
             .catch ((error)=> console.log(error))
-        }   
+        }
     }
 });
 
@@ -60,36 +61,55 @@ function getCookie(cname){
     return "";
 }
 
-var comment = new VUe({
+
+//comment section
+var comment = new Vue({
     el:'#vue-comment',
     data: {
         commentBox:'',
         comments:[]
     },
+    created(){
+            this.loadComment()
+    },
     methods:{
         loadComment: function(){
-            this.$http.get('/service/api/post/getpost/'+postID).then(response => {
+            //this.$http.get('/service/api/comment/getDetail/'+postID)
+            this.$http.get('/service/api/comment/getSumComment/'+postID)
+            .then(response => {
                 var element = response.body.data;
-                var input = {
-                    title: element.title,
-                    content: element.description,
-                    subcom: element.subcomment
-                }
-                this.info= input;
-                console.log(input);
+                console.log(element);
+                // var input = {
+                //     title: element.title,
+                //     content: element.description,
+                //     subcom: element.subcomment
+                // }
+                // this.info= input;
+                // console.log(input);
             }, response => {
                 // error callback
                 console.log('failed');
             })
         },
-        submitcomment: function(){
-            this.$http.post('/service/api/post/getpost/'+postID,{content: this.commentBox}).then(response => {
-               //Success
-               console.log('Success');
-            }, response => {
-                // error callback
-                console.log('failed');
-            })   
+        addComment: function(){
+            var input = {
+                user: getCookie("usrName"),
+                content:  this.commentBox
+            };
+            //input.user = getCookie("usrName");
+            //input.content =  this.commentBox;
+            this.comments.push(input);
+            this.commentBox = '';
+            // get api this.$http.post('/service/api/post/getpost/'+postID,{content: this.commentBox})
+            // .then(response => {
+            //    //Success
+            //    console.log('Success');
+            // }, response => {
+            //     // error callback
+            //     console.log('failed');
+            // })
+
+
         }
     }
 })
