@@ -290,6 +290,13 @@ body, html {
   text-decoration: none;
 }
 
+.dashboard aside .menu a i {
+  width: 27px;
+  font-size: 16px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .dashboard aside #avatar {
   border-radius: 50%;
   width: 50px;
@@ -303,6 +310,7 @@ body, html {
 }
 
 .dashboard aside figcaption {
+  font-size: 40px;
   text-align: center;
   color: #fff;
 }
