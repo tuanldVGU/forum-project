@@ -43,7 +43,7 @@
         <div class="col-lg-5 basic-spacing" style="padding-top: 6.5em;">
             <h2>Results</h2>
             <div v-for="post in filteredTable">
-                <a v-bind:href="post.title" target="_blank">{{post.title}}</a>
+                <a v-bind:href="'/forum/article?id='+post._id" target="_blank">{{post.title}}</a>
             </div>
         </div>
     </div>
