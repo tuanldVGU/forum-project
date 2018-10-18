@@ -50,12 +50,12 @@ router.post('/api/post/createPost', (req, res) => {
       )
     .catch(err => res.send(utils.fail(err, err.message)));
 });
-// router.get('/api/post/searchPost/:categoryid/:title',(req,res)=>
-// postService.searchPost(req.params.categoryid,req.params.title)
-// .then(result => res.json(utils.succeed(result)))
-// .catch((err) => {
-//   return res.json(utils.fail(err, err.message));
-// }));
+ router.get('/api/post/searchPost/:categoryid/:title',(req,res)=>
+ postService.searchPost(req.params.categoryid,req.params.title)
+ .then(result => res.json(utils.succeed(result)))
+ .catch((err) => {
+   return res.json(utils.fail(err, err.message));
+ }));
 
 router.post('/api/post/deletePost', (req, res) => {
   const { postId, forumId} = req.body;
