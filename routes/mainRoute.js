@@ -34,6 +34,10 @@ router.get('/profile',function(req,res,next){
     res.render('profile',{title:"Motor || Profile"});
 })
 
+router.get('/profileUpd',function(req,res,next){
+    res.render('profileUpload',{title:" "});
+})
+
 router.get('/google', loggedin,function(req,res,next){
    //console.log(res.session);
    var user=jwt.verify(req.session.passport.user.token,"googletoken");
