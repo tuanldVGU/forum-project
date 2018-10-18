@@ -3,6 +3,15 @@ const subCommentService = require('../../services/subCommentService');
 const utils = require('../../ultis/ultis');
 const jwt = require('jsonwebtoken');
 const key = require('../../config/jwt');
+const Pusher = require('pusher');
+
+var pusher = new Pusher({
+  appId: '625402',
+  key: 'e0d50cdec56f3482d272',
+  secret: '182c4448daaab917182f',
+  cluster: 'ap1',
+  encrypted: true
+});
 
 router.get('/api/subComment/getDetail', (req, res) => subCommentService.getDetail()
   .then(result => res.json(utils.succeed(result)))
@@ -10,11 +19,15 @@ router.get('/api/subComment/getDetail', (req, res) => subCommentService.getDetai
     return res.json(utils.fail(err, err.message));
   }));
 router.post('/api/comment/createSubComment', (req, res) => {
-  // console.log(req.body.data);
   const {post, token, comment, content} = req.body.data;
-  // console.log(post);
-  // console.log(content);
-  // console.log(token);
+
+  // real-time function
+  pusher.trigger('motor-forum', 'add-subcomment', {
+    postID: post,
+    commentID: comment,
+    content: content 
+  });
+
   console.log(comment);
   const user = jwt.verify(token,key.secret).userID;
 
