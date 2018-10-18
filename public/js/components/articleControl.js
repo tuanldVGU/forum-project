@@ -51,9 +51,10 @@ var article = new Vue({
             console.log("PostID:",postID);
             console.log("Reason:", this.reason);
             console.log("Reporter:",getCookie("token"));
-            this.$http.post('/service/api/report/createReport', {postId:postID,reason:this.reason.toString(),reporter:getCookie("token")})
-            .then ((res)=> console.log (res))
-            .catch ((error)=> console.log(error))
+            console.log("Title",this.info.title)
+            this.$http.post('/service/api/report/createReport', {postId:postID,reason:this.reason.toString(),reporter:getCookie("token"),title:this.info.title})
+             .then ((res)=> {if(res.body.status=="successful"){alert("Report are saved. Thank for your attribute.")}})
+             .catch ((error)=> console.log(error))
         }
     }
 });

@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema({
   post: { type: mongoose.Schema.Types.ObjectId, ref: 'post', default: undefined },
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'user', default: undefined },
+  subComment : [{ type: mongoose.Schema.ObjectId, ref: 'subComment', default: undefined }],
   content: { type: String, require: true }
 
 }, {
