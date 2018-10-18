@@ -28,5 +28,9 @@ class reportService {
       }
     }))
   }
+  static deleteAllReport(){
+    return report.deleteMany({}).exec()
+    .then(()=>post.updateMany({},{reported:false}).exec())
+  }
 }
 module.exports = reportService;

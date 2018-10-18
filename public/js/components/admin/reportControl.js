@@ -15,7 +15,11 @@ var reportCotrol=new Vue({
          thisYear:0,
          thisMonth:0,
          title:[],
-         author:[]
+         author:[],
+         parseData: {
+            rid: '',
+            pid:''
+        }
         }
     },
     created(){
@@ -23,11 +27,14 @@ var reportCotrol=new Vue({
     },
     methods:{
         loadReport: function(){
+            console.log('1')
+            this.thisMonth=0;
+            this.thisYear=0;
             this.report.length=0;
             this.$http.get('/service/api/report/getAllDetail').then(response => {
                 response.body.data.forEach(element => {
                    this.report.push(element);
-                   this.loadTitle(element.post)
+                  // this.loadTitle(element.post)
                 });
                 console.log(this.report);
                 this.countReport();
@@ -44,22 +51,46 @@ var reportCotrol=new Vue({
             })
            
         },
-        loadTitle:function(postId){
-            this.$http.get('/service/api/post/getPost/'+postId).then(response => {
-                this.title.push(response.body.data.title)
-            }, response => {
-                // error callback
-                console.log("Fail to load post");
-            })
-        },
         deleteReport:function(reportId, postId){
             console.log(reportId, postId)
             this.$http.post('/service/api/report/deleteReport', {postId:postId,reportId:reportId})
              .then ((res)=> {if(res.body.status=="successful")
-             {alert("Report are saved. Thank for your attribute.")}
+             {alert("Report are deleted.")}
               this.loadReport();                                                    
             })
              .catch ((error)=> console.log(error))
+        },
+        deletePost:function(reportId, postId){
+            console.log(reportId, postId)
+            this.$http.get('/service/api/post/getPost/'+postId).then(response => {
+                forumlist=response.body.data.forumList;
+                console.log(forumlist)
+                this.$http.post('/service/api/post/deletePost', {postId:postId,forumId:forumlist})
+                .then ((res)=> {if(res.body.status=="successful")
+                {alert("Post are deleted.")}
+                 this.deleteReport(reportId,postId);
+                                                                
+                })
+                .catch ((error)=> console.log(error))     
+                }, response => {
+                // error callback
+                console.log("Fail to load post");
+                 })
+        },
+        updateData:function(reportId, postId){
+            this.parseData.rid=reportId;
+            this.parseData.pid=postId;
+        },
+        deleteAllReport:function(){
+            console.log("delete all!!!!")
+            this.$http.get('/service/api/report/deleteAllReport').then(response => {
+                if(response.body.status=="successful")
+                {alert("All report are deleted.")}
+                this.loadReport();
+            }, response => {
+                // error callback
+                console.log(response.body);
+            })
         }
     }
 })

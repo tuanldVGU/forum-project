@@ -33,4 +33,13 @@ router.post('/api/report/deleteReport', (req, res) => {
      .then(() => res.send(utils.succeed()))
      .catch(err => res.send(utils.fail(err, err.message)));
 });
+router.get('/api/report/deleteAllReport', (req, res) => {
+//  const {confirmation} = req.body;
+  
+  //  console.log(req.body.postId)
+    return reportService.deleteAllReport()
+    .then(() => res.send(utils.succeed()))
+    .catch(err => res.send(utils.fail(err, err.message)));
+});
+
 module.exports = router;
