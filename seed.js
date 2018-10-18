@@ -30,6 +30,18 @@ category.deleteMany({}).exec()
       "transportModel": "Wave",
       "transportYear": 2017,
       "transportManufacture": "Honda",
+    },
+    {
+      "transportType": "Motorbike",
+      "transportModel": "Wave",
+      "transportYear": 2018,
+      "transportManufacture": "Honda",
+    },
+    {
+      "transportType": "Motorbike",
+      "transportModel": "Air Blade",
+      "transportYear": 2018,
+      "transportManufacture": "Honda",
     }
     ]))
   .then(() => user.findOne({ username: 'admin' }).exec())
@@ -57,6 +69,7 @@ category.deleteMany({}).exec()
     .then((_post) => comment.create({
       post: _post,
       user: _user,
+      subComment: [],
       content: 'I fixed.'
     }))
     .then((_comment) => subComment.create({

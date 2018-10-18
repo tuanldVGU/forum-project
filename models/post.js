@@ -8,7 +8,7 @@ const schema = mongoose.Schema({
   description: { type: String, require: true },
   views: { type: Number, default: 0 },
   recentComment: { type: String, default: ''},
-  numOfComment: { type: String, default: 0 },
+  numOfComment: { type: Number, default: 0 },
   reported: { type: Boolean, default: false },
   isBlocked: { type: Boolean, default: false }
 

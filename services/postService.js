@@ -42,7 +42,7 @@ class postService {
         }
         return forumLists.findOneAndUpdate({_id: ObjectId(forumId)}, {  numOfPost: 0 , recentPost: '' }, {new: true }).exec();
 
-    }));
+    }))
   }
   static modifyPost({category,postid, user, title, description})
   {
