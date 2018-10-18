@@ -43,8 +43,11 @@ class userService {
   }
   
   static deleteUser(id){
-    return user.findByIdAndDelete(id).exec();
+    return user.findOneAndDelete({_id:id}).exec();
   }
 
+  static addAvatar(data){
+    return user.findOneAndUpdate({_id: data.userID},{avatar:data.fileUpload}).exec();
+  }
 }
 module.exports = userService;

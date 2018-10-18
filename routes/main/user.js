@@ -40,4 +40,19 @@ router.delete('/api/user/:id', (req, res) => {
   })
 });
 
+router.post('/api/user/avatar/', (req, res) => {
+  const sentData = {
+    userID: jwt.verify(req.body.userID,key.secret).userID,
+    fileUpload: req.body.fileUpload
+  };
+  userService.addAvatar(sentData)
+  .then(
+    // result => res.json(utils.succeed(result))
+    res.send('<h1>Success</h1>')
+    )
+  .catch((err) => {
+    return res.json(utils.fail(err, err.message));
+  })
+});
+
 module.exports = router;

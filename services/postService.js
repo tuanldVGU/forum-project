@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const posts = mongoose.model('post');
 const category = mongoose.model('category');
 const forumLists = mongoose.model('forumList');
+const comments = mongoose.model('comment');
+const subComments = mongoose.model('subComment');
 const utils = require('../ultis/ultis');
 const { ObjectId } = mongoose.Types;
 
@@ -13,6 +15,13 @@ class postService {
   }
   static getAllDetail(){
     return posts.find().exec();
+    // const forumId = "5bc7f92f7c95bf014833b224";
+    // return posts.aggregate([
+    //   {$match:{"forumList":ObjectId(forumId)}},
+    //   {$group: {"_id": "$forumId", "result": {$sum:"$numOfComment"} }}
+    // ]).then(countAll => {
+    //   console.log(countAll[0].result);
+    // })
   }
   static getSumPost(){
     return posts.countDocuments().exec();
@@ -35,12 +44,21 @@ class postService {
   }
   static deletePost({postId, forumId}){
     return posts.findByIdAndRemove(postId).exec()
+      .then(() => comments.findOneAndRemove({post: postId})).exec()
+      .then(() => subComments.findOneAndRemove({post: postId})).exec()
       .then(()=>posts.find({ forumList: forumId }).sort({ "_id": -1 }).limit(1).then((_post) => {
         const postDetail = utils.succeed(_post).data;
         if(postDetail.length>0){
-          return forumLists.findOneAndUpdate({_id: ObjectId(forumId)}, { $inc: { numOfPost: -1 } , recentPost: postDetail[0].title }, {new: true }).exec();
+          return posts.aggregate([
+            {$match:{"forumList":ObjectId(forumId)}},
+            {$group: {"_id": "$forumId", "result": {$sum:"$numOfComment"} }}
+          ]).then(countAll => {
+            console.log(countAll[0].result);
+            return forumLists.findOneAndUpdate({_id: ObjectId(forumId)}, { $inc: { numOfPost: -1 } , recentPost: postDetail[0].title, numOfComment: countAll[0].result }, {new: true }).exec();
+          })
+          
         }
-        return forumLists.findOneAndUpdate({_id: ObjectId(forumId)}, {  numOfPost: 0 , recentPost: '' }, {new: true }).exec();
+        return forumLists.findOneAndUpdate({_id: ObjectId(forumId)}, {  numOfPost: 0 , recentPost: '', numOfComment: 0 }, {new: true }).exec();
 
     }))
   }
