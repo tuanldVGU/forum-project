@@ -68,5 +68,6 @@ class postService {
     {category: category, user: user, title: title, description: description})
     .exec();
   }
+
 }
 module.exports = postService;

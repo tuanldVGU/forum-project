@@ -68,6 +68,7 @@ module.exports = function (passport) {
                         done(null,
                             {
                             username:doc.username, 
+                            rule:doc.userType,
                             token : jwt.sign({
                             username: doc.username,
                              userID: doc._id,

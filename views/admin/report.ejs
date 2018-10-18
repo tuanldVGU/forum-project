@@ -1,6 +1,6 @@
 <%layout('./partials/dashboardLayout')%>
 
-<div class="container-fluid" id="vue-dashboard">
+<div class="container-fluid" id="vue-adminreport">
     <!-- Count user number -->
     <h2 style="padding-top: 2em;">Post report statistic</h2>
     <div class="row">
@@ -11,7 +11,7 @@
                         <span><i class="fas fa-user-tie fa-3x "></i></span>
                     </div>
                     <div class="media-body media-text-right">
-                        <h2>{{admin}}</h2>
+                        <h2>{{thisMonth}}</h2>
                         <p class="m-b-0">This month</p>
                     </div>
                 </div>   
@@ -24,7 +24,7 @@
                         <span><i class="fas fa-user fa-3x"></i></span>
                     </div>
                     <div class="media-body media-text-right">
-                        <h2>{{user}}</h2>
+                        <h2>{{thisYear}}</h2>
                         <p class="m-b-0">This year</p>
                     </div>
                 </div>   
@@ -32,7 +32,15 @@
         </div>
     </div>
     <!-- User table -->
-    <h2 style="padding-top: 1em;">Unsolve reports</h2>
+    <div class="toolbar pt-3 pb-2">
+        <h2>Unsolve Report</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group">
+                <button class="btn btn-sm btn-outline-secondary"data-toggle="modal" data-target="#deleteAllReport">Delete all</button>
+                <button class="btn btn-sm btn-outline-secondary" v-on:click="loadReport()">Refresh</button>
+            </div>
+        </div>
+    </div>
     <div class="table-responsive">  
         <table class="table table-striped table-sm">
             <thead>
@@ -46,16 +54,58 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(row,index) in datas">
+                <tr v-for="(row,index) in report">
                     <td>{{index}}</td>
-                    <td>{{row.usrName}}</td>
+                    <td><a v-bind:href="'/forum/article?id='+row.post" target="_blank">{{row.title}}</a></td>
                     <td>{{row.reason}}</td>
-                    <td>{{row.role}}</td>
-                    <td><a v-bind:href="'/forum/modifyPost?id='+row._id" class="btn"><i class="fas fa-wrench"></i></a></td>
-                    <td><a role="button" class="btn" v-on:click="deleteReminder(row._id,row.forumList)"  data-toggle="modal" data-target="#emailModal"><i class="fas fa-eraser"></i></a></td>
+                    <td>{{row.createdAt}}</td>
+                    <td><a v-on:click="updateData(row._id,row.post)" class="btn"data-toggle="modal" data-target="#deleteReport"><i class="fas fa-wrench"></i></a></td>
+                    <td><a role="button" class="btn" v-on:click="updateData(row._id,row.post)"  data-toggle="modal" data-target="#deletePost"><i class="fas fa-eraser"></i></a></td>
                 </tr>
             </tbody>
         </table>
+    </div>
+     <!-- Delete Post Modal -->
+    <div class="modal fade" id="deletePost" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+        <div class="modal-dialog" role="document"> 
+          <div class="modal-content">
+                  <div class="modal-body">
+                    <p class="lead">Do you want to delete this post</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" v-on:click="deletePost(parseData.rid,parseData.pid)" data-dismiss="modal" >Continue</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+                  </div>
+          </div>
+        </div>
+    </div>
+         <!-- Delete Report Modal -->
+     <div class="modal fade" id="deleteReport" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+        <div class="modal-dialog" role="document"> 
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p class="lead">Do you want to delete this report</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" v-on:click="deleteReport(parseData.rid,parseData.pid)" data-dismiss="modal" >Continue</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- Delete  All Report Modal -->
+     <div class="modal fade" id="deleteAllReport" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+        <div class="modal-dialog" role="document"> 
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p class="lead">Do you want to delete all report</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" v-on:click="deleteAllReport()" data-dismiss="modal" >Continue</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

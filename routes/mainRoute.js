@@ -246,10 +246,19 @@ router.post('/forwardthread',function(req,res,next){
     res.send("Email was sent")
 })
 router.get('/redirect', loggedin,function(req,res,next){
-    //res.send(req.session);
+    console.log(req.session.passport.user.rule=="admin");
+    if(req.session.passport.user.rule=="admin")
+    {
+    console.log("admin");
     res.cookie('usrName',req.session.passport.user.username); 
     res.cookie('token',req.session.passport.user.token)
-    res.render('home',{title:"Motor || Home"});
+    res.send({rule:req.session.passport.user.rule});}
+    else{
+    console.log("user")
+    res.cookie('usrName',req.session.passport.user.username); 
+    res.cookie('token',req.session.passport.user.token)
+    res.send({rule:req.session.passport.user.rule});
+}
 });
 
 
