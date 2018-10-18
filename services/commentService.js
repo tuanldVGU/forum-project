@@ -7,7 +7,7 @@ const posts = mongoose.model('post');
 const { ObjectId } = mongoose.Types;
 class commentService {
   static getDetail(postId) {
-    return comments.find({post: postId}).exec();
+    return comments.find({post: postId}).populate('user').populate('subComment').exec();
   }
   static getSumComment(postId){
   console.log(postId);

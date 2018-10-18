@@ -38,7 +38,7 @@ class postService {
         }
         return forumLists.findOneAndUpdate({_id: ObjectId(forumId)}, {  numOfPost: 0 , recentPost: '' }, {new: true }).exec();
 
-    }));
+    }))
   }
 }
 module.exports = postService;
