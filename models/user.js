@@ -28,6 +28,7 @@ const userSchema = new schema({
   },
   avatar: {
     type: String,
+    default:'/img/user-circle.svg' 
   },
   loginFacebook:{
     type:String,

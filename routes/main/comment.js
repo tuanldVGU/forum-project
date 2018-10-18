@@ -45,4 +45,9 @@ router.post('/api/comment/createComment', (req, res) => {
     .then(() => res.send(utils.succeed()))
     .catch(err => res.send(utils.fail(err, err.message)));
 });
+// router.post('/api/comment/deleteComment',(req,res)=>{
+//     const { commentId, postId}=req.body.data;
+//     console.log(commentId, postId);
+// })
+
 module.exports = router;
