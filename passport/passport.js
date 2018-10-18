@@ -19,7 +19,7 @@ module.exports = function (passport) {
         key = 'secrettoken';
         const token = jwt.sign({
             username: username,
-            userID: id,
+            userID: id
           },key,
           {
             expiresIn: '3h'
@@ -69,6 +69,7 @@ module.exports = function (passport) {
                             {
                             username:doc.username, 
                             rule:doc.userType,
+                            avatar:doc.avatar,
                             token : jwt.sign({
                             username: doc.username,
                              userID: doc._id,

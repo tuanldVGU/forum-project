@@ -13,7 +13,6 @@ var loggedin = function (req, res, next) {
       res.redirect('/signin')
     }
   }
-
 router.get('/', function(req,res,next){
     res.render('index',{title:"welcome to Motor"});
 });
@@ -48,6 +47,7 @@ router.get('/google', loggedin,function(req,res,next){
         {
             if(doc){
                 res.cookie('usrName',doc.username);
+                res.cookie('avatar',doc.avatar);
                 var newtoken=jwt.sign({userID:doc._id},"secrettoken",{expiresIn: '3h'}) 
                 res.cookie('token',newtoken)
                 res.render('home',{title:"Motor || Home"});}
@@ -64,6 +64,7 @@ router.get('/google', loggedin,function(req,res,next){
                         User.updateOne(myquery,newvalue,function(err,doc){
                             if(err){res.status(500).send("Error in update database")}
                             else{res.cookie('usrName',record.username);
+                            res.cookie('avatar',record.avatar);
                             var newtoken=jwt.sign({userID:record._id},"secrettoken",{expiresIn: '3h'}) 
                             res.cookie('token',newtoken)
                             res.render('home',{title:"Motor || Home"});}})
@@ -90,6 +91,7 @@ router.get('/facebook',loggedin,function(req,res,next){
         {
             if(doc){
                 res.cookie('usrName',doc.username);
+                res.cookie('avatar',doc.avatar);
                 var newtoken=jwt.sign({userID:doc._id},"secrettoken",{expiresIn: '3h'}) 
                 res.cookie('token',newtoken)
                 res.render('home',{title:"Motor || Home"});}
@@ -108,6 +110,7 @@ router.get('/facebook',loggedin,function(req,res,next){
                                 else
                                 {
                                   res.cookie('usrName',record.username);
+                                  res.cookie('avatar',record.avatar)
                                   var newtoken=jwt.sign({userID:record._id},"secrettoken",{expiresIn: '3h'}) 
                                   res.cookie('token',newtoken)
                                   res.render('home',{title:"Motor || Home"});
@@ -147,6 +150,7 @@ router.post('/facebookUser',function(req,res){
                         if(err){res.status(500).send( err);}
                         else{
                             res.cookie('usrName',doc.username);
+                            res.cookie('avatar',doc.avatar)
                             var newtoken=jwt.sign({userID:doc._id},"secrettoken",{expiresIn: '3h'}) 
                             res.cookie('token',newtoken)
                             res.send("Success!!");
@@ -181,6 +185,7 @@ router.post('/googleUser',function(req,res){
                             if(err){res.status(500).send( err);}
                             else{
                                 res.cookie('usrName',doc.username);
+                                res.cookie('avatar',doc.avatar)
                                 var newtoken=jwt.sign({userID:doc._id},"secrettoken",{expiresIn: '3h'}) 
                                 res.cookie('token',newtoken)
                                 res.send('Success!!');
@@ -198,6 +203,7 @@ router.get('/logout', function (req, res) {
     req.logout()
     res.clearCookie("usrName");
     res.clearCookie("token")
+    res.clearCookie("avatar")
     res.redirect('/')
   })
 router.get('/resetPassword',function(req, res)
@@ -238,6 +244,11 @@ router.post('/search', function(req, res){
       res.send(text)
     })})
   })
+router.get('/avatar',function(req,res,next){
+    var a="hello" ;
+    console.log(req.session.passport.user.avatar)
+    res.send(a)
+})
 router.get('/about', loggedin,function(req,res,next){
     res.render('about',{title:"Motor || About us"});
 });
@@ -255,11 +266,15 @@ router.get('/redirect', loggedin,function(req,res,next){
     {
     console.log("admin");
     res.cookie('usrName',req.session.passport.user.username); 
+    res.cookie('avatar',req.session.passport.user.avatar);
     res.cookie('token',req.session.passport.user.token)
     res.send({rule:req.session.passport.user.rule});}
     else{
     console.log("user")
+   // var avatar=loadAvatar(req.session.passport.user.username);
+    console.log(req.session.passport.user.avatar)
     res.cookie('usrName',req.session.passport.user.username); 
+    res.cookie('avatar',req.session.passport.user.avatar);
     res.cookie('token',req.session.passport.user.token)
     res.send({rule:req.session.passport.user.rule});
 }
