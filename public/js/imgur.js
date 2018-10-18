@@ -49,6 +49,8 @@
             referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
         },
         post: function (path, data, callback) {
+            console.log(data);
+            console.log(path);
             var xhttp = new XMLHttpRequest();
 
             xhttp.open('POST', path, true);
@@ -93,7 +95,7 @@
 
             div = this.createEls('div', {className: 'loading-modal'});
             table = this.createEls('table', {className: 'loading-table'});
-            img = this.createEls('img', {className: 'loading-image', src: './img/loading-spin.svg'});
+            img = this.createEls('img', {className: 'loading-image', src: '../img/loading-spin.svg'});
 
             div.appendChild(table);
             table.appendChild(img);

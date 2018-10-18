@@ -193,6 +193,7 @@ body, html {
 }
 
 .profile .prof-img img {
+  border-radius: 50%;
   width: 100%;
   height: 100%;
   padding: 3px;
@@ -416,7 +417,7 @@ body, html {
   width: 100%;
 }
 
-.h-350 {
-  height: 350px;
+.h-425 {
+  height: 425px;
 }
 /*# sourceMappingURL=myStyle.css.map */
