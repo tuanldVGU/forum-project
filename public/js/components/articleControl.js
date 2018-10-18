@@ -61,25 +61,17 @@ var article = new Vue({
     }
 });
 
-// Realtime comment function
-Pusher.logToConsole = true;
-
-var pusher = new Pusher('e0d50cdec56f3482d272', {
-    cluster: 'ap1',
-    forceTLS: true
-});
-
-var channel = pusher.subscribe('motor-forum');
-
 //comment section
 var comment = new Vue({
     el:'#vue-comment',
-    data: {
-        commentBox:'',
-        comments:[],
-
-        replyBox:'',
-        replies:[]
+    data() {
+        return {
+            commentBox:'',
+            comments:[],
+            replyBox:'',
+            replies:[],
+            channel: {}
+        }
     },
     created(){
             this.loadComment()
@@ -107,12 +99,13 @@ var comment = new Vue({
 
                         this.comments.push(input);
                     });
-                    console.log(response.body.data);
+                    // console.log(response.body.data);
                     // this.toggleReply();
                 }
                 catch(err){
                     console.log('empty');
                 }
+                this.pusher()
             }, response => {
                 // error callback
                 console.log('failed');
@@ -126,7 +119,7 @@ var comment = new Vue({
             };
 
             if(input.content != '' ){
-                this.comments.push(input);
+                //this.comments.push(input);
                 var dataSent ={
                     post: postID,
                     //user: userName,
@@ -137,7 +130,7 @@ var comment = new Vue({
                 this.$http.post('/service/api/comment/createComment', { data: dataSent})
                 .then(response => {
                    //Success
-                   console.log(response);
+                   //console.log(response);
                 }, response => {
                     // error callback
                     console.log('failed');
@@ -183,6 +176,37 @@ var comment = new Vue({
                     widget.style.display = "block";
                 });
             }
+        },
+        pusher: function(){
+            // Realtime comment function
+            Pusher.logToConsole = true;
+
+            var pusher = new Pusher('e0d50cdec56f3482d272', {
+                cluster: 'ap1',
+                forceTLS: true
+            });
+
+            var channel = pusher.subscribe('motor-forum');
+
+            channel.bind('add-comment', function(data) {
+                var tmp = data.content.split(':::');
+                var input = {
+                    user: tmp[0],
+                    content: tmp[1]
+                }
+                comment.comments.push(input);
+            });
+
+            channel.bind('add-subcomment', function(data) {
+                console.log('ok');
+                var tmp = data.content.split(':::');
+                var input = {
+                    parent: data.commentID,
+                    username: tmp[0],
+                    content: tmp[1]
+                }
+                comment.comments.push(input);
+            });
         }
     },
     mounted(){
@@ -190,24 +214,5 @@ var comment = new Vue({
     },
     updated(){
         this.toggleReply()   
-    },
-    ready(){
-        channel.bind('add-comment', function(data) {
-            var tmp = data.content.split(':::');
-            var input = {
-                username: tmp[0],
-                content: tmp[1]
-            }
-            this.comments.push(input);
-        });
-        channel.bind('add-subcomment', function(data) {
-            var tmp = data.content.split(':::');
-            var input = {
-                parent: data.commentID,
-                username: tmp[0],
-                content: tmp[1]
-            }
-            this.comments.push(input);
-        });
     }
 })
