@@ -81,7 +81,10 @@ var comment = new Vue({
     el:'#vue-comment',
     data: {
         commentBox:'',
-        comments:[]
+        comments:[],
+
+        replyBox:'',
+        replies:[]
     },
     created(){
             this.loadComment()
@@ -91,17 +94,26 @@ var comment = new Vue({
             this.$http.get('/service/api/comment/getDetail/'+postID)
             //this.$http.get('/service/api/comment/getSumComment/'+postID)
             .then(response => {
-                var element = response.body.data;
-                console.log(element);
                 try {
-                    var tmp = element.content.split(':::');
-                    var input = {
-                        user: tmp[0],
-                        content: tmp[1],
-                        //subcom: element.subcomment
-                    }
-                    this.info= input;
-                    //console.log(input);
+                    response.body.data.forEach(element=>{
+                        var tmp = element.content.split(':::');
+                        var input = {
+                            cmtID: element._id,
+                            user: tmp[0],
+                            content: tmp[1],
+                            time: element.content.createdAt,
+                            reply: element.subComment
+                        }
+                        for (var i=0; i<input.reply.length; i++){
+                            var subtmp = input.reply[i].content.split(':::');
+                            input.reply[i].username = subtmp[0];
+                            input.reply[i].content = subtmp[1];
+                        }
+
+                        this.comments.push(input);
+                    });
+                    console.log(response.body.data);
+                    this.toggleReply();
                 }
                 catch(err){
                     console.log('empty');
@@ -111,30 +123,76 @@ var comment = new Vue({
                 console.log('failed');
             })
         },
+
         addComment: function(){
             var input = {
-                user: getCookie("usrName"),
+                user: userName,
                 content:  this.commentBox
             };
 
-            this.comments.push(input);
-            var dataSent ={
+            // console.log(postID);
+            // console.log(input.user);
+            console.log(input.content);
+
+           // console.log(this.comments.content);
+            if(input.content != '' ){
+                this.comments.push(input);
+                var dataSent ={
+                    post: postID,
+                    //user: userName,
+                    token: getCookie('token'),
+                    content: getCookie("usrName")+":::"+this.commentBox
+                }
+                //get api
+                this.$http.post('/service/api/comment/createComment', { data: dataSent})
+                .then(response => {
+                   //Success
+                   console.log(response);
+                }, response => {
+                    // error callback
+                    console.log('failed');
+                })
+            }
+
+
+            this.commentBox = '';
+        },
+
+        addReply: function(cid){
+            var input ={
                 post: postID,
                 token: getCookie('token'),
-                content: getCookie("usrName")+":::"+this.commentBox
+                comment: cid,
+                content: userName+":::"+this.replyBox
+
             }
-            //get api
-            this.$http.post('/service/api/comment/createComment', { data: dataSent})
+            console.log(input.comment);
+            this.replies.push(input);
+            this.$http.post('/service/api/comment/createSubComment', {data: input})
             .then(response => {
                //Success
                console.log(response);
             }, response => {
                 // error callback
-                console.log('failed');
+                console.log(response);
+                // console.log('failed');
             })
+        },
+        toggleReply: function(){
+            console.log('rub');
+            var comment = document.getElementsByClassName('comment');
+            for (var i = 0; i<comment.length;i++){
+                var current = comment[i];
+                current.addEventListener("mouseout",function(){
+                    var widget = this.children[2];
+                    widget.style.display = "none";
+                });
 
-            this.commentBox = '';
-
+                current.addEventListener("mouseover",function(){
+                    var widget = this.children[2];
+                    widget.style.display = "block";
+                });
+            }
         }
     }
 })
