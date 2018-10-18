@@ -6,7 +6,7 @@
                 <h1 class="display-4">Title: {{info.title}}</h1>
                 <p class="lead">Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             </div>
-            
+
             <!-- Content -->
             <div class="container-fluid" style="padding: 3rem 3.5rem 1rem;">
                 <p v-html="info.content"></p>
@@ -28,10 +28,39 @@
                         </div>
                 </div>
             </div>
+        <!-- Report -->
+        <div id="report" v-on:click="reportreason" class="control text-center pb-3">
+                <button class="btn">Report this post</button>
+        </div>
+        <div v-if="seen" id='reason' class="text-center pb-3">
+            <input type="checkbox" id="nudity" value="Nudity" v-model="reason">
+            <label for="nudity">Nudity</label>
+            <input type="checkbox" id="violence" value="Violence" v-model="reason">
+            <label for="violence">Violence</label>
+            <input type="checkbox" id="harassment" value="Harassment" v-model="reason">
+            <label for="Harassment">Harassment</label>
+            <input type="checkbox" id="suicide" value="Suicide or Self-Injury" v-model="reason">
+            <label for="suicide">Suicide or Self-Injury</label>
+            <input type="checkbox" id="fake" value="False News" v-model="reason">
+            <label for="fake">False News</label>
+            <br>
+            <input type="checkbox" id="spam" value="Spam" v-model="reason">
+            <label for="spam">Spam</label>
+            <input type="checkbox" id="unsales" value="Unauthorized Sales" v-model="reason">
+            <label for="unsales">Unauthorized Sales</label>
+            <input type="checkbox" id="speech" value="Hate Speech" v-model="reason">
+            <label for="speech">Hate Speech</label>
+            <input type="checkbox" id="terrorism" value="Terrorism" v-model="reason">
+            <label for="terrorism">Terrorism</label>
+            <br>
+            <span>Report reason: {{ reason }}</span>
+            <button class="btn" @click="createReport">Submit</button>
+        </div>
     </div>
 
+    <!-- Share -->
     <div class="text-center pb-3">
-        Share the post by 
+        Share the post by
         <!-- Button trigger modal -->
         <button type="button" class="btn" data-toggle="modal" data-target="#emailModal" style="margin-left: 1em">
         <i class="far fa-envelope"></i>
@@ -42,12 +71,13 @@
     <div class="card bg-menu thread" id="vue-comment">
         <h4>Comment section</h4>
         <div class="input-group mb-4">
-            <textarea class="form-control" aria-label="With textarea"></textarea>
+            <textarea class="form-control" aria-label="With textarea" v-model="commentBox"
+            v-on:keyup.13="addComment"></textarea>
             <div class="input-group-append">
-                    <span class="input-group-text">Comment</span>
+                    <button class="input-group-text" v-on:click="addComment" >Comment</button>
             </div>
         </div>
-        
+
         <!-- demo -->
         <div class="media mb-4" v-for="comment in comments">
             <img class="d-flex mr-3 rounded-circle far fa-user-circle" src="/img/user-circle.svg">
@@ -77,7 +107,7 @@
             <img class="d-flex mr-3 rounded-circle" src="/img/user-circle.svg"/>
             <div class="media-body comment">
                 <h5 class="mt-0">DangMTH</h5>
-    
+
                 <p>Of course, man.</p>
                 <p class="widget">
                         -100 <i class="fas fa-angle-up"></i> <i class="fas fa-angle-down"></i>
@@ -108,7 +138,7 @@
                 </div>
             </div>
         </div>
-    
+
         <div class="media mb-4">
                 <img class="d-flex mr-3 rounded-circle far fa-user-circle" src="/img/user-circle.svg">
                 <div class="media-body comment">
@@ -123,4 +153,3 @@
     </div>
 </div>
 <script src="/js/components/articleControl.js" type="module"></script>
-

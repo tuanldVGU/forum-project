@@ -10,6 +10,7 @@ class userService {
   
     return user.findById(userId).exec();
   }
+
   static checkUsername(username) {
     console.log("1")
      user.findOne({username:username},function(err,doc){
@@ -22,6 +23,7 @@ class userService {
           }
      })
   }
+
   static checkEmail(email) {
     user.find({email:email},function(err,doc){
          if(err){throw err;}
@@ -30,6 +32,19 @@ class userService {
            else{return false;}
          }
     })
- }
+  }
+  
+  static getAllDetail(){
+    return user.find().exec();
+  }
+
+  static updateRole(id,role){
+    return user.findOneAndUpdate({_id: id},{userType:role}).exec();
+  }
+  
+  static deleteUser(id){
+    return user.findByIdAndDelete(id).exec();
+  }
+
 }
 module.exports = userService;

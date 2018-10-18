@@ -41,10 +41,12 @@ app.use(passport.session());
 var main = require('./routes/mainRoute');
 var thread = require('./routes/threadRoute');
 var auth = require('./routes/auth')(passport);
+var admin = require('./routes/adminRoute.js');
 app.use('/',main);
 app.use('/forum',thread);
 app.use('/auth',auth);
 app.use('/service', require('./routes/main'));
+app.use('/admin',admin);
 
 // Start the server
 const PORT = process.env.PORT || 8000;

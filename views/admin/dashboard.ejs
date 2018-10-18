@@ -1,0 +1,116 @@
+<%layout('./partials/dashboardLayout')%>
+
+<div class="container-fluid" id="vue-dashboard">
+    <!-- Count user number -->
+    <h2 style="padding-top: 2em;">User statistic</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card p-30">
+                <div class="media media-info">
+                    <div class="media-left">
+                        <span><i class="fas fa-user-tie fa-3x "></i></span>
+                    </div>
+                    <div class="media-body media-text-right">
+                        <h2>{{admin}}</h2>
+                        <p class="m-b-0">Admin</p>
+                    </div>
+                </div>   
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-30">
+                <div class="media media-info">
+                    <div class="media-left">
+                        <span><i class="fas fa-user fa-3x"></i></span>
+                    </div>
+                    <div class="media-body media-text-right">
+                        <h2>{{user}}</h2>
+                        <p class="m-b-0">Normal user</p>
+                    </div>
+                </div>   
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-30">
+                <div class="media media-info">
+                    <div class="media-left">
+                        <span><i class="fas fa-users fa-3x"></i></span>
+                    </div>
+                    <div class="media-body media-text-right">
+                        <h2>{{admin+user}}</h2>
+                        <p class="m-b-0">Total users</p>
+                    </div>
+                </div>   
+            </div>
+        </div>
+    </div>
+    <!-- User table -->
+    <div class="toolbar pt-3 pb-2">
+        <h2>Users</h2>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group">
+                <button class="btn btn-sm btn-outline-secondary" v-on:click="loadUser">Refresh</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="table-responsive">  
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Promoted</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(row,index) in datas">
+                    <td>{{index}}</td>
+                    <td>{{row.usrName}}</td>
+                    <td>{{row.role}}</td>
+                    <td>
+                        <a role="button" class="btn" v-on:click="updateParse(row.id)"  data-toggle="modal" data-target="#promoteModal"><i class="fas fa-wrench"></i></a>
+                    </td>
+                    <td>
+                        <a role="button" class="btn" v-on:click="updateParse(row.id)"  data-toggle="modal" data-target="#deleteModal"><i class="fas fa-eraser"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+            <div class="modal-dialog" role="document"> 
+              <div class="modal-content">
+                      <div class="modal-body">
+                        <p class="lead">Do you want to delete this user</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" v-on:click="deleteUser(parseData.uid)" data-dismiss="modal" >Continue</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+                      </div>
+              </div>
+            </div>
+    </div>
+    <!-- Promote Modal -->
+    <div class="modal fade" id="promoteModal" tabindex="-1" role="dialog" aria-labelledby="promoteModal" aria-hidden="true">
+            <div class="modal-dialog" role="document"> 
+              <div class="modal-content">
+                      <div class="modal-body">
+                        <p class="lead">Do you want to promote this user</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" v-on:click="promoteUser(parseData.uid)" data-dismiss="modal" >Continue</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Close</button>
+                      </div>
+              </div>
+            </div>
+    </div>
+</div>
+
+</main>
+</div>
+
+<script src="/js/components/admin/dashboardControl.js"></script>

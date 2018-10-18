@@ -1,17 +1,10 @@
-function urlParam(name){
-    var params = document.URL.split('?');
-    for (var i = 1; i<params.length; i++){
-        var param = params[i].split('=');
-        if (param[0]==name){
-            return param[1];
-        }
-    }
-}
+import {urlParam} from '../urlParam.mjs'
+
 var forumID = urlParam('id');
 var forumName = urlParam('name');
 console.log(forumID);
 console.log(forumName);
-
+document.title += ' ' + forumName;
 
 class thread {
     constructor(id, title, date, comment,lc) {

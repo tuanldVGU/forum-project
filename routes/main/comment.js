@@ -17,8 +17,14 @@ router.get('/api/comment/getSumComment/:id', (req, res) => commentService.getSum
   }));
 
 router.post('/api/comment/createComment', (req, res) => {
-  const { post, content} = req.body;
-  const user =jwt.verify(author,"secrettoken").userID;
+  // console.log(req.body.data);
+  const {post, token, content} = req.body.data;
+  // console.log(post);
+  // console.log(user);
+  // console.log(content);
+  //console.log(token);
+  const user = jwt.verify(token,key.secret).userID;
+
   return commentService.createComment({ post, user, content })
     .then(() => res.send(utils.succeed()))
     .catch(err => res.send(utils.fail(err, err.message)));
