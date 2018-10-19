@@ -28,21 +28,20 @@ router.get('/api/comment/getSumComment/:id', (req, res) => commentService.getSum
 router.post('/api/comment/createComment', (req, res) => {
   // console.log(req.body.data);
   const {post, token, content} = req.body.data;
-  // console.log(post);
-  // console.log(user);
-  // console.log(content);
-  //console.log(token);
-
-  // real-time function
-  pusher.trigger('motor-forum', 'add-comment', {
-    postID: post,
-    content: content 
-  });
-
   const user = jwt.verify(token,key.secret).userID;
 
   return commentService.createComment({ post, user, content })
-    .then(() => res.send(utils.succeed()))
+    .then(
+      result => {
+        // console.log(result);
+        // real-time function
+        pusher.trigger('motor-forum', 'add-comment', {
+          id: result._id,
+          postID: result.post,
+          content: result.content 
+        });
+        res.json(utils.succeed(result))
+      })
     .catch(err => res.send(utils.fail(err, err.message)));
 });
 // router.post('/api/comment/deleteComment',(req,res)=>{

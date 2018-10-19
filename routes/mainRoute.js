@@ -79,7 +79,6 @@ router.get('/google', loggedin,function(req,res,next){
    })
 });
 
-
 router.get('/facebook',loggedin,function(req,res,next){
   //  res.send(jwt.verify(req.session.passport.user.tokenface,"facebooktoken"))
    //res.cookie('token',req.session.passport.user.token);
@@ -129,6 +128,7 @@ router.get('/facebook',loggedin,function(req,res,next){
 
     })
 })
+
 router.post('/facebookUser',function(req,res){
     var user=jwt.verify(req.session.passport.user.tokenface,"facebooktoken");
     var record=new User();
@@ -164,6 +164,7 @@ router.post('/facebookUser',function(req,res){
     })
 
 })
+
 router.post('/googleUser',function(req,res){
     var user=jwt.verify(req.session.passport.user.token,"googletoken");
     var record = new User()
@@ -199,13 +200,15 @@ router.post('/googleUser',function(req,res){
     })
 
 })
+
 router.get('/logout', function (req, res) {
     req.logout()
     res.clearCookie("usrName");
     res.clearCookie("token")
     res.clearCookie("avatar")
     res.redirect('/')
-  })
+})
+
 router.get('/resetPassword',function(req, res)
 {
     res.render('auth/reset',{ title:"Motor || Reset Password"})
@@ -219,9 +222,11 @@ router.get('/setPassword', function(req,res){
  res.cookie("tokenreset",q.token)
   res.render('auth/setPassword',{title:"Motor || Set New Password"})
 })
+
 router.get('/tech', loggedin,function(req,res,next){
     res.render('search',{title:"Motor || Technical support"});
 });
+
 router.post('/search', function(req, res){
     var query={transportType :req.body.transportType,
                transportModel:req.body.transportModel,
@@ -243,15 +248,18 @@ router.post('/search', function(req, res){
       }
       res.send(text)
     })})
-  })
+})
+
 router.get('/avatar',function(req,res,next){
     var a="hello" ;
     console.log(req.session.passport.user.avatar)
     res.send(a)
 })
+
 router.get('/about', loggedin,function(req,res,next){
     res.render('about',{title:"Motor || About us"});
 });
+
 router.post('/forwardthread',function(req,res,next){
     console.log(req.body.link, req.body.email, req.body.username);
     link=req.body.link;
@@ -260,24 +268,24 @@ router.post('/forwardthread',function(req,res,next){
     mail(email,'The thread are shared by your friend','Your friend '+name+' share the post from Motor-Forum to you. \nPlease click to the link '+link +' to visit the Motor Forum and enjoy the post. \nThank you. \nVGU Team 1.');
     res.send("Email was sent")
 })
+
 router.get('/redirect', loggedin,function(req,res,next){
-    console.log(req.session.passport.user.rule=="admin");
-    if(req.session.passport.user.rule=="admin")
-    {
-    console.log("admin");
-    res.cookie('usrName',req.session.passport.user.username); 
-    res.cookie('avatar',req.session.passport.user.avatar);
-    res.cookie('token',req.session.passport.user.token)
-    res.send({rule:req.session.passport.user.rule});}
-    else{
-    console.log("user")
+    //console.log(req.session.passport.user.rule=="admin");
+    if(req.session.passport.user.rule=="admin"){
+        // console.log("admin");
+        res.cookie('usrName',req.session.passport.user.username); 
+        res.cookie('avatar',req.session.passport.user.avatar);
+        res.cookie('token',req.session.passport.user.token)
+        res.send({rule:req.session.passport.user.rule});
+    }else{
+    // console.log("user")
    // var avatar=loadAvatar(req.session.passport.user.username);
-    console.log(req.session.passport.user.avatar)
-    res.cookie('usrName',req.session.passport.user.username); 
-    res.cookie('avatar',req.session.passport.user.avatar);
-    res.cookie('token',req.session.passport.user.token)
-    res.send({rule:req.session.passport.user.rule});
-}
+    // console.log(req.session.passport.user.avatar)
+        res.cookie('usrName',req.session.passport.user.username); 
+        res.cookie('avatar',req.session.passport.user.avatar);
+        res.cookie('token',req.session.passport.user.token)
+        res.send({rule:req.session.passport.user.rule});
+    }
 });
 
 

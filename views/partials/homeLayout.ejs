@@ -2,43 +2,12 @@
 <body class="bg-white">
 <div>
     <header>
-        <%include ./navbar%>
+        <%include ./navbar %>
     </header>
     <main>
         <%- body%>
     </main>
-    <footer class="container py-5">
-            <div class="row">
-                <div class="col">
-                    <h3>motor</h3>
-                    <p class="text-muted">© 2018</p>
-                </div>
-                <div class="col">
-                    <h5>General Features</h5>
-                    <ul class="list-unstyled text-small">
-                        <li><a href="#">User Guide</a></li>
-                        <li><a href="#">Feedback</a></li>
-                        <li><a href="#">Term of uses</a></li>
-                    </ul>
-                </div>
-                <div class="col">
-                    <h5>Supported by</h5>
-                    <ul class="list-unstyled text-small">
-                        <li><a href="#">Honda</a></li>
-                        <li><a href="#">Suzuki</a></li>
-                        <li><a href="#">Yamaha</a></li>
-                    </ul>
-                </div>
-                <div class="col">
-                    <h5>Follow us on</h5>
-                    <ul class="list-unstyled text-small">
-                        <li><a href="#"> <i class="fab fa-facebook-square"></i> Facebook</a></li>
-                        <li><a href="#"><i class="fab fa-youtube"></i>Youtube</a></li>
-                        <li><a href="#"><i class="fab fa-twitter-square"></i>Twitter</a></li>
-                    </ul>
-                </div>
-            </div>
-    </footer>
+    <%include ./footer %>
     <script>
         var navbar = document.getElementsByClassName('navbar');
         navbar[0].classList.add("fixed-top");

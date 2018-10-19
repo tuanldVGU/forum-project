@@ -48,7 +48,7 @@ router.post('/api/user/avatar/', (req, res) => {
   userService.addAvatar(sentData)
   .then(
     // result => res.json(utils.succeed(result))
-    res.send('<h1>Success</h1>')
+    res.send('<h1>Success</h1><h2>Please signin again to update avatar.</h2>')
     )
   .catch((err) => {
     return res.json(utils.fail(err, err.message));

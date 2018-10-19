@@ -21,7 +21,7 @@ var formControl = new Vue({
             //get user detail
             this.$http.get('/service/api/user/getDetail/'+usrToken).then(response => {
                 this.usr = response.body.data;
-                console.log(this.usr);
+                // console.log(this.usr);
                 this.usr.token = getCookie('token');
             }, response => {
                 // error callback

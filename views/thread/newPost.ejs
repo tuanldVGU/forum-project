@@ -25,6 +25,11 @@
             </div>
         </div>
 
+        <label for="problem">Problem area</label>
+        <select name="problem" id="problem" class="form-control">
+            <option v-for="part in partarea" v-bind:value="part">{{part}}</option>
+        </select>
+
         <label for="author">Author</label>
         <input type="text" id="author" name="author" class="form-control" readonly>
 

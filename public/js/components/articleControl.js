@@ -78,9 +78,7 @@ var comment = new Vue({
     },
     methods:{
         loadComment: function(){
-            this.$http.get('/service/api/comment/getDetail/'+postID)
-            //this.$http.get('/service/api/comment/getSumComment/'+postID)
-            .then(response => {
+            this.$http.get('/service/api/comment/getDetail/'+postID).then(response => {
                 try {
                     response.body.data.forEach(element=>{
                         var tmp = element.content.split(':::');
@@ -88,6 +86,8 @@ var comment = new Vue({
                             cmtID: element._id,
                             user: tmp[0],
                             content: tmp[1],
+                            avatar: tmp[2],
+                            vote: tmp[3],
                             time: element.content.createdAt,
                             reply: element.subComment
                         }
@@ -95,12 +95,14 @@ var comment = new Vue({
                             var subtmp = input.reply[i].content.split(':::');
                             input.reply[i].username = subtmp[0];
                             input.reply[i].content = subtmp[1];
+                            input.reply[i].avatar = subtmp[2];
+                            input.reply[i].vote = subtmp[3];
                         }
-
                         this.comments.push(input);
                     });
                     // console.log(response.body.data);
                     // this.toggleReply();
+                    console.log(this.comments);
                 }
                 catch(err){
                     console.log('empty');
@@ -124,7 +126,7 @@ var comment = new Vue({
                     post: postID,
                     //user: userName,
                     token: getCookie('token'),
-                    content: getCookie("usrName")+":::"+this.commentBox
+                    content: getCookie("usrName")+":::"+this.commentBox+":::"+getCookie("avatar")+":::"+'0'
                 }
                 //get api
                 this.$http.post('/service/api/comment/createComment', { data: dataSent})
@@ -141,16 +143,16 @@ var comment = new Vue({
             this.commentBox = '';
         },
 
-        addReply: function(cid){
+        addReply: function(cid,index){
             var input ={
                 post: postID,
                 token: getCookie('token'),
                 comment: cid,
-                content: userName+":::"+this.replyBox
-
+                content: userName+":::"+this.replyBox+":::"+getCookie("avatar")+":::"+'0',
+                commentIndex : index
             }
-            console.log(input.comment);
-            this.replies.push(input);
+            // console.log(input.comment);
+            this.replyBox ='';
             this.$http.post('/service/api/comment/createSubComment', {data: input})
             .then(response => {
                //Success
@@ -160,6 +162,7 @@ var comment = new Vue({
                 console.log(response);
                 // console.log('failed');
             })
+            this.replyBox ='';
         },
 
         toggleReply: function(){
@@ -191,8 +194,11 @@ var comment = new Vue({
             channel.bind('add-comment', function(data) {
                 var tmp = data.content.split(':::');
                 var input = {
+                    cmtID: data.id,
                     user: tmp[0],
-                    content: tmp[1]
+                    content: tmp[1],
+                    avatar: tmp[2],
+                    vote: tmp[3]
                 }
                 comment.comments.push(input);
             });
@@ -201,11 +207,13 @@ var comment = new Vue({
                 console.log('ok');
                 var tmp = data.content.split(':::');
                 var input = {
-                    parent: data.commentID,
+                    _id: data.id,
                     username: tmp[0],
-                    content: tmp[1]
+                    content: tmp[1],
+                    avatar: tmp[2],
+                    vote: tmp[3]
                 }
-                comment.comments.push(input);
+                comment.comments[data.index].reply.push(input);
             });
         }
     },

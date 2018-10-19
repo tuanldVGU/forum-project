@@ -18,21 +18,24 @@ router.get('/api/subComment/getDetail', (req, res) => subCommentService.getDetai
   .catch((err) => {
     return res.json(utils.fail(err, err.message));
   }));
+
 router.post('/api/comment/createSubComment', (req, res) => {
-  const {post, token, comment, content} = req.body.data;
-
-  // real-time function
-  pusher.trigger('motor-forum', 'add-subcomment', {
-    postID: post,
-    commentID: comment,
-    content: content 
-  });
-
-  console.log(comment);
+  const {post, token, comment, content, commentIndex} = req.body.data;
   const user = jwt.verify(token,key.secret).userID;
 
   return subCommentService.createSubComment({ post, comment, user, content })
-    .then(() => res.send(utils.succeed()))
+    .then(
+      result => {
+        // console.log(result.subComment);
+        // real-time function
+        pusher.trigger('motor-forum', 'add-subcomment', {
+          postID: post,
+          id: result.subComment[result.subComment.length - 1],
+          index: commentIndex,
+          content: content 
+        });
+        res.json(utils.succeed(result))
+      })
     .catch(err => res.send(utils.fail(err, err.message)));
 });
 

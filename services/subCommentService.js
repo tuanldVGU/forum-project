@@ -12,11 +12,6 @@ class subCommentService {
     return subComments.find().exec();
   }
   static createSubComment({ post, comment, user, content }){
-      console.log(post);
-      console.log(content);
-      console.log(comment);
-      console.log(user);
-
     return posts.findOneAndUpdate({_id: ObjectId(post)}, { $inc: { numOfComment:1 } , recentComment: content}, {new: true }).exec()
       .then(() => subComments.create({ post: post, comment: comment, user: user, content: content })
         .then((_subComment)=> comments.findOneAndUpdate({_id: comment}, { "$push": { "subComment": _subComment } }))

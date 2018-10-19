@@ -74,24 +74,24 @@
         </div>
 
         <!-- demo -->
-        <div class="media mb-4" v-for="comment in comments">
-            <img class="d-flex mr-3 rounded-circle far fa-user-circle" src="/img/user-circle.svg">
+        <div class="media mb-4" v-for="(comment,index) in comments">
+            <img class="d-flex mr-3 rounded-circle far fa-user-circle" v-bind:src="comment.avatar">
             <div class="media-body comment">
                 <h5 class="mt-0">{{comment.user}}</h5>
                 <p>{{comment.content}}</p>
                 <p class="widget">
-                    100 <i class="fas fa-angle-up"></i> <i class="fas fa-angle-down"></i>
-                    <input type="text" name="reply" v-model="replyBox" style="width: 500px">
-                    <button type="button" v-on:click="addReply(comment.cmtID)" class="btn">Reply</button>
+                    {{comment.vote}} <i class="fas fa-angle-up"></i> <i class="fas fa-angle-down"></i>
+                    <input type="text" name="reply" v-model="replyBox" style="border-radius: .25rem; width: 500px;">
+                    <button type="button" v-on:click="addReply(comment.cmtID,index)" class="btn">Reply</button>
                 </p>
                 <br>
                 <div class="media mt-4" v-for="subcomment in comment.reply">
-                    <img class="d-flex mr-3 rounded-circle" src="/img/user-circle.svg"/>
+                    <img class="d-flex mr-3 rounded-circle" v-bind:src="subcomment.avatar"/>
                     <div class="media-body comment">
                         <h5 class="mt-0">{{subcomment.username}}</h5>
                         <p>{{subcomment.content}}</p>
                         <p class="widget">
-                            1 <i class="fas fa-angle-up"></i> <i class="fas fa-angle-down"></i>
+                            {{subcomment.vote}} <i class="fas fa-angle-up"></i> <i class="fas fa-angle-down"></i>
                         </p>
                     </div>
                 </div>
