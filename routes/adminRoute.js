@@ -1,19 +1,27 @@
 var express = require('express');
 var router = express.Router();
+var loggedinadmin = function (req, res, next) {
+    console.log(req.session)
+    if (req.isAuthenticated()&& req.session.passport.user.rule=="admin") {
+      next()
+    } else {
+      res.redirect('/logout')
+    }
+  }
 
-router.get('/', function(req,res,next){
+router.get('/',loggedinadmin, function(req,res,next){
     res.render('./admin/dashboard',{title:"Motor || Dashboard"});
 });
 
-router.get('/report', function(req,res,next){
+router.get('/report',loggedinadmin, function(req,res,next){
     res.render('./admin/report',{title:"Motor || Report "});
 });
 
-router.get('/category', function(req,res,next){
+router.get('/category',loggedinadmin, function(req,res,next){
     res.render('./admin/category',{title:"Motor || Category"});
 });
 
-router.get('/forum', function(req,res,next){
+router.get('/forum',loggedinadmin, function(req,res,next){
     res.render('./admin/forumadmin',{title:"Motor || Forum control"});
 });
 
