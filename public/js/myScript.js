@@ -1,7 +1,5 @@
 import {getCookie} from './getCookie.mjs';
 
-console.log(getCookie('usrName'));
-
 var navbar = new Vue({
     el: '#usrname',
     data: {
@@ -19,5 +17,5 @@ try {
     author.value = getCookie('token');
 }
 catch(err){
-    console.log('Not avaliable : ');
+    // console.log('Not avaliable : ');
 }

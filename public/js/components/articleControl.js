@@ -1,6 +1,8 @@
+import {getCookie} from '../getCookie.mjs'
 var postID = document.URL.split('id=')[1];
 var userName = getCookie("usrName");
 
+// article content
 var article = new Vue({
     el: '#vue-content',
     data(){
@@ -33,7 +35,7 @@ var article = new Vue({
                     author:element.user
                 }
                 this.info= input;
-                console.log(this.info);
+                document.title += " "+ input.title;
             }, response => {
                 // error callback
                 console.log('failed');
@@ -59,32 +61,17 @@ var article = new Vue({
     }
 });
 
-function getCookie(cname){
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
-
-
 //comment section
 var comment = new Vue({
     el:'#vue-comment',
-    data: {
-        commentBox:'',
-        comments:[],
-
-        replyBox:'',
-        replies:[]
+    data() {
+        return {
+            commentBox:'',
+            comments:[],
+            replyBox:'',
+            replies:[],
+            channel: {}
+        }
     },
     created(){
             this.loadComment()
@@ -112,12 +99,13 @@ var comment = new Vue({
 
                         this.comments.push(input);
                     });
-                    console.log(response.body.data);
-                    this.toggleReply();
+                    // console.log(response.body.data);
+                    // this.toggleReply();
                 }
                 catch(err){
                     console.log('empty');
                 }
+                this.pusher()
             }, response => {
                 // error callback
                 console.log('failed');
@@ -130,13 +118,8 @@ var comment = new Vue({
                 content:  this.commentBox
             };
 
-            // console.log(postID);
-            // console.log(input.user);
-            console.log(input.content);
-
-           // console.log(this.comments.content);
             if(input.content != '' ){
-                this.comments.push(input);
+                //this.comments.push(input);
                 var dataSent ={
                     post: postID,
                     //user: userName,
@@ -147,7 +130,7 @@ var comment = new Vue({
                 this.$http.post('/service/api/comment/createComment', { data: dataSent})
                 .then(response => {
                    //Success
-                   console.log(response);
+                   //console.log(response);
                 }, response => {
                     // error callback
                     console.log('failed');
@@ -178,8 +161,8 @@ var comment = new Vue({
                 // console.log('failed');
             })
         },
+
         toggleReply: function(){
-            console.log('rub');
             var comment = document.getElementsByClassName('comment');
             for (var i = 0; i<comment.length;i++){
                 var current = comment[i];
@@ -193,6 +176,43 @@ var comment = new Vue({
                     widget.style.display = "block";
                 });
             }
+        },
+        pusher: function(){
+            // Realtime comment function
+            Pusher.logToConsole = true;
+
+            var pusher = new Pusher('e0d50cdec56f3482d272', {
+                cluster: 'ap1',
+                forceTLS: true
+            });
+
+            var channel = pusher.subscribe('motor-forum');
+
+            channel.bind('add-comment', function(data) {
+                var tmp = data.content.split(':::');
+                var input = {
+                    user: tmp[0],
+                    content: tmp[1]
+                }
+                comment.comments.push(input);
+            });
+
+            channel.bind('add-subcomment', function(data) {
+                console.log('ok');
+                var tmp = data.content.split(':::');
+                var input = {
+                    parent: data.commentID,
+                    username: tmp[0],
+                    content: tmp[1]
+                }
+                comment.comments.push(input);
+            });
         }
+    },
+    mounted(){
+        this.toggleReply()
+    },
+    updated(){
+        this.toggleReply()   
     }
 })

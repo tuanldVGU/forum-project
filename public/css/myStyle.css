@@ -420,4 +420,13 @@ body, html {
 .h-425 {
   height: 425px;
 }
+
+i {
+  padding: 0 3px;
+}
+
+footer li a:hover {
+  text-decoration: none;
+  color: #f25656;
+}
 /*# sourceMappingURL=myStyle.css.map */
