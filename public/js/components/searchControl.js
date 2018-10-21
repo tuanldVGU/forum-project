@@ -22,6 +22,7 @@ var formControl = new Vue({
     },
     computed:{
         filteredTable() {
+            console.log("run filter")
             return this.table.filter(element => {
               return element.title.toLowerCase().includes(this.search.toLowerCase())
             })
@@ -104,18 +105,30 @@ var formControl = new Vue({
            })
         },
         addPart:function(news, old){
+            this.table.length=0;
+            console.log(this.table.length)
             this.categories.forEach(element=>{
                 if(element.transportManufacture==this.addManufacture && element.transportType==this.addType&& element.transportModel==this.addModel
                      &&element.transportYear==this.addYear){
                        //console.log("true",element._id);  
                        this.categoryid=element._id;}})
             if(this.categoryid!=''){
+            console.log("run get post")
             this.$http.get('/service/api/post/searchPost/'+this.categoryid+'/'+news).then(
                 response=>{
+                    console.log("response body",response.body);
+                    console.log("respone length",response.body.data.length==0);
+                    if(response.body.data.length==0){
+                        this.table=[];
+                        alert("Sorry. We not found post about this problem.!!");}
+                    else{
+                    
                     response.body.data.forEach(element=>{
+                        console.log(element!="")
                         this.table.push(element);
                         console.log("success!!")
-                    })
+                       
+                    })}
                 }
                 ,response=>{
                     console.log("failure!!")

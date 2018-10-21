@@ -1,11 +1,11 @@
 const router = require('express').Router();
-const commentService = require('../../services/commentService');
-const utils = require('../../ultis/ultis');
-const jwt = require('jsonwebtoken');
-const key = require('../../config/jwt');
-const Pusher = require('pusher');
+ const commentService = require('../../services/commentService');
+ const utils = require('../../ultis/ultis');
+ const jwt = require('jsonwebtoken');
+ const key = require('../../config/jwt');
+ const Pusher = require('pusher');
 
-var pusher = new Pusher({
+ var pusher = new Pusher({
   appId: '625402',
   key: 'e0d50cdec56f3482d272',
   secret: '182c4448daaab917182f',
@@ -44,9 +44,9 @@ router.post('/api/comment/createComment', (req, res) => {
       })
     .catch(err => res.send(utils.fail(err, err.message)));
 });
-// router.post('/api/comment/deleteComment',(req,res)=>{
-//     const { commentId, postId}=req.body.data;
-//     console.log(commentId, postId);
-// })
+// // router.post('/api/comment/deleteComment',(req,res)=>{
+// //     const { commentId, postId}=req.body.data;
+// //     console.log(commentId, postId);
+// // })
 
 module.exports = router;
