@@ -33,6 +33,8 @@ var formControl = new Vue({
             this.manufacture.length=0;
             this.model.length=0;
             this.year.length=0;
+            this.table=[];
+            this.addPart='';
             this.categories.forEach(element=>{
                 if(element.transportType==news)
                 {
@@ -58,6 +60,8 @@ var formControl = new Vue({
         addManufacture:function(news, old)
         {  this.model.length=0;
            this.year.length=0;
+           this.table=[];
+           this.addPart='';
            this.categories.forEach(element=>{
                if(element.transportManufacture==news && element.transportType==this.addType)
                {
@@ -81,6 +85,8 @@ var formControl = new Vue({
         },
         addModel:function(news, old)
         {  this.year.length=0;
+            this.table=[];
+            this.addPart='';
            this.categories.forEach(element=>
             {
                if(element.transportManufacture==this.addManufacture && element.transportType==this.addType&& element.transportModel==news)
@@ -104,7 +110,12 @@ var formControl = new Vue({
                }
            })
         },
+        addYear:function(news,old){
+            this.table=[];
+            this.addPart='';
+        },
         addPart:function(news, old){
+            if(news!=""){
             this.table.length=0;
             console.log(this.table.length)
             this.categories.forEach(element=>{
@@ -132,7 +143,7 @@ var formControl = new Vue({
                 }
                 ,response=>{
                     console.log("failure!!")
-                });}
+                });}}
 
 
 
