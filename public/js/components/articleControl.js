@@ -198,7 +198,8 @@ var comment = new Vue({
                     user: tmp[0],
                     content: tmp[1],
                     avatar: tmp[2],
-                    vote: tmp[3]
+                    vote: tmp[3],
+                    reply: []
                 }
                 comment.comments.push(input);
             });
