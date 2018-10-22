@@ -36,6 +36,9 @@ var article = new Vue({
                 }
                 this.info= input;
                 document.title += " "+ input.title;
+                console.log(this.info.content);
+                this.info.content=this.info.content.replace("&lt;","<");
+                this.info.content=this.info.content.replace("&gt;",">");
             }, response => {
                 // error callback
                 console.log('failed');
