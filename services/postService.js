@@ -44,8 +44,8 @@ class postService {
   }
   static deletePost({postId, forumId}){
     return posts.findByIdAndRemove(postId).exec()
-      .then(() => comments.findOneAndRemove({post: postId})).exec()
-      .then(() => subComments.findOneAndRemove({post: postId})).exec()
+      .then(() => comments.deleteMany({post: postId}).exec())
+      .then(() => subComments.deleteMany({post: postId}).exec())
       .then(()=>posts.find({ forumList: forumId }).sort({ "_id": -1 }).limit(1).then((_post) => {
         const postDetail = utils.succeed(_post).data;
         if(postDetail.length>0){
