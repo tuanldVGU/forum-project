@@ -2,9 +2,7 @@ import {urlParam} from '../urlParam.mjs'
 
 var forumID = urlParam('id');
 var forumName = urlParam('name');
-console.log(forumID);
-console.log(forumName);
-document.title += ' ' + forumName;
+document.title += ' ' + decodeURI(forumName);
 
 class thread {
     constructor(id, title, date, comment,lc) {
@@ -12,7 +10,11 @@ class thread {
         this.title = title;
         this.Postdate = date;
         this.comment = comment;
-        this.lastComment = lc;
+        if (lc){
+            this.bad = "true";
+        }else{
+            this.bad = "false";   
+        }
     }
 }
 
@@ -50,11 +52,12 @@ var table = new Vue({
         loadtableData: function(){
             this.$http.get('/service/api/post/getDetail/'+forumID).then(response => {
                 response.body.data.forEach(element => {
+                    console.log(element)
                     var input = new thread(element._id,
                         element.title,
                         element.createdAt,
-                        0,
-                        'unknown'
+                        element.numOfComment,
+                        element.reported
                     )
                     this.tableData.push(input);
                 });

@@ -2,35 +2,12 @@
 <body class="bg-white">
 <div>
     <header>
-        <%include ./navbar%>
+        <%include ./navbar %>
     </header>
     <main>
         <%- body%>
     </main>
-    <footer class="container py-5">
-            <div class="row">
-                <div class="col">
-                    <h3>motor</h3>
-                    <p class="text-muted">© 2018</p>
-                </div>
-                <div class="col">
-                    <h5>More Features</h5>
-                    <ul class="list-unstyled text-small">
-                        <li><a href="#">app 1</a></li>
-                        <li><a href="#">app 2</a></li>
-                        <li><a href="#">app 3</a></li>
-                    </ul>
-                </div>
-                <div class="col">
-                    <h5>Hot Topics</h5>
-                    <ul class="list-unstyled text-small">
-                        <li><a href="#">topic 1</a></li>
-                        <li><a href="#">topic 2</a></li>
-                        <li><a href="#">topic 3</a></li>
-                    </ul>
-                </div>
-            </div>
-    </footer>
+    <%include ./footer %>
     <script>
         var navbar = document.getElementsByClassName('navbar');
         navbar[0].classList.add("fixed-top");

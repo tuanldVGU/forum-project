@@ -1,6 +1,8 @@
+import {getCookie} from '../getCookie.mjs'
 var postID = document.URL.split('id=')[1];
 var userName = getCookie("usrName");
 
+// article content
 var article = new Vue({
     el: '#vue-content',
     data(){
@@ -33,7 +35,7 @@ var article = new Vue({
                     author:element.user
                 }
                 this.info= input;
-                console.log(this.info);
+                document.title += " "+ input.title;
             }, response => {
                 // error callback
                 console.log('failed');
@@ -59,82 +61,166 @@ var article = new Vue({
     }
 });
 
-function getCookie(cname){
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
-
-
 //comment section
 var comment = new Vue({
     el:'#vue-comment',
-    data: {
-        commentBox:'',
-        comments:[]
+    data() {
+        return {
+            commentBox:'',
+            comments:[],
+            replyBox:'',
+            replies:[],
+            channel: {}
+        }
     },
     created(){
             this.loadComment()
     },
     methods:{
         loadComment: function(){
-            this.$http.get('/service/api/comment/getDetail/'+postID)
-            //this.$http.get('/service/api/comment/getSumComment/'+postID)
-            .then(response => {
-                var element = response.body.data;
-                console.log(element);
+            this.$http.get('/service/api/comment/getDetail/'+postID).then(response => {
                 try {
-                    var tmp = element.content.split(':::');
-                    var input = {
-                        user: tmp[0],
-                        content: tmp[1],
-                        //subcom: element.subcomment
-                    }
-                    this.info= input;
-                    //console.log(input);
+                    response.body.data.forEach(element=>{
+                        var tmp = element.content.split(':::');
+                        var input = {
+                            cmtID: element._id,
+                            user: tmp[0],
+                            content: tmp[1],
+                            avatar: tmp[2],
+                            vote: tmp[3],
+                            time: element.content.createdAt,
+                            reply: element.subComment
+                        }
+                        for (var i=0; i<input.reply.length; i++){
+                            var subtmp = input.reply[i].content.split(':::');
+                            input.reply[i].username = subtmp[0];
+                            input.reply[i].content = subtmp[1];
+                            input.reply[i].avatar = subtmp[2];
+                            input.reply[i].vote = subtmp[3];
+                        }
+                        this.comments.push(input);
+                    });
+                    // console.log(response.body.data);
+                    // this.toggleReply();
+                    console.log(this.comments);
                 }
                 catch(err){
                     console.log('empty');
                 }
+                this.pusher()
             }, response => {
                 // error callback
                 console.log('failed');
             })
         },
+
         addComment: function(){
             var input = {
-                user: getCookie("usrName"),
+                user: userName,
                 content:  this.commentBox
             };
 
-            this.comments.push(input);
-            var dataSent ={
+            if(input.content != '' ){
+                //this.comments.push(input);
+                var dataSent ={
+                    post: postID,
+                    //user: userName,
+                    token: getCookie('token'),
+                    content: getCookie("usrName")+":::"+this.commentBox+":::"+getCookie("avatar")+":::"+'0'
+                }
+                //get api
+                this.$http.post('/service/api/comment/createComment', { data: dataSent})
+                .then(response => {
+                   //Success
+                   //console.log(response);
+                }, response => {
+                    // error callback
+                    console.log('failed');
+                })
+            }
+
+
+            this.commentBox = '';
+        },
+
+        addReply: function(cid,index){
+            var input ={
                 post: postID,
                 token: getCookie('token'),
-                content: getCookie("usrName")+":::"+this.commentBox
+                comment: cid,
+                content: userName+":::"+this.replyBox+":::"+getCookie("avatar")+":::"+'0',
+                commentIndex : index
             }
-            //get api
-            this.$http.post('/service/api/comment/createComment', { data: dataSent})
+            // console.log(input.comment);
+            this.replyBox ='';
+            this.$http.post('/service/api/comment/createSubComment', {data: input})
             .then(response => {
                //Success
                console.log(response);
             }, response => {
                 // error callback
-                console.log('failed');
+                console.log(response);
+                // console.log('failed');
             })
+            this.replyBox ='';
+        },
 
-            this.commentBox = '';
+        toggleReply: function(){
+            var comment = document.getElementsByClassName('comment');
+            for (var i = 0; i<comment.length;i++){
+                var current = comment[i];
+                current.addEventListener("mouseout",function(){
+                    var widget = this.children[2];
+                    widget.style.display = "none";
+                });
 
+                current.addEventListener("mouseover",function(){
+                    var widget = this.children[2];
+                    widget.style.display = "block";
+                });
+            }
+        },
+        pusher: function(){
+            // Realtime comment function
+            Pusher.logToConsole = true;
+
+            var pusher = new Pusher('e0d50cdec56f3482d272', {
+                cluster: 'ap1',
+                forceTLS: true
+            });
+
+            var channel = pusher.subscribe('motor-forum');
+
+            channel.bind('add-comment', function(data) {
+                var tmp = data.content.split(':::');
+                var input = {
+                    cmtID: data.id,
+                    user: tmp[0],
+                    content: tmp[1],
+                    avatar: tmp[2],
+                    vote: tmp[3]
+                }
+                comment.comments.push(input);
+            });
+
+            channel.bind('add-subcomment', function(data) {
+                console.log('ok');
+                var tmp = data.content.split(':::');
+                var input = {
+                    _id: data.id,
+                    username: tmp[0],
+                    content: tmp[1],
+                    avatar: tmp[2],
+                    vote: tmp[3]
+                }
+                comment.comments[data.index].reply.push(input);
+            });
         }
+    },
+    mounted(){
+        this.toggleReply()
+    },
+    updated(){
+        this.toggleReply()   
     }
 })

@@ -1,7 +1,8 @@
 var formControl = new Vue({
     el: "#vue-form",
     data: {
-        categories: []
+        categories: [],
+        partarea:['Engine','Tire & Wheel','Brake','Drivetrain']
     },
     components: {
     },

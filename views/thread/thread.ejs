@@ -37,8 +37,8 @@
                 <tr>
                     <th scope="col">Title</th>
                     <th scope="col">Posted date</th>
-                    <th scope="col">Views</th>
-                    <th scope="col">Last post</th>
+                    <th scope="col">Comments</th>
+                    <th scope="col">Reported</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,7 +46,7 @@
                     <td><a v-bind:href="'/forum/article?id='+row.id">{{row.title}}</a></td>
                     <td>{{row.Postdate}}</td>
                     <td>{{row.comment}}</td>
-                    <td>{{row.lastcomment}}</td>
+                    <td>{{row.bad}}</td>
                 </tr>
             </tbody>
         </table>

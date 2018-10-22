@@ -9,6 +9,9 @@ var formControl = new Vue({
     el: "#vue-profile",
     data: {
         usr : {},
+        status: "Upload Image to change avatar",
+        fileUpload: '',
+        file: []
     },
     created(){
         this.loadInfo();
@@ -18,10 +21,56 @@ var formControl = new Vue({
             //get user detail
             this.$http.get('/service/api/user/getDetail/'+usrToken).then(response => {
                 this.usr = response.body.data;
+                // console.log(this.usr);
+                this.usr.token = getCookie('token');
             }, response => {
                 // error callback
                 console.log('failed');
             })
+        },
+        previewFile: function(){
+            this.status = "Loading ..."
+            var inputFile = this.$refs.imgFile.files;
+            if (inputFile.length){
+                // Reject big files
+                if (inputFile[0].size > this.$refs.imgFile.dataset.maxSize * 1024) {
+                    console.log("Please select a smaller file");
+                    return false;
+                }
+
+                // Begin file upload
+                this.status= "Uploading file to Imgur..";
+
+                // Replace ctrlq with your own API key
+                var apiUrl = 'https://api.imgur.com/3/image';
+                var apiKey = 'ctrlq';
+
+                var settings = {
+                async: false,
+                crossDomain: true,
+                processData: false,
+                contentType: false,
+                type: 'POST',
+                url: apiUrl,
+                headers: {
+                    Authorization: 'Client-ID ' + apiKey,
+                    Accept: 'application/json'
+                },
+                mimeType: 'multipart/form-data'
+                };
+
+                var formData = new FormData();
+                formData.append("image", inputFile[0]);
+                settings.data = formData;
+
+                // Response contains stringified JSON
+                // Image URL available at response.data.link
+                $.ajax(settings).done(function(response) {
+                    console.log(response);
+                    // this.fileUpload= response;
+                });
+                this.status = "Finish";
+            }
         }
     }
 });
