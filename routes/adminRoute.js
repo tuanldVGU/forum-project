@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var loggedinadmin = function (req, res, next) {
-    console.log(req.session)
     if (req.isAuthenticated()&& req.session.passport.user.rule=="admin") {
       next()
     } else {

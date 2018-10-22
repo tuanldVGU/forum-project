@@ -61,17 +61,18 @@ var reportCotrol=new Vue({
              .catch ((error)=> console.log(error))
         },
         deletePost:function(reportId, postId){
-            console.log(reportId, postId)
+            console.log("report id, post id",reportId, postId)
             this.$http.get('/service/api/post/getPost/'+postId).then(response => {
+                console.log(response)
                 forumlist=response.body.data.forumList;
-                console.log(forumlist)
-                this.$http.post('/service/api/post/deletePost', {postId:postId,forumId:forumlist})
-                .then ((res)=> {if(res.body.status=="successful")
-                {alert("Post are deleted.")}
-                 this.deleteReport(reportId,postId);
+                
+                 this.$http.post('/service/api/post/deletePost', {postId:postId,forumId:forumlist})
+                 .then ((res)=> {if(res.body.status=="successful")
+                 {alert("Post are deleted.")}
+                  this.deleteReport(reportId,postId);
                                                                 
-                })
-                .catch ((error)=> console.log(error))     
+                 })
+                 .catch ((error)=> console.log(error))     
                 }, response => {
                 // error callback
                 console.log("Fail to load post");
