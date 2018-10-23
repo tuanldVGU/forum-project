@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 
 const comments = mongoose.model('comment');
 const posts = mongoose.model('post');
-const subcomment =mongoose.model('subComment')
+const subcomment =mongoose.model('subComment');
+const forumLists = mongoose.model('forumList');
 
 const { ObjectId } = mongoose.Types;
 class commentService {
@@ -17,6 +18,10 @@ class commentService {
   static createComment({ post, user, content }){
 
     return posts.findOneAndUpdate({_id: ObjectId(post)}, { $inc: { numOfComment:1 } , recentComment: content}, {new: true }).exec()
+      .then(() => {
+        return posts.findOne({_id: ObjectId(post)}).exec()
+          .then((_post) => forumLists.findOneAndUpdate({_id: _post.forumList}, { $inc: { numOfComment:1 }}, {new: true }).exec())
+      })
       .then(() => comments.create({ post: post, user: user, content: content })
       .then(
            //console.log("im here");

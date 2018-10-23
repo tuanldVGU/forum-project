@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const subComments = mongoose.model('subComment');
 const comments = mongoose.model('comment');
 const posts = mongoose.model('post');
+const forumLists = mongoose.model('forumList');
 
 const { ObjectId } = mongoose.Types;
 
@@ -13,6 +14,10 @@ class subCommentService {
   }
   static createSubComment({ post, comment, user, content }){
     return posts.findOneAndUpdate({_id: ObjectId(post)}, { $inc: { numOfComment:1 } , recentComment: content}, {new: true }).exec()
+      .then(() => {
+        return posts.findOne({_id: ObjectId(post)}).exec()
+          .then((_post) => forumLists.findOneAndUpdate({_id: _post.forumList}, { $inc: { numOfComment:1 }}, {new: true }).exec())
+      })
       .then(() => subComments.create({ post: post, comment: comment, user: user, content: content })
         .then((_subComment)=> comments.findOneAndUpdate({_id: comment}, { "$push": { "subComment": _subComment } }))
         .then(
