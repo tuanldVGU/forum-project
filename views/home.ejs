@@ -1,11 +1,52 @@
 <%layout('./partials/homeLayout')%>
-<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+<div class="carousel slide" id="myCarousel" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="/img/b1.jpg" class="d-block w-100 h-400" alt="First slide">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1 class="display-4">Biker paradise</h1>
+                    <p class="lead">Explore the lastest news about motorbike</p>
+                    <a class="btn btn-black" href="/forum" >Getting started</a>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="/img/b2.jpg" class="d-block w-100 h-400" alt="Second slide">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h3>New parter with</h3>
+                    <h1 class="display 2">Honda Vietnam</h1>
+                    <p class="lead">Welcome our lastest professional technical support.</p>
+                    <a class="btn btn-black" href="/forum">More infomation</a>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="/img/b3.jpg" class="d-block w-100 h-400" alt="Third slide">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h3>100.000</h3>
+                    <h1 class="display 2">Members reached</h1>
+                    <p class="lead">Explore the lastest news about motorbike</p>
+                    <a class="btn btn-black" href="/forum">Thank you!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
     <div class="col-md-5 p-lg-5 mx-auto my-5">
         <h1 class="display-4">Biker paradise</h1>
         <p class="lead">Explore the lastest news about motorbike</p>
         <a class="btn btn-outline-secondary" href="/forum">Getting started</a>
     </div>
-</div>
+</div> -->
 
 <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
     <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden col">

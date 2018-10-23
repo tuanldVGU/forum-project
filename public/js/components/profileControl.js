@@ -92,24 +92,23 @@ var postControl = new Vue({
         loadPost: function(){
             // get post detail
             this.$http.get('/service/api/post/getUserPost/'+usrToken).then(response => {
-                response.body.data.forEach(element => {
-                    //console.log(element);
-                    this.posts.push(element);
-                });
-                //console.log(this.posts);
+                try {
+                    response.body.data.forEach(element => {
+                        this.posts.push(element);
+                    });
+                }catch(err){
+                    this.posts = [];
+                }
+                
             }, response => {
                 // error callback
                 console.log('failed');
             })
         },
         deletePost: function(postID,forumID){
-            console.log('click');
+            // console.log('click');
             this.$http.post('/service/api/post/deletePost',{postId: postID, forumId: forumID}).then(response => {
-                response.body.data.forEach(element => {
-                    console.log(element);
-                    this.posts.push(element);
-                });
-                console.log(this.posts);
+                console.log('success');
             }, response => {
                 // error callback
                 console.log('failed');

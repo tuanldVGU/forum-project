@@ -429,4 +429,16 @@ footer li a:hover {
   text-decoration: none;
   color: #f25656;
 }
+
+.h-400 {
+  height: 400px;
+}
+
+.carousel-item img {
+  opacity: 0.5;
+}
+
+.carousel-item h1, .carousel-item h3, .carousel-item a, .carousel-item p {
+  color: #000;
+}
 /*# sourceMappingURL=myStyle.css.map */

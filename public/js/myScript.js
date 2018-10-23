@@ -19,3 +19,12 @@ try {
 catch(err){
     // console.log('Not avaliable : ');
 }
+
+try {
+    $('.carousel').carousel({
+        interval: 2000
+      })
+}
+catch(err){
+
+}

@@ -432,3 +432,15 @@ footer {
     }
 }
 
+.h-400 {
+    height: 400px;
+}
+
+.carousel-item{
+    img{
+        opacity: 0.5;
+    }
+    h1,h3,a,p{
+        color: #000;
+    }
+}
